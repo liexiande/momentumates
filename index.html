@@ -2091,29 +2091,50 @@
             const wo = ev.woProgress || createDefaultWoProgress(ev.eventName, ev.venue);
             const items = wo.rundown || [];
             const revisions = wo.revisions || [];
+            const isFinal = String(wo.status || 'Draft').toLowerCase() === 'final';
 
             return `
                 <div class="space-y-4">
                     <div class="bg-white/95 rounded-3xl border border-stoneborder p-5 sm:p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-4 card-playful">
-                        <div class="space-y-1">
+                        <div class="space-y-1.5">
                             <div class="flex flex-wrap items-center gap-2">
-                                <span class="px-2.5 py-0.5 rounded-full bg-champagne-100 text-champagne-600 text-[10px] font-extrabold uppercase">
-                                    Status: ${escapeHtml(wo.status || 'Draft')}
+                                <span class="px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider inline-flex items-center gap-1.5 ${
+                                    isFinal
+                                        ? 'bg-sage-600 text-white shadow-xs'
+                                        : 'bg-butter text-charcoal-900 border border-champagne-400/60'
+                                }">
+                                    <span class="w-2 h-2 rounded-full ${isFinal ? 'bg-white' : 'bg-champagne-600'}"></span>
+                                    <span>${isFinal ? 'FINAL RUNDOWN' : 'DRAFT RUNDOWN'}</span>
                                 </span>
                                 ${wo.clientApproved ? `
                                     <span class="px-2.5 py-0.5 rounded-full bg-sage-100 text-sage-700 text-[10px] font-extrabold uppercase">
                                         Disetujui Klien (${escapeHtml(wo.clientApprovedAt || '')})
                                     </span>
                                 ` : ''}
-                                <span class="text-[11px] text-charcoal-700/70">Effective: ${escapeHtml(wo.lastUpdated || 'Hari ini')}</span>
+                                <span class="text-[11px] text-charcoal-700/70">Update Terakhir: ${escapeHtml(wo.lastUpdated || 'Hari ini')}</span>
                             </div>
                             <h2 class="font-editorial text-2xl sm:text-3xl font-bold text-charcoal-900">
-                                Rundown Acara &mdash; ${escapeHtml(ev.eventName)}
+                                ${isFinal ? 'Final Rundown' : 'Rundown Draft'} &mdash; ${escapeHtml(ev.eventName)}
                             </h2>
                             <p class="text-xs text-charcoal-700/80">${escapeHtml(wo.woNotes || '')}</p>
                         </div>
 
                         <div class="flex flex-wrap items-center gap-2 shrink-0">
+                            <button type="button" onclick="openRundownPreviewModal()"
+                                class="px-3.5 py-2 rounded-xl border border-stoneborder bg-alabaster hover:bg-champagne-100 text-xs font-bold text-charcoal-900 inline-flex items-center gap-1.5 transition">
+                                <i data-lucide="eye" class="w-3.5 h-3.5 text-champagne-600"></i>
+                                <span>Lihat Rundown</span>
+                            </button>
+                            <button type="button" onclick="printRundownByEvent()"
+                                class="px-3.5 py-2 rounded-xl border border-stoneborder bg-white hover:bg-alabaster text-xs font-bold text-charcoal-900 inline-flex items-center gap-1.5 transition">
+                                <i data-lucide="download" class="w-3.5 h-3.5 text-champagne-600"></i>
+                                <span>Download PDF</span>
+                            </button>
+                            <button type="button" onclick="shareRundownToWhatsApp()"
+                                class="px-3.5 py-2 rounded-xl bg-sage-600 hover:bg-sage-700 text-white text-xs font-bold inline-flex items-center gap-1.5 transition">
+                                <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                                <span>Share WhatsApp</span>
+                            </button>
                             ${isClient ? `
                                 <button type="button" onclick="approveRundownByClient()"
                                     class="px-3.5 py-2 rounded-xl ${wo.clientApproved ? 'bg-sage-100 text-sage-700 border border-sage-500/30' : 'bg-charcoal-900 hover:bg-charcoal-800 text-white'} text-xs font-bold inline-flex items-center gap-1.5 transition">
@@ -2126,20 +2147,11 @@
                                     <span>Request Revisi</span>
                                 </button>
                             ` : ''}
-                            <button type="button" onclick="printRundownByEvent()"
-                                class="px-3.5 py-2 rounded-xl border border-stoneborder bg-white hover:bg-alabaster text-xs font-bold text-charcoal-900 inline-flex items-center gap-1.5 transition">
-                                <i data-lucide="download" class="w-3.5 h-3.5 text-champagne-600"></i>
-                                <span>Download PDF</span>
-                            </button>
-                            <button type="button" onclick="shareRundownToWhatsApp()"
-                                class="px-3.5 py-2 rounded-xl bg-sage-600 hover:bg-sage-700 text-white text-xs font-bold inline-flex items-center gap-1.5 transition">
-                                <i data-lucide="send" class="w-3.5 h-3.5"></i>
-                                <span>Share WhatsApp</span>
-                            </button>
                             ${isAdmin ? `
                                 <button type="button" onclick="toggleRundownStatus()"
-                                    class="px-3.5 py-2 rounded-xl border border-stoneborder bg-alabaster hover:bg-champagne-100 text-xs font-bold text-charcoal-900">
-                                    ${wo.status === 'Final' ? 'Set Draft' : 'Set Final'}
+                                    class="px-3.5 py-2 rounded-xl border border-champagne-400 ${isFinal ? 'bg-butter text-charcoal-900' : 'bg-sage-100 text-sage-700'} hover:opacity-90 text-xs font-extrabold inline-flex items-center gap-1.5 transition">
+                                    <i data-lucide="badge-check" class="w-3.5 h-3.5"></i>
+                                    <span>${isFinal ? 'Ubah ke Draft' : 'Tandai Final'}</span>
                                 </button>
                                 <button type="button" onclick="openRundownModal()"
                                     class="px-4 py-2 rounded-xl bg-charcoal-900 hover:bg-charcoal-800 text-white text-xs font-bold inline-flex items-center gap-1.5">
@@ -2160,12 +2172,15 @@
                             <div class="bg-white/95 rounded-3xl border border-stoneborder p-8 text-center text-sm text-charcoal-700">
                                 Belum ada sesi rundown.
                             </div>
-                        ` : items.map((item) => {
+                        ` : items.map((item, index) => {
                             const durText = computeRundownDurationText(item.time, item.durationText);
                             return `
                                 <div class="bg-white/95 rounded-3xl border border-stoneborder p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 card-playful">
                                     <div class="space-y-1 min-w-0">
                                         <div class="flex flex-wrap items-center gap-2">
+                                            <span class="w-6 h-6 rounded-full bg-charcoal-900 text-white text-[11px] font-extrabold inline-flex items-center justify-center">
+                                                ${index + 1}
+                                            </span>
                                             <span class="px-3 py-1 rounded-full bg-butter text-charcoal-900 text-xs font-extrabold">
                                                 ${escapeHtml(item.time || '')}
                                             </span>
@@ -2174,6 +2189,11 @@
                                                     ${escapeHtml(durText)}
                                                 </span>
                                             ` : ''}
+                                            <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase ${
+                                                isFinal ? 'bg-sage-100 text-sage-700' : 'bg-alabaster border border-stoneborder text-charcoal-700'
+                                            }">
+                                                ${isFinal ? 'Final' : 'Draft'}
+                                            </span>
                                         </div>
                                         <h3 class="font-bold text-sm sm:text-base text-charcoal-900 pt-0.5">
                                             ${escapeHtml(item.activity || '')}
@@ -2231,9 +2251,108 @@
             if (currentUser?.role !== 'admin') return;
             const ev = getActiveEvent(getActiveClient());
             if (!ev?.woProgress) return;
-            ev.woProgress.status = ev.woProgress.status === 'Final' ? 'Draft' : 'Final';
+            const nextStatus = String(ev.woProgress.status || 'Draft').toLowerCase() === 'final' ? 'Draft' : 'Final';
+            ev.woProgress.status = nextStatus;
+            ev.woProgress.lastUpdated = new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
             saveAppData();
+            showToast(`Status rundown diubah menjadi ${nextStatus.toUpperCase()}.`, 'success');
             renderApp();
+        }
+
+        function openRundownPreviewModal() {
+            const client = getActiveClient();
+            const ev = getActiveEvent(client);
+            if (!client || !ev) return;
+
+            const wo = ev.woProgress || createDefaultWoProgress(ev.eventName, ev.venue);
+            const rundown = wo.rundown || [];
+            const isFinal = String(wo.status || 'Draft').toLowerCase() === 'final';
+
+            openModal(`
+                <div class="bg-white rounded-3xl border border-stoneborder w-full max-w-3xl p-5 sm:p-7 space-y-5 shadow-xl my-auto">
+                    <div class="flex items-start justify-between gap-3 border-b border-stoneborder pb-4">
+                        <div class="space-y-1">
+                            <div class="flex flex-wrap items-center gap-2">
+                                <span class="text-[10px] font-extrabold uppercase tracking-widest text-champagne-600">
+                                    MOMENTUMATES WEDDING ORGANIZER
+                                </span>
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase ${
+                                    isFinal ? 'bg-sage-600 text-white' : 'bg-butter text-charcoal-900 border border-champagne-400'
+                                }">
+                                    STATUS: ${isFinal ? 'FINAL' : 'DRAFT'}
+                                </span>
+                            </div>
+                            <h3 class="font-editorial text-2xl sm:text-3xl font-bold text-charcoal-900">
+                                ${escapeHtml(client.coupleShort)} &mdash; ${escapeHtml(ev.eventName)}
+                            </h3>
+                            <p class="text-xs text-charcoal-700">
+                                Tanggal: <strong>${formatDateIndo(ev.eventDate)}</strong> &bull; Venue: <strong>${escapeHtml(ev.venue || '-')}</strong>
+                            </p>
+                        </div>
+                        <button type="button" onclick="closeModal()" class="p-2 rounded-xl hover:bg-alabaster shrink-0">
+                            <i data-lucide="x" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+
+                    ${wo.woNotes ? `
+                        <div class="p-3.5 rounded-2xl bg-alabaster border border-stoneborder/80 text-xs text-charcoal-800">
+                            ${escapeHtml(wo.woNotes)}
+                        </div>
+                    ` : ''}
+
+                    <div class="overflow-x-auto max-h-[55vh] editorial-scroll rounded-2xl border border-stoneborder">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead class="bg-alabaster border-b border-stoneborder text-[11px] uppercase text-charcoal-700">
+                                <tr>
+                                    <th class="py-3 px-3.5 w-10">#</th>
+                                    <th class="py-3 px-3.5 w-36">Waktu &amp; Durasi</th>
+                                    <th class="py-3 px-3.5">Agenda / Kegiatan</th>
+                                    <th class="py-3 px-3.5 w-36">PIC</th>
+                                    <th class="py-3 px-3.5 w-44">Catatan</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-stoneborder/70">
+                                ${rundown.length === 0 ? `
+                                    <tr>
+                                        <td colspan="5" class="py-6 text-center text-charcoal-700">Belum ada sesi rundown.</td>
+                                    </tr>
+                                ` : rundown.map((item, idx) => {
+                                    const dur = computeRundownDurationText(item.time, item.durationText);
+                                    return `
+                                        <tr class="align-top hover:bg-alabaster/60">
+                                            <td class="py-3 px-3.5 font-bold text-charcoal-700">${idx + 1}</td>
+                                            <td class="py-3 px-3.5">
+                                                <div class="font-extrabold text-charcoal-900">${escapeHtml(item.time || '')}</div>
+                                                ${dur ? `<div class="text-[10px] font-bold text-champagne-600 mt-0.5">${escapeHtml(dur)}</div>` : ''}
+                                            </td>
+                                            <td class="py-3 px-3.5 font-bold text-charcoal-900">${escapeHtml(item.activity || '')}</td>
+                                            <td class="py-3 px-3.5 text-charcoal-800">${escapeHtml(item.pic || '-')}</td>
+                                            <td class="py-3 px-3.5 text-charcoal-700">${escapeHtml(item.notes || '-')}</td>
+                                        </tr>
+                                    `;
+                                }).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="flex flex-wrap items-center justify-end gap-2 pt-2 border-t border-stoneborder">
+                        <button type="button" onclick="closeModal()"
+                            class="px-4 py-2 rounded-2xl border border-stoneborder text-xs font-bold text-charcoal-800 hover:bg-alabaster">
+                            Tutup
+                        </button>
+                        <button type="button" onclick="closeModal(); printRundownByEvent();"
+                            class="px-4 py-2 rounded-2xl bg-charcoal-900 hover:bg-charcoal-800 text-white text-xs font-bold inline-flex items-center gap-1.5">
+                            <i data-lucide="download" class="w-3.5 h-3.5 text-champagne-400"></i>
+                            <span>Download PDF</span>
+                        </button>
+                        <button type="button" onclick="shareRundownToWhatsApp()"
+                            class="px-4 py-2 rounded-2xl bg-sage-600 hover:bg-sage-700 text-white text-xs font-bold inline-flex items-center gap-1.5">
+                            <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                            <span>Share WhatsApp</span>
+                        </button>
+                    </div>
+                </div>
+            `);
         }
 
         function printRundownByEvent() {
@@ -2243,6 +2362,7 @@
 
             const wo = ev.woProgress || createDefaultWoProgress(ev.eventName, ev.venue);
             const rundown = wo.rundown || [];
+            const statusUpper = String(wo.status || 'Draft').toUpperCase();
 
             const html = `
                 <div style="font-family: 'Plus Jakarta Sans', sans-serif; color: #1C1B1A; padding: 28px 34px; max-width: 820px; margin: 0 auto;">
@@ -2250,11 +2370,11 @@
                         <div>
                             <div style="font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:#B85D3E; font-weight:700;">Official Event Rundown &bull; @MOMENTUMATES</div>
                             <div style="font-family:'Cormorant Garamond', Georgia, serif; font-size:24px; font-weight:700; line-height:1.15; margin-top:4px;">MOMENTUMATES WEDDING ORGANIZER</div>
-                            <div style="font-size:11px; color:#544946; margin-top:2px;">Master Rundown &mdash; ${escapeHtml(client.coupleShort)} (${escapeHtml(ev.eventName)})</div>
+                            <div style="font-size:11px; color:#544946; margin-top:2px;">Master Rundown (${escapeHtml(statusUpper)}) &mdash; ${escapeHtml(client.coupleShort)} (${escapeHtml(ev.eventName)})</div>
                         </div>
                         <div style="text-align:right; font-size:11px;">
-                            <div style="font-weight:800; text-transform:uppercase; color:#B85D3E;">Status: ${escapeHtml(wo.status || 'Draft')}</div>
-                            <div style="margin-top:3px;">Tanggal: <strong>${formatDateIndo(ev.eventDate)}</strong></div>
+                            <div style="display:inline-block; padding:3px 10px; border-radius:999px; background:${statusUpper === 'FINAL' ? '#EDF2EB' : '#F6F0DF'}; font-weight:800; text-transform:uppercase; color:${statusUpper === 'FINAL' ? '#384834' : '#856536'};">Status: ${escapeHtml(statusUpper)}</div>
+                            <div style="margin-top:4px;">Tanggal: <strong>${formatDateIndo(ev.eventDate)}</strong></div>
                             <div>Venue: <strong>${escapeHtml(ev.venue || '-')}</strong></div>
                         </div>
                     </div>
@@ -2303,13 +2423,14 @@
 
             const wo = ev.woProgress || createDefaultWoProgress(ev.eventName, ev.venue);
             const rundown = wo.rundown || [];
+            const statusUpper = String(wo.status || 'Draft').toUpperCase();
 
             const lines = [
-                `*RUNDOWN ACARA — ${String(client.coupleShort || '').toUpperCase()}*`,
+                `*RUNDOWN ACARA [${statusUpper}] — ${String(client.coupleShort || '').toUpperCase()}*`,
                 `Event: ${ev.eventName || '-'}`,
                 `Tanggal: ${formatDateIndo(ev.eventDate)}`,
                 `Venue: ${ev.venue || '-'}`,
-                `Status: ${wo.status || 'Draft'}`,
+                `Status: *${statusUpper}*`,
                 '',
             ];
 
