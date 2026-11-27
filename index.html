@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LIEXIANDE — User & Workspace Access</title>
+  <title>LIEXIANDE — Superadmin & Client Manager</title>
   <style>
     :root {
-      --bg: #0f1115;
-      --panel: #171a21;
-      --panel-2: #1f2430;
+      --bg: #0c0e12;
+      --surface: #141820;
+      --surface-2: #1b202b;
+      --border: #2a3140;
       --text: #f3f4f6;
-      --muted: #9ca3af;
-      --border: #2c3240;
+      --muted: #9aa3b2;
       --accent: #e5b869;
-      --accent-text: #111317;
-      --danger: #ef4444;
+      --accent-ink: #111318;
       --success: #22c55e;
+      --danger: #ef4444;
     }
 
     * { box-sizing: border-box; }
@@ -29,36 +29,31 @@
       line-height: 1.5;
     }
 
-    .container {
-      max-width: 960px;
+    .wrap {
+      max-width: 1120px;
       margin: 0 auto;
     }
 
-    .card {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-
-    .top-bar {
+    .topbar {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
       gap: 12px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
     }
 
     .brand {
       font-size: 18px;
       font-weight: 700;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
     }
 
-    .session-info {
+    .session-box {
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
       gap: 10px;
       font-size: 13px;
@@ -66,24 +61,52 @@
     }
 
     .badge {
-      display: inline-block;
-      padding: 2px 8px;
+      padding: 2px 9px;
       border-radius: 999px;
-      font-size: 11px;
-      font-weight: 600;
-      background: var(--panel-2);
-      color: var(--accent);
+      background: var(--surface-2);
       border: 1px solid var(--border);
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
     }
 
-    h1, h2 {
-      margin: 0 0 14px;
-      font-size: 18px;
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
     }
 
-    .grid-form {
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .tab-btn.active {
+      background: var(--accent);
+      color: var(--accent-ink);
+      border-color: var(--accent);
+    }
+
+    h1, h2, h3 { margin: 0 0 12px; }
+    h1, h2 { font-size: 18px; }
+    h3 {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+      margin-top: 20px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
       gap: 12px;
       align-items: end;
     }
@@ -94,19 +117,33 @@
       gap: 6px;
     }
 
+    .field.span-2 {
+      grid-column: span 2;
+    }
+
+    @media (max-width: 640px) {
+      .field.span-2 { grid-column: span 1; }
+    }
+
     label {
       font-size: 12px;
       color: var(--muted);
     }
 
-    input, select {
+    input, select, textarea {
       width: 100%;
       padding: 9px 11px;
       border-radius: 7px;
       border: 1px solid var(--border);
-      background: var(--panel-2);
+      background: var(--surface-2);
       color: var(--text);
-      font-size: 14px;
+      font-size: 13px;
+      font-family: inherit;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--accent);
     }
 
     input[readonly] {
@@ -114,67 +151,80 @@
       cursor: not-allowed;
     }
 
-    .checkbox-field {
+    textarea {
+      min-height: 68px;
+      resize: vertical;
+    }
+
+    .check-row {
       flex-direction: row;
       align-items: center;
       gap: 8px;
       padding-bottom: 8px;
     }
 
-    .checkbox-field input {
-      width: auto;
-    }
+    .check-row input { width: auto; }
+    .check-row label { color: var(--text); margin: 0; }
 
-    .checkbox-field label {
-      margin: 0;
-      color: var(--text);
-      font-size: 13px;
-    }
-
-    .actions {
+    .btn-row {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
+      margin-top: 14px;
     }
 
     button {
-      padding: 9px 14px;
+      padding: 8px 14px;
       border-radius: 7px;
       border: 1px solid var(--border);
-      background: var(--panel-2);
+      background: var(--surface-2);
       color: var(--text);
       font-size: 13px;
       font-weight: 600;
       cursor: pointer;
+      transition: border-color 0.15s ease, opacity 0.15s ease;
     }
 
-    button:hover {
-      border-color: var(--accent);
-    }
+    button:hover:not(:disabled) { border-color: var(--accent); }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
 
     button.primary {
       background: var(--accent);
-      color: var(--accent-text);
+      color: var(--accent-ink);
       border-color: var(--accent);
     }
 
     button.danger {
       color: #fca5a5;
-      border-color: rgba(239, 68, 68, 0.4);
+      border-color: rgba(239, 68, 68, 0.45);
     }
 
     .status {
-      margin-top: 12px;
+      margin-top: 10px;
       font-size: 13px;
-      min-height: 20px;
+      min-height: 18px;
     }
 
     .status.ok { color: var(--success); }
     .status.err { color: var(--danger); }
 
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .search-box {
+      max-width: 280px;
+      width: 100%;
+    }
+
     .table-wrap {
       overflow-x: auto;
-      margin-top: 16px;
+      margin-top: 10px;
     }
 
     table {
@@ -184,344 +234,633 @@
     }
 
     th, td {
-      padding: 10px 12px;
+      padding: 9px 11px;
       border-bottom: 1px solid var(--border);
       text-align: left;
       white-space: nowrap;
     }
 
     th {
+      background: var(--surface-2);
       color: var(--muted);
       font-weight: 600;
-      background: var(--panel-2);
     }
 
     .hidden { display: none !important; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="top-bar">
+  <div class="wrap">
+    <header class="topbar">
       <div class="brand">LIEXIANDE WORKSPACE</div>
-      <div id="sessionBar" class="session-info hidden">
-        <span>Login sebagai: <strong id="activeUserLabel"></strong></span>
-        <span id="activeRoleBadge" class="badge"></span>
+      <div id="sessionBar" class="session-box hidden">
+        <span>Login: <strong id="sessionUser"></strong></span>
+        <span id="sessionRole" class="badge"></span>
         <button type="button" id="btnLogout">Logout</button>
       </div>
-    </div>
+    </header>
 
-    <!-- LOGIN CARD -->
-    <section id="loginCard" class="card">
+    <!-- LOGIN -->
+    <section id="loginSection" class="card">
       <h1>Login</h1>
-      <form id="loginForm" class="grid-form">
+      <form id="loginForm" class="grid">
         <div class="field">
-          <label for="loginUsername">Username</label>
-          <input type="text" id="loginUsername" autocomplete="username" required />
+          <label for="loginUser">Username</label>
+          <input type="text" id="loginUser" autocomplete="username" required />
         </div>
         <div class="field">
-          <label for="loginPassword">Password</label>
-          <input type="password" id="loginPassword" autocomplete="current-password" required />
+          <label for="loginPass">Password</label>
+          <input type="password" id="loginPass" autocomplete="current-password" required />
         </div>
-        <div class="actions">
+        <div class="btn-row" style="margin-top:0;">
           <button type="submit" class="primary">Masuk</button>
         </div>
       </form>
-      <div id="loginStatus" class="status"></div>
+      <div id="loginMsg" class="status"></div>
     </section>
 
-    <!-- NON-SUPERADMIN DASHBOARD CARD -->
-    <section id="standardDashboard" class="card hidden">
-      <h2>Dashboard</h2>
-      <p style="margin:0; color:var(--muted); font-size:14px;">
-        Akun kamu aktif dengan role <strong id="standardRoleText"></strong>. Menu pengelolaan user khusus tersedia untuk <strong>superadmin</strong>.
-      </p>
-    </section>
+    <!-- MAIN APP -->
+    <main id="appSection" class="hidden">
+      <nav class="tabs">
+        <button type="button" class="tab-btn active" data-tab="clients">Kelola Klien & Detail</button>
+        <button type="button" class="tab-btn hidden" id="navUsersTab" data-tab="users">Kelola User (Superadmin)</button>
+      </nav>
 
-    <!-- SUPERADMIN MANAGE USERS PANEL -->
-    <section id="superadminPanel" class="card hidden">
-      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:12px;">
-        <h2 style="margin:0;">Manage Users (Superadmin)</h2>
-        <button type="button" id="btnRefreshUsers">Refresh Daftar</button>
-      </div>
-
-      <form id="userForm" class="grid-form">
-        <input type="hidden" id="formMode" value="create" />
-
-        <div class="field">
-          <label for="userUsername">Username</label>
-          <input type="text" id="userUsername" placeholder="contoh: editor01" required />
+      <!-- TAB KLIEN & DETAILS -->
+      <section id="panel-clients" class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <h2 style="margin:0;">Kelola Klien & Detail</h2>
+          <button type="button" id="btnRefreshClients">Refresh</button>
         </div>
 
-        <div class="field">
-          <label for="userRole">Role</label>
-          <select id="userRole">
-            <option value="superadmin">superadmin</option>
-            <option value="admin">admin</option>
-            <option value="editor">editor</option>
-            <option value="viewer">viewer</option>
-          </select>
+        <form id="clientForm">
+          <input type="hidden" id="clientId" />
+
+          <h3>Data Utama Klien</h3>
+          <div class="grid">
+            <div class="field">
+              <label for="coupleShort">Nama Pasangan / Couple Short *</label>
+              <input type="text" id="coupleShort" required />
+            </div>
+            <div class="field">
+              <label for="clientUsername">Username Portal Klien</label>
+              <input type="text" id="clientUsername" />
+            </div>
+            <div class="field">
+              <label for="clientPassword">Password Portal Klien</label>
+              <input type="text" id="clientPassword" />
+            </div>
+            <div class="field">
+              <label for="clientPhone">No. HP / WhatsApp</label>
+              <input type="text" id="clientPhone" />
+            </div>
+            <div class="field">
+              <label for="packageTier">Paket / Layanan</label>
+              <input type="text" id="packageTier" />
+            </div>
+            <div class="field">
+              <label for="projectStatus">Status Project</label>
+              <select id="projectStatus">
+                <option value="Active">Active</option>
+                <option value="In Review">In Review</option>
+                <option value="Completed">Completed</option>
+                <option value="On Hold">On Hold</option>
+              </select>
+            </div>
+          </div>
+
+          <h3>Biodata Mempelai</h3>
+          <div class="grid">
+            <div class="field">
+              <label for="groomFullName">Nama Lengkap Groom</label>
+              <input type="text" id="groomFullName" />
+            </div>
+            <div class="field">
+              <label for="groomPhone">No. HP Groom</label>
+              <input type="text" id="groomPhone" />
+            </div>
+            <div class="field">
+              <label for="groomIg">Instagram Groom</label>
+              <input type="text" id="groomIg" />
+            </div>
+            <div class="field">
+              <label for="brideFullName">Nama Lengkap Bride</label>
+              <input type="text" id="brideFullName" />
+            </div>
+            <div class="field">
+              <label for="bridePhone">No. HP Bride</label>
+              <input type="text" id="bridePhone" />
+            </div>
+            <div class="field">
+              <label for="brideIg">Instagram Bride</label>
+              <input type="text" id="brideIg" />
+            </div>
+          </div>
+
+          <h3>Detail Event & Brief Acara</h3>
+          <div class="grid">
+            <div class="field">
+              <label for="eventName">Nama Event</label>
+              <input type="text" id="eventName" placeholder="Wedding Day / Sangjit / Prewedding" />
+            </div>
+            <div class="field">
+              <label for="eventDate">Tanggal Event</label>
+              <input type="date" id="eventDate" />
+            </div>
+            <div class="field">
+              <label for="eventVenue">Venue / Lokasi</label>
+              <input type="text" id="eventVenue" />
+            </div>
+            <div class="field">
+              <label for="woStatus">Status Rundown / WO</label>
+              <select id="woStatus">
+                <option value="Draft">Draft</option>
+                <option value="In Review">In Review</option>
+                <option value="Approved">Approved</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="ceremonyTime">Waktu Pemberkatan / Akad</label>
+              <input type="text" id="ceremonyTime" />
+            </div>
+            <div class="field">
+              <label for="receptionTime">Waktu Resepsi</label>
+              <input type="text" id="receptionTime" />
+            </div>
+            <div class="field">
+              <label for="guestCount">Jumlah Tamu</label>
+              <input type="text" id="guestCount" />
+            </div>
+            <div class="field">
+              <label for="themeConcept">Tema / Konsep</label>
+              <input type="text" id="themeConcept" />
+            </div>
+            <div class="field">
+              <label for="colorPalette">Color Palette</label>
+              <input type="text" id="colorPalette" />
+            </div>
+            <div class="field">
+              <label for="dietaryNotes">Catatan Diet / F&amp;B</label>
+              <input type="text" id="dietaryNotes" />
+            </div>
+            <div class="field span-2">
+              <label for="additionalNotes">Catatan Tambahan Event</label>
+              <textarea id="additionalNotes"></textarea>
+            </div>
+            <div class="field span-2">
+              <label for="historyNotes">History / Catatan Internal Klien</label>
+              <textarea id="historyNotes"></textarea>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button type="submit" class="primary" id="btnSaveClient">Simpan Klien</button>
+            <button type="button" id="btnResetClient">Reset Form</button>
+          </div>
+        </form>
+
+        <div id="clientMsg" class="status"></div>
+
+        <div class="toolbar">
+          <input type="search" id="clientSearch" class="search-box" placeholder="Cari pasangan, paket, venue..." />
         </div>
 
-        <div class="field">
-          <label for="userPassword">Password</label>
-          <input type="password" id="userPassword" placeholder="Min. 6 karakter (kosongkan saat edit jika tetap)" />
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Pasangan</th>
+                <th>Paket</th>
+                <th>Event &amp; Tanggal</th>
+                <th>Venue</th>
+                <th>Status</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="clientsTbody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- TAB SUPERADMIN KELOLA USER -->
+      <section id="panel-users" class="card hidden">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <h2 style="margin:0;">Kelola User (Superadmin)</h2>
+          <button type="button" id="btnRefreshUsers">Refresh</button>
         </div>
 
-        <div class="field checkbox-field">
-          <input type="checkbox" id="userIsPrimary" />
-          <label for="userIsPrimary">Primary Account</label>
+        <form id="userForm" class="grid" style="margin-top:12px;">
+          <input type="hidden" id="userMode" value="create" />
+          <div class="field">
+            <label for="userNameInput">Username *</label>
+            <input type="text" id="userNameInput" required />
+          </div>
+          <div class="field">
+            <label for="userRoleInput">Role</label>
+            <select id="userRoleInput">
+              <option value="superadmin">superadmin</option>
+              <option value="admin">admin</option>
+              <option value="editor">editor</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="userPassInput">Password</label>
+            <input type="password" id="userPassInput" placeholder="Min. 6 karakter (kosongkan saat edit jika tetap)" />
+          </div>
+          <div class="field check-row">
+            <input type="checkbox" id="userPrimaryInput" />
+            <label for="userPrimaryInput">Primary Account</label>
+          </div>
+          <div class="btn-row" style="margin-top:0;">
+            <button type="submit" class="primary" id="btnSaveUser">Simpan User</button>
+            <button type="button" id="btnResetUser">Batal</button>
+          </div>
+        </form>
+
+        <div id="userMsg" class="status"></div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Username</th>
+                <th>Role</th>
+                <th>Primary</th>
+                <th>Updated At</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="usersTbody"></tbody>
+          </table>
         </div>
-
-        <div class="actions">
-          <button type="submit" id="btnSubmitUser" class="primary">Buat User</button>
-          <button type="button" id="btnCancelEdit">Reset</button>
-        </div>
-      </form>
-
-      <div id="manageStatus" class="status"></div>
-
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Username</th>
-              <th>Role</th>
-              <th>Primary</th>
-              <th>Updated At</th>
-              <th>Aksi</th>
-            </tr>
-          </thead>
-          <tbody id="usersTableBody"></tbody>
-        </table>
-      </div>
-    </section>
+      </section>
+    </main>
   </div>
 
   <script>
-    const SESSION_KEY = 'liexiande_session_v1';
+    const SESSION_KEY = 'liexiande_workspace_session_v1';
+    let clientsData = [];
 
-    function getSession() {
-      try {
-        return JSON.parse(sessionStorage.getItem(SESSION_KEY) || 'null');
-      } catch (_) {
-        return null;
-      }
+    function readSession() {
+      try { return JSON.parse(sessionStorage.getItem(SESSION_KEY) || 'null'); }
+      catch (_) { return null; }
     }
 
-    function setSession(data) {
-      if (data) {
-        sessionStorage.setItem(SESSION_KEY, JSON.stringify(data));
-      } else {
-        sessionStorage.removeItem(SESSION_KEY);
-      }
+    function writeSession(data) {
+      if (data) sessionStorage.setItem(SESSION_KEY, JSON.stringify(data));
+      else sessionStorage.removeItem(SESSION_KEY);
     }
 
-    function setStatus(elId, message, type = '') {
-      const el = document.getElementById(elId);
-      el.textContent = message || '';
-      el.className = 'status' + (type ? ' ' + type : '');
+    function setMsg(id, text, state = '') {
+      const el = document.getElementById(id);
+      el.textContent = text || '';
+      el.className = 'status' + (state ? ' ' + state : '');
     }
 
-    function escapeHtml(value) {
-      return String(value ?? '').replace(/[&<>"']/g, ch => ({
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#39;'
+    function esc(val) {
+      return String(val ?? '').replace(/[&<>"']/g, ch => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
       }[ch]));
     }
 
-    // Wrapper google.script.run menjadi Promise
-    function callGs(fnName, ...args) {
+    function gsCall(fnName, ...args) {
       return new Promise((resolve, reject) => {
-        if (typeof google === 'undefined' || !google.script || !google.script.run) {
-          reject(new Error('google.script.run tidak tersedia di konteks ini.'));
+        if (!window.google || !google.script || !google.script.run) {
+          reject(new Error('google.script.run tidak tersedia.'));
           return;
         }
         google.script.run
           .withSuccessHandler(resolve)
-          .withFailureHandler(err => reject(new Error(err && err.message ? err.message : String(err))))
+          .withFailureHandler(err => reject(new Error(err?.message || String(err))))
           [fnName](...args);
       });
     }
 
-    function renderAuthState() {
-      const session = getSession();
-      const loginCard = document.getElementById('loginCard');
-      const sessionBar = document.getElementById('sessionBar');
-      const standardDashboard = document.getElementById('standardDashboard');
-      const superadminPanel = document.getElementById('superadminPanel');
+    function openTab(tabName) {
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.tab === tabName);
+      });
+      document.getElementById('panel-clients').classList.toggle('hidden', tabName !== 'clients');
+      document.getElementById('panel-users').classList.toggle('hidden', tabName !== 'users');
+    }
 
-      if (!session || !session.token || !session.user) {
-        loginCard.classList.remove('hidden');
-        sessionBar.classList.add('hidden');
-        standardDashboard.classList.add('hidden');
-        superadminPanel.classList.add('hidden');
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => openTab(btn.dataset.tab));
+    });
+
+    function refreshViewBySession() {
+      const session = readSession();
+      const loggedIn = Boolean(session && session.token && session.user);
+
+      document.getElementById('loginSection').classList.toggle('hidden', loggedIn);
+      document.getElementById('sessionBar').classList.toggle('hidden', !loggedIn);
+      document.getElementById('appSection').classList.toggle('hidden', !loggedIn);
+
+      if (!loggedIn) return;
+
+      const role = String(session.user.role || '').toLowerCase();
+      const isSuperadmin = role === 'superadmin';
+
+      document.getElementById('sessionUser').textContent = session.user.username;
+      document.getElementById('sessionRole').textContent = session.user.role;
+      document.getElementById('navUsersTab').classList.toggle('hidden', !isSuperadmin);
+
+      if (!isSuperadmin && document.querySelector('.tab-btn[data-tab="users"]').classList.contains('active')) {
+        openTab('clients');
+      }
+
+      loadClientsList();
+      if (isSuperadmin) loadUsersList();
+    }
+
+    // --- KLIEN ---
+    function renderClientsTable() {
+      const q = document.getElementById('clientSearch').value.trim().toLowerCase();
+      const filtered = clientsData.filter(c => {
+        if (!q) return true;
+        const ev = (c.events && c.events[0]) || {};
+        const hay = [
+          c.coupleShort, c.packageTier, c.projectStatus,
+          ev.eventName, ev.eventDate, ev.venue
+        ].join(' ').toLowerCase();
+        return hay.includes(q);
+      });
+
+      const tbody = document.getElementById('clientsTbody');
+      tbody.innerHTML = '';
+
+      if (!filtered.length) {
+        tbody.innerHTML = '<tr><td colspan="6" style="color:var(--muted);">Tidak ada data klien yang cocok.</td></tr>';
         return;
       }
 
-      loginCard.classList.add('hidden');
-      sessionBar.classList.remove('hidden');
-      document.getElementById('activeUserLabel').textContent = session.user.username;
-      document.getElementById('activeRoleBadge').textContent = session.user.role;
+      filtered.forEach(c => {
+        const ev = (c.events && c.events[0]) || {};
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${esc(c.coupleShort)}</strong></td>
+          <td>${esc(c.packageTier || '-')}</td>
+          <td>${esc(ev.eventName || '-')} (${esc(ev.eventDate || '-')})</td>
+          <td>${esc(ev.venue || '-')}</td>
+          <td>${esc(c.projectStatus || 'Active')}</td>
+          <td class="btn-row" style="margin-top:0;">
+            <button type="button" onclick="fillClientForm('${esc(c.id)}')">Edit Detail</button>
+            <button type="button" class="danger" onclick="removeClient('${esc(c.id)}')">Hapus</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
 
-      if (String(session.user.role).toLowerCase() === 'superadmin') {
-        standardDashboard.classList.add('hidden');
-        superadminPanel.classList.remove('hidden');
-        loadUsers();
-      } else {
-        superadminPanel.classList.add('hidden');
-        standardDashboard.classList.remove('hidden');
-        document.getElementById('standardRoleText').textContent = session.user.role;
+    async function loadClientsList() {
+      const session = readSession();
+      if (!session) return;
+      try {
+        setMsg('clientMsg', 'Memuat klien...');
+        const res = await gsCall('getAllClients', session.token);
+        clientsData = Array.isArray(res) ? res : [];
+        renderClientsTable();
+        setMsg('clientMsg', `Total ${clientsData.length} klien.`, 'ok');
+      } catch (err) {
+        setMsg('clientMsg', err.message, 'err');
       }
     }
 
-    async function loadUsers() {
-      const session = getSession();
-      if (!session || !session.token) return;
+    function fillClientForm(id) {
+      const c = clientsData.find(item => item.id === id);
+      if (!c) return;
+      const ev = (c.events && c.events[0]) || {};
+      const brief = ev.formBrief || {};
+      const bio = c.biodata || {};
+
+      document.getElementById('clientId').value = c.id || '';
+      document.getElementById('coupleShort').value = c.coupleShort || '';
+      document.getElementById('clientUsername').value = c.username || '';
+      document.getElementById('clientPassword').value = c.password || '';
+      document.getElementById('clientPhone').value = c.phone || '';
+      document.getElementById('packageTier').value = c.packageTier || '';
+      document.getElementById('projectStatus').value = c.projectStatus || 'Active';
+
+      document.getElementById('groomFullName').value = bio.groom?.fullName || c.groomFullName || '';
+      document.getElementById('groomPhone').value = bio.groom?.phone || '';
+      document.getElementById('groomIg').value = bio.groom?.instagram || '';
+      document.getElementById('brideFullName').value = bio.bride?.fullName || c.brideFullName || '';
+      document.getElementById('bridePhone').value = bio.bride?.phone || '';
+      document.getElementById('brideIg').value = bio.bride?.instagram || '';
+
+      document.getElementById('eventName').value = ev.eventName || '';
+      document.getElementById('eventDate').value = ev.eventDate || '';
+      document.getElementById('eventVenue').value = ev.venue || '';
+      document.getElementById('woStatus').value = ev.woProgress?.status || 'Draft';
+      document.getElementById('ceremonyTime').value = brief.ceremonyTime || '';
+      document.getElementById('receptionTime').value = brief.receptionTime || '';
+      document.getElementById('guestCount').value = brief.guestCount || '';
+      document.getElementById('themeConcept').value = brief.themeConcept || '';
+      document.getElementById('colorPalette').value = brief.colorPalette || '';
+      document.getElementById('dietaryNotes').value = brief.dietaryNotes || '';
+      document.getElementById('additionalNotes').value = brief.additionalNotes || '';
+      document.getElementById('historyNotes').value = c.historyNotes || '';
+
+      document.getElementById('btnSaveClient').textContent = 'Update Klien & Detail';
+      setMsg('clientMsg', `Mode edit: ${c.coupleShort}`);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function clearClientForm() {
+      document.getElementById('clientForm').reset();
+      document.getElementById('clientId').value = '';
+      document.getElementById('btnSaveClient').textContent = 'Simpan Klien';
+    }
+
+    async function removeClient(id) {
+      const session = readSession();
+      if (!session || !confirm('Hapus data klien ini?')) return;
+      try {
+        const res = await gsCall('deleteClient', session.token, id);
+        setMsg('clientMsg', res.message || 'Klien dihapus.', 'ok');
+        await loadClientsList();
+      } catch (err) {
+        setMsg('clientMsg', err.message, 'err');
+      }
+    }
+
+    document.getElementById('clientForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const session = readSession();
+      if (!session) return;
+
+      const payload = {
+        id: document.getElementById('clientId').value.trim(),
+        coupleShort: document.getElementById('coupleShort').value.trim(),
+        username: document.getElementById('clientUsername').value.trim(),
+        password: document.getElementById('clientPassword').value.trim(),
+        phone: document.getElementById('clientPhone').value.trim(),
+        packageTier: document.getElementById('packageTier').value.trim(),
+        projectStatus: document.getElementById('projectStatus').value,
+        historyNotes: document.getElementById('historyNotes').value.trim(),
+        biodata: {
+          groom: {
+            fullName: document.getElementById('groomFullName').value.trim(),
+            phone: document.getElementById('groomPhone').value.trim(),
+            instagram: document.getElementById('groomIg').value.trim()
+          },
+          bride: {
+            fullName: document.getElementById('brideFullName').value.trim(),
+            phone: document.getElementById('bridePhone').value.trim(),
+            instagram: document.getElementById('brideIg').value.trim()
+          }
+        },
+        primaryEvent: {
+          eventName: document.getElementById('eventName').value.trim(),
+          eventDate: document.getElementById('eventDate').value,
+          venue: document.getElementById('eventVenue').value.trim(),
+          woProgress: { status: document.getElementById('woStatus').value },
+          formBrief: {
+            ceremonyTime: document.getElementById('ceremonyTime').value.trim(),
+            receptionTime: document.getElementById('receptionTime').value.trim(),
+            guestCount: document.getElementById('guestCount').value.trim(),
+            themeConcept: document.getElementById('themeConcept').value.trim(),
+            colorPalette: document.getElementById('colorPalette').value.trim(),
+            dietaryNotes: document.getElementById('dietaryNotes').value.trim(),
+            additionalNotes: document.getElementById('additionalNotes').value.trim()
+          }
+        }
+      };
 
       try {
-        setStatus('manageStatus', 'Memuat daftar user...');
-        const users = await callGs('getAllUsers', session.token);
-        const tbody = document.getElementById('usersTableBody');
+        setMsg('clientMsg', 'Menyimpan data klien...');
+        const res = await gsCall('saveClient', session.token, payload);
+        setMsg('clientMsg', res.message || 'Tersimpan.', 'ok');
+        clearClientForm();
+        await loadClientsList();
+      } catch (err) {
+        setMsg('clientMsg', err.message, 'err');
+      }
+    });
+
+    // --- SUPERADMIN USERS ---
+    async function loadUsersList() {
+      const session = readSession();
+      if (!session) return;
+      try {
+        const users = await gsCall('getAllUsers', session.token);
+        const tbody = document.getElementById('usersTbody');
         tbody.innerHTML = '';
 
-        if (!users || users.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="5" style="color:var(--muted);">Belum ada user terdaftar.</td></tr>';
-          setStatus('manageStatus', '');
-          return;
-        }
-
-        users.forEach(user => {
+        users.forEach(u => {
           const tr = document.createElement('tr');
-          const safeJson = escapeHtml(JSON.stringify(user));
-          const delBtnHtml = user.isPrimary
-            ? ''
-            : `<button type="button" class="danger" onclick="handleDeleteUser('${escapeHtml(user.username)}')">Hapus</button>`;
-
+          const encoded = esc(JSON.stringify(u));
           tr.innerHTML = `
-            <td>${escapeHtml(user.username)}</td>
-            <td>${escapeHtml(user.role)}</td>
-            <td>${user.isPrimary ? 'Yes' : 'No'}</td>
-            <td>${escapeHtml(user.updatedAt || '-')}</td>
-            <td class="actions">
-              <button type="button" onclick='startEditUser("${safeJson}")'>Edit</button>
-              ${delBtnHtml}
+            <td>${esc(u.username)}</td>
+            <td>${esc(u.role)}</td>
+            <td>${u.isPrimary ? 'Yes' : 'No'}</td>
+            <td>${esc(u.updatedAt || '-')}</td>
+            <td class="btn-row" style="margin-top:0;">
+              <button type="button" onclick='beginUserEdit("${encoded}")'>Edit</button>
+              ${u.isPrimary ? '' : `<button type="button" class="danger" onclick="removeUser('${esc(u.username)}')">Hapus</button>`}
             </td>
           `;
           tbody.appendChild(tr);
         });
-
-        setStatus('manageStatus', `Total user: ${users.length}`, 'ok');
       } catch (err) {
-        setStatus('manageStatus', err.message, 'err');
+        setMsg('userMsg', err.message, 'err');
       }
     }
 
-    function startEditUser(encodedUserJson) {
-      const user = JSON.parse(encodedUserJson);
-      document.getElementById('formMode').value = 'edit';
-
-      const inpUser = document.getElementById('userUsername');
-      inpUser.value = user.username;
-      inpUser.readOnly = true;
-
-      document.getElementById('userRole').value = user.role || 'admin';
-      document.getElementById('userPassword').value = '';
-      document.getElementById('userIsPrimary').checked = Boolean(user.isPrimary);
-      document.getElementById('btnSubmitUser').textContent = 'Simpan Perubahan';
-      setStatus('manageStatus', `Mode edit untuk user "${user.username}".`);
+    function beginUserEdit(encodedJson) {
+      const u = JSON.parse(encodedJson);
+      document.getElementById('userMode').value = 'edit';
+      const inp = document.getElementById('userNameInput');
+      inp.value = u.username;
+      inp.readOnly = true;
+      document.getElementById('userRoleInput').value = u.role;
+      document.getElementById('userPassInput').value = '';
+      document.getElementById('userPrimaryInput').checked = Boolean(u.isPrimary);
+      document.getElementById('btnSaveUser').textContent = 'Update User';
     }
 
-    function resetUserForm() {
-      document.getElementById('formMode').value = 'create';
-
-      const inpUser = document.getElementById('userUsername');
-      inpUser.value = '';
-      inpUser.readOnly = false;
-
-      document.getElementById('userRole').value = 'admin';
-      document.getElementById('userPassword').value = '';
-      document.getElementById('userIsPrimary').checked = false;
-      document.getElementById('btnSubmitUser').textContent = 'Buat User';
+    function clearUserForm() {
+      document.getElementById('userMode').value = 'create';
+      const inp = document.getElementById('userNameInput');
+      inp.value = '';
+      inp.readOnly = false;
+      document.getElementById('userRoleInput').value = 'admin';
+      document.getElementById('userPassInput').value = '';
+      document.getElementById('userPrimaryInput').checked = false;
+      document.getElementById('btnSaveUser').textContent = 'Simpan User';
     }
 
-    async function handleDeleteUser(username) {
-      const session = getSession();
-      if (!session || !session.token) return;
-      if (!confirm(`Hapus user "${username}"?`)) return;
+    async function removeUser(username) {
+      const session = readSession();
+      if (!session || !confirm(`Hapus user "${username}"?`)) return;
+      try {
+        const res = await gsCall('deleteAdminUser', session.token, username);
+        setMsg('userMsg', res.message || 'User dihapus.', 'ok');
+        await loadUsersList();
+      } catch (err) {
+        setMsg('userMsg', err.message, 'err');
+      }
+    }
+
+    document.getElementById('userForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const session = readSession();
+      if (!session) return;
+
+      const mode = document.getElementById('userMode').value;
+      const payload = {
+        username: document.getElementById('userNameInput').value.trim(),
+        role: document.getElementById('userRoleInput').value,
+        password: document.getElementById('userPassInput').value,
+        isPrimary: document.getElementById('userPrimaryInput').checked
+      };
 
       try {
-        const res = await callGs('deleteAdminUser', session.token, username);
-        setStatus('manageStatus', res.message || 'User dihapus.', 'ok');
-        await loadUsers();
+        setMsg('userMsg', 'Menyimpan user...');
+        const res = mode === 'create'
+          ? await gsCall('createAdminUser', session.token, payload)
+          : await gsCall('updateAdminUser', session.token, payload);
+        setMsg('userMsg', res.message || 'Berhasil.', 'ok');
+        clearUserForm();
+        await loadUsersList();
       } catch (err) {
-        setStatus('manageStatus', err.message, 'err');
+        setMsg('userMsg', err.message, 'err');
       }
-    }
+    });
 
     document.getElementById('loginForm').addEventListener('submit', async e => {
       e.preventDefault();
-      const username = document.getElementById('loginUsername').value.trim();
-      const password = document.getElementById('loginPassword').value;
-
       try {
-        setStatus('loginStatus', 'Memverifikasi akun...');
-        const res = await callGs('loginUser', username, password);
-        if (!res || !res.ok || !res.token) {
-          throw new Error((res && res.error) || 'Login gagal.');
-        }
-        setSession({ token: res.token, user: res.user });
+        setMsg('loginMsg', 'Masuk...');
+        const res = await gsCall(
+          'loginUser',
+          document.getElementById('loginUser').value.trim(),
+          document.getElementById('loginPass').value
+        );
+        if (!res || !res.ok || !res.token) throw new Error(res?.error || 'Login gagal.');
+        writeSession({ token: res.token, user: res.user });
         document.getElementById('loginForm').reset();
-        setStatus('loginStatus', '');
-        renderAuthState();
+        setMsg('loginMsg', '');
+        refreshViewBySession();
       } catch (err) {
-        setStatus('loginStatus', err.message, 'err');
+        setMsg('loginMsg', err.message, 'err');
       }
     });
 
     document.getElementById('btnLogout').addEventListener('click', () => {
-      setSession(null);
-      resetUserForm();
-      renderAuthState();
+      writeSession(null);
+      clearClientForm();
+      clearUserForm();
+      refreshViewBySession();
     });
 
-    document.getElementById('btnCancelEdit').addEventListener('click', () => {
-      resetUserForm();
-      setStatus('manageStatus', '');
-    });
+    document.getElementById('clientSearch').addEventListener('input', renderClientsTable);
+    document.getElementById('btnRefreshClients').addEventListener('click', loadClientsList);
+    document.getElementById('btnResetClient').addEventListener('click', clearClientForm);
+    document.getElementById('btnRefreshUsers').addEventListener('click', loadUsersList);
+    document.getElementById('btnResetUser').addEventListener('click', clearUserForm);
 
-    document.getElementById('btnRefreshUsers').addEventListener('click', loadUsers);
-
-    document.getElementById('userForm').addEventListener('submit', async e => {
-      e.preventDefault();
-      const session = getSession();
-      if (!session || !session.token) return;
-
-      const mode = document.getElementById('formMode').value;
-      const payload = {
-        username: document.getElementById('userUsername').value.trim(),
-        role: document.getElementById('userRole').value,
-        password: document.getElementById('userPassword').value,
-        isPrimary: document.getElementById('userIsPrimary').checked
-      };
-
-      try {
-        setStatus('manageStatus', mode === 'create' ? 'Menyimpan user baru...' : 'Mengupdate user...');
-        const res = mode === 'create'
-          ? await callGs('createAdminUser', session.token, payload)
-          : await callGs('updateAdminUser', session.token, payload);
-
-        setStatus('manageStatus', res.message || 'Berhasil.', 'ok');
-        resetUserForm();
-        await loadUsers();
-      } catch (err) {
-        setStatus('manageStatus', err.message, 'err');
-      }
-    });
-
-    renderAuthState();
+    refreshViewBySession();
   </script>
 </body>
 </html>
