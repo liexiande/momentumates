@@ -3,36 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LIEXIANDE — Superadmin & Client Manager</title>
+  <title>MOMENTUMATES WO — Client & Team Portal</title>
   <style>
     :root {
-      --bg: #0c0e12;
-      --surface: #141820;
-      --surface-2: #1b202b;
-      --border: #2a3140;
+      --bg: #0b0d11;
+      --panel: #131720;
+      --panel-alt: #1a202c;
+      --border: #283040;
       --text: #f3f4f6;
-      --muted: #9aa3b2;
-      --accent: #e5b869;
-      --accent-ink: #111318;
-      --success: #22c55e;
-      --danger: #ef4444;
+      --muted: #9ca3af;
+      --gold: #e5b869;
+      --gold-ink: #111317;
+      --green: #22c55e;
+      --red: #ef4444;
     }
 
     * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      padding: 24px 16px;
+      padding: 20px 16px 40px;
       background: var(--bg);
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       line-height: 1.5;
     }
 
-    .wrap {
-      max-width: 1120px;
-      margin: 0 auto;
-    }
+    .container { max-width: 1180px; margin: 0 auto; }
 
     .topbar {
       display: flex;
@@ -40,18 +37,15 @@
       justify-content: space-between;
       align-items: center;
       gap: 12px;
-      margin-bottom: 18px;
       padding-bottom: 14px;
+      margin-bottom: 18px;
       border-bottom: 1px solid var(--border);
     }
 
-    .brand {
-      font-size: 18px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-    }
+    .brand { font-size: 17px; font-weight: 700; letter-spacing: 0.08em; }
+    .brand span { color: var(--gold); }
 
-    .session-box {
+    .session-bar {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
@@ -63,20 +57,20 @@
     .badge {
       padding: 2px 9px;
       border-radius: 999px;
-      background: var(--surface-2);
+      background: var(--panel-alt);
       border: 1px solid var(--border);
-      color: var(--accent);
+      color: var(--gold);
       font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
     }
 
     .card {
-      background: var(--surface);
+      background: var(--panel);
       border: 1px solid var(--border);
       border-radius: 10px;
       padding: 20px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .tabs {
@@ -87,18 +81,18 @@
     }
 
     .tab-btn.active {
-      background: var(--accent);
-      color: var(--accent-ink);
-      border-color: var(--accent);
+      background: var(--gold);
+      color: var(--gold-ink);
+      border-color: var(--gold);
     }
 
     h1, h2, h3 { margin: 0 0 12px; }
     h1, h2 { font-size: 18px; }
     h3 {
-      font-size: 13px;
+      font-size: 12px;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--accent);
+      letter-spacing: 0.06em;
+      color: var(--gold);
       margin-top: 20px;
       padding-bottom: 6px;
       border-bottom: 1px solid var(--border);
@@ -111,31 +105,18 @@
       align-items: end;
     }
 
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field.span-2 { grid-column: span 2; }
+    @media (max-width: 640px) { .field.span-2 { grid-column: span 1; } }
 
-    .field.span-2 {
-      grid-column: span 2;
-    }
-
-    @media (max-width: 640px) {
-      .field.span-2 { grid-column: span 1; }
-    }
-
-    label {
-      font-size: 12px;
-      color: var(--muted);
-    }
+    label { font-size: 12px; color: var(--muted); }
 
     input, select, textarea {
       width: 100%;
       padding: 9px 11px;
       border-radius: 7px;
       border: 1px solid var(--border);
-      background: var(--surface-2);
+      background: var(--panel-alt);
       color: var(--text);
       font-size: 13px;
       font-family: inherit;
@@ -143,28 +124,18 @@
 
     input:focus, select:focus, textarea:focus {
       outline: none;
-      border-color: var(--accent);
+      border-color: var(--gold);
     }
 
-    input[readonly] {
-      opacity: 0.65;
-      cursor: not-allowed;
-    }
+    input[readonly] { opacity: 0.65; cursor: not-allowed; }
+    textarea { min-height: 68px; resize: vertical; }
 
-    textarea {
-      min-height: 68px;
-      resize: vertical;
+    .perm-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
     }
-
-    .check-row {
-      flex-direction: row;
-      align-items: center;
-      gap: 8px;
-      padding-bottom: 8px;
-    }
-
-    .check-row input { width: auto; }
-    .check-row label { color: var(--text); margin: 0; }
 
     .btn-row {
       display: flex;
@@ -177,262 +148,144 @@
       padding: 8px 14px;
       border-radius: 7px;
       border: 1px solid var(--border);
-      background: var(--surface-2);
+      background: var(--panel-alt);
       color: var(--text);
       font-size: 13px;
       font-weight: 600;
       cursor: pointer;
-      transition: border-color 0.15s ease, opacity 0.15s ease;
     }
 
-    button:hover:not(:disabled) { border-color: var(--accent); }
+    button:hover:not(:disabled) { border-color: var(--gold); }
     button:disabled { opacity: 0.5; cursor: not-allowed; }
+    button.primary { background: var(--gold); color: var(--gold-ink); border-color: var(--gold); }
+    button.danger { color: #fca5a5; border-color: rgba(239, 68, 68, 0.45); }
 
-    button.primary {
-      background: var(--accent);
-      color: var(--accent-ink);
-      border-color: var(--accent);
-    }
+    .status { margin-top: 10px; font-size: 13px; min-height: 18px; }
+    .status.ok { color: var(--green); }
+    .status.err { color: var(--red); }
 
-    button.danger {
-      color: #fca5a5;
-      border-color: rgba(239, 68, 68, 0.45);
-    }
-
-    .status {
-      margin-top: 10px;
-      font-size: 13px;
-      min-height: 18px;
-    }
-
-    .status.ok { color: var(--success); }
-    .status.err { color: var(--danger); }
-
-    .toolbar {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    .search-box {
-      max-width: 280px;
-      width: 100%;
-    }
-
-    .table-wrap {
-      overflow-x: auto;
-      margin-top: 10px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-    }
-
+    .table-wrap { overflow-x: auto; margin-top: 14px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
     th, td {
       padding: 9px 11px;
       border-bottom: 1px solid var(--border);
       text-align: left;
       white-space: nowrap;
     }
-
-    th {
-      background: var(--surface-2);
-      color: var(--muted);
-      font-weight: 600;
-    }
+    th { background: var(--panel-alt); color: var(--muted); font-weight: 600; }
 
     .hidden { display: none !important; }
   </style>
 </head>
 <body>
-  <div class="wrap">
+  <div class="container">
     <header class="topbar">
-      <div class="brand">LIEXIANDE WORKSPACE</div>
-      <div id="sessionBar" class="session-box hidden">
-        <span>Login: <strong id="sessionUser"></strong></span>
-        <span id="sessionRole" class="badge"></span>
+      <div class="brand">MOMENTUMATES <span>WO APPS</span></div>
+      <div id="sessionBar" class="session-bar hidden">
+        <span>Login: <strong id="lblUser"></strong></span>
+        <span id="lblRole" class="badge"></span>
+        <button type="button" id="btnSyncNow">Sync DB</button>
         <button type="button" id="btnLogout">Logout</button>
       </div>
     </header>
 
     <!-- LOGIN -->
-    <section id="loginSection" class="card">
-      <h1>Login</h1>
+    <section id="loginCard" class="card">
+      <h1>Login Portal</h1>
+      <p style="margin:0 0 14px; font-size:13px; color:var(--muted);">
+        Masuk menggunakan akun <strong>Superadmin / Staff WO</strong> atau akun <strong>Klien</strong>.
+      </p>
       <form id="loginForm" class="grid">
         <div class="field">
-          <label for="loginUser">Username</label>
-          <input type="text" id="loginUser" autocomplete="username" required />
+          <label for="loginUsername">Username</label>
+          <input type="text" id="loginUsername" autocomplete="username" required />
         </div>
         <div class="field">
-          <label for="loginPass">Password</label>
-          <input type="password" id="loginPass" autocomplete="current-password" required />
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" autocomplete="current-password" required />
         </div>
         <div class="btn-row" style="margin-top:0;">
           <button type="submit" class="primary">Masuk</button>
         </div>
       </form>
-      <div id="loginMsg" class="status"></div>
+      <div id="loginStatus" class="status"></div>
     </section>
 
-    <!-- MAIN APP -->
-    <main id="appSection" class="hidden">
-      <nav class="tabs">
-        <button type="button" class="tab-btn active" data-tab="clients">Kelola Klien & Detail</button>
-        <button type="button" class="tab-btn hidden" id="navUsersTab" data-tab="users">Kelola User (Superadmin)</button>
+    <!-- WORKSPACE -->
+    <main id="workspace" class="hidden">
+      <nav class="tabs" id="navTabs">
+        <button type="button" class="tab-btn active" data-tab="projects">Projects &amp; Klien</button>
+        <button type="button" class="tab-btn" data-tab="biodata">Biodata Pasangan</button>
+        <button type="button" class="tab-btn" data-tab="client-form">Event &amp; Brief Acara</button>
+        <button type="button" class="tab-btn hidden" id="tabUsersBtn" data-tab="users">Manage Users (Superadmin)</button>
       </nav>
 
-      <!-- TAB KLIEN & DETAILS -->
-      <section id="panel-clients" class="card">
+      <!-- TAB 1: PROJECTS & KLIEN -->
+      <section id="panel-projects" class="card">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-          <h2 style="margin:0;">Kelola Klien & Detail</h2>
-          <button type="button" id="btnRefreshClients">Refresh</button>
+          <h2 style="margin:0;">Kelola Klien &amp; Project</h2>
+          <div class="btn-row" style="margin-top:0;">
+            <input type="search" id="searchClient" placeholder="Cari pasangan / venue..." style="width:230px;" />
+            <button type="button" id="btnNewClient">+ Klien Baru</button>
+          </div>
         </div>
 
-        <form id="clientForm">
-          <input type="hidden" id="clientId" />
-
-          <h3>Data Utama Klien</h3>
+        <form id="clientMainForm" style="margin-top:14px;">
+          <input type="hidden" id="c_id" />
+          <h3>Data Utama &amp; Akses Portal Klien</h3>
           <div class="grid">
             <div class="field">
-              <label for="coupleShort">Nama Pasangan / Couple Short *</label>
-              <input type="text" id="coupleShort" required />
+              <label for="c_coupleShort">Nama Pasangan (Couple Short) *</label>
+              <input type="text" id="c_coupleShort" placeholder="contoh: ALDY ERZA" required />
             </div>
             <div class="field">
-              <label for="clientUsername">Username Portal Klien</label>
-              <input type="text" id="clientUsername" />
+              <label for="c_packageTier">Paket WO *</label>
+              <input type="text" id="c_packageTier" placeholder="WEDDING DAY ORGANIZER" />
             </div>
             <div class="field">
-              <label for="clientPassword">Password Portal Klien</label>
-              <input type="text" id="clientPassword" />
-            </div>
-            <div class="field">
-              <label for="clientPhone">No. HP / WhatsApp</label>
-              <input type="text" id="clientPhone" />
-            </div>
-            <div class="field">
-              <label for="packageTier">Paket / Layanan</label>
-              <input type="text" id="packageTier" />
-            </div>
-            <div class="field">
-              <label for="projectStatus">Status Project</label>
-              <select id="projectStatus">
+              <label for="c_projectStatus">Status Project</label>
+              <select id="c_projectStatus">
                 <option value="Active">Active</option>
                 <option value="In Review">In Review</option>
                 <option value="Completed">Completed</option>
                 <option value="On Hold">On Hold</option>
               </select>
             </div>
-          </div>
-
-          <h3>Biodata Mempelai</h3>
-          <div class="grid">
             <div class="field">
-              <label for="groomFullName">Nama Lengkap Groom</label>
-              <input type="text" id="groomFullName" />
+              <label for="c_phone">No. WhatsApp Utama</label>
+              <input type="text" id="c_phone" placeholder="628..." />
             </div>
             <div class="field">
-              <label for="groomPhone">No. HP Groom</label>
-              <input type="text" id="groomPhone" />
+              <label for="c_username">Username Login Klien</label>
+              <input type="text" id="c_username" placeholder="aldyerza" />
             </div>
             <div class="field">
-              <label for="groomIg">Instagram Groom</label>
-              <input type="text" id="groomIg" />
-            </div>
-            <div class="field">
-              <label for="brideFullName">Nama Lengkap Bride</label>
-              <input type="text" id="brideFullName" />
-            </div>
-            <div class="field">
-              <label for="bridePhone">No. HP Bride</label>
-              <input type="text" id="bridePhone" />
-            </div>
-            <div class="field">
-              <label for="brideIg">Instagram Bride</label>
-              <input type="text" id="brideIg" />
-            </div>
-          </div>
-
-          <h3>Detail Event & Brief Acara</h3>
-          <div class="grid">
-            <div class="field">
-              <label for="eventName">Nama Event</label>
-              <input type="text" id="eventName" placeholder="Wedding Day / Sangjit / Prewedding" />
-            </div>
-            <div class="field">
-              <label for="eventDate">Tanggal Event</label>
-              <input type="date" id="eventDate" />
-            </div>
-            <div class="field">
-              <label for="eventVenue">Venue / Lokasi</label>
-              <input type="text" id="eventVenue" />
-            </div>
-            <div class="field">
-              <label for="woStatus">Status Rundown / WO</label>
-              <select id="woStatus">
-                <option value="Draft">Draft</option>
-                <option value="In Review">In Review</option>
-                <option value="Approved">Approved</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="ceremonyTime">Waktu Pemberkatan / Akad</label>
-              <input type="text" id="ceremonyTime" />
-            </div>
-            <div class="field">
-              <label for="receptionTime">Waktu Resepsi</label>
-              <input type="text" id="receptionTime" />
-            </div>
-            <div class="field">
-              <label for="guestCount">Jumlah Tamu</label>
-              <input type="text" id="guestCount" />
-            </div>
-            <div class="field">
-              <label for="themeConcept">Tema / Konsep</label>
-              <input type="text" id="themeConcept" />
-            </div>
-            <div class="field">
-              <label for="colorPalette">Color Palette</label>
-              <input type="text" id="colorPalette" />
-            </div>
-            <div class="field">
-              <label for="dietaryNotes">Catatan Diet / F&amp;B</label>
-              <input type="text" id="dietaryNotes" />
+              <label for="c_password">Password Login Klien</label>
+              <input type="text" id="c_password" placeholder="15mei2027" />
             </div>
             <div class="field span-2">
-              <label for="additionalNotes">Catatan Tambahan Event</label>
-              <textarea id="additionalNotes"></textarea>
-            </div>
-            <div class="field span-2">
-              <label for="historyNotes">History / Catatan Internal Klien</label>
-              <textarea id="historyNotes"></textarea>
+              <label for="c_historyNotes">Catatan History Klien</label>
+              <textarea id="c_historyNotes"></textarea>
             </div>
           </div>
 
-          <div class="btn-row">
-            <button type="submit" class="primary" id="btnSaveClient">Simpan Klien</button>
-            <button type="button" id="btnResetClient">Reset Form</button>
+          <div class="btn-row" id="clientMainActions">
+            <button type="submit" class="primary">Simpan Data Klien</button>
+            <button type="button" id="btnResetClientForm">Reset</button>
           </div>
         </form>
 
         <div id="clientMsg" class="status"></div>
 
-        <div class="toolbar">
-          <input type="search" id="clientSearch" class="search-box" placeholder="Cari pasangan, paket, venue..." />
-        </div>
-
-        <div class="table-wrap">
+        <div class="table-wrap" id="clientsTableWrap">
           <table>
             <thead>
               <tr>
                 <th>Pasangan</th>
-                <th>Paket</th>
+                <th>Paket WO</th>
                 <th>Event &amp; Tanggal</th>
                 <th>Venue</th>
+                <th>Login Klien</th>
                 <th>Status</th>
                 <th>Aksi</th>
               </tr>
@@ -442,38 +295,126 @@
         </div>
       </section>
 
-      <!-- TAB SUPERADMIN KELOLA USER -->
+      <!-- TAB 2: BIODATA -->
+      <section id="panel-biodata" class="card hidden">
+        <h2>Biodata Mempelai (<span id="bioClientTitle">-</span>)</h2>
+        <form id="biodataForm">
+          <h3>Mempelai Pria (Groom)</h3>
+          <div class="grid">
+            <div class="field"><label>Nama Lengkap</label><input type="text" id="g_fullName" /></div>
+            <div class="field"><label>Nama Panggilan</label><input type="text" id="g_nickname" /></div>
+            <div class="field"><label>Anak Ke-</label><input type="text" id="g_birthOrder" /></div>
+            <div class="field"><label>No. HP</label><input type="text" id="g_phone" /></div>
+            <div class="field"><label>Instagram</label><input type="text" id="g_instagram" /></div>
+            <div class="field"><label>Alamat</label><input type="text" id="g_address" /></div>
+            <div class="field"><label>Nama Ayah Groom</label><input type="text" id="g_fatherName" /></div>
+            <div class="field"><label>HP Ayah Groom</label><input type="text" id="g_fatherPhone" /></div>
+            <div class="field"><label>Nama Ibu Groom</label><input type="text" id="g_motherName" /></div>
+            <div class="field"><label>HP Ibu Groom</label><input type="text" id="g_motherPhone" /></div>
+          </div>
+
+          <h3>Mempelai Wanita (Bride)</h3>
+          <div class="grid">
+            <div class="field"><label>Nama Lengkap</label><input type="text" id="b_fullName" /></div>
+            <div class="field"><label>Nama Panggilan</label><input type="text" id="b_nickname" /></div>
+            <div class="field"><label>Anak Ke-</label><input type="text" id="b_birthOrder" /></div>
+            <div class="field"><label>No. HP</label><input type="text" id="b_phone" /></div>
+            <div class="field"><label>Instagram</label><input type="text" id="b_instagram" /></div>
+            <div class="field"><label>Alamat</label><input type="text" id="b_address" /></div>
+            <div class="field"><label>Nama Ayah Bride</label><input type="text" id="b_fatherName" /></div>
+            <div class="field"><label>HP Ayah Bride</label><input type="text" id="b_fatherPhone" /></div>
+            <div class="field"><label>Nama Ibu Bride</label><input type="text" id="b_motherName" /></div>
+            <div class="field"><label>HP Ibu Bride</label><input type="text" id="b_motherPhone" /></div>
+          </div>
+
+          <div class="btn-row" id="biodataActions">
+            <button type="submit" class="primary">Simpan Biodata</button>
+          </div>
+        </form>
+        <div id="bioMsg" class="status"></div>
+      </section>
+
+      <!-- TAB 3: EVENT & BRIEF -->
+      <section id="panel-client-form" class="card hidden">
+        <h2>Detail Event &amp; Brief Acara (<span id="evClientTitle">-</span>)</h2>
+        <form id="eventDetailForm">
+          <h3>Informasi Event</h3>
+          <div class="grid">
+            <div class="field"><label>Nama Event</label><input type="text" id="ev_eventName" placeholder="Wedding Day" /></div>
+            <div class="field"><label>Jenis Event</label><input type="text" id="ev_eventType" placeholder="Wedding Day / Sangjit" /></div>
+            <div class="field"><label>Tanggal Event</label><input type="date" id="ev_eventDate" /></div>
+            <div class="field"><label>Venue / Lokasi</label><input type="text" id="ev_venue" /></div>
+            <div class="field">
+              <label>Status Rundown WO</label>
+              <select id="ev_woStatus">
+                <option value="Draft">Draft</option>
+                <option value="In Review">In Review</option>
+                <option value="Approved">Approved</option>
+              </select>
+            </div>
+          </div>
+
+          <h3>Brief &amp; Konsep Acara</h3>
+          <div class="grid">
+            <div class="field"><label>Waktu Pemberkatan / Akad</label><input type="text" id="br_ceremonyTime" /></div>
+            <div class="field"><label>Waktu Resepsi</label><input type="text" id="br_receptionTime" /></div>
+            <div class="field"><label>Jumlah Tamu</label><input type="text" id="br_guestCount" /></div>
+            <div class="field"><label>Tema / Konsep</label><input type="text" id="br_themeConcept" /></div>
+            <div class="field"><label>Color Palette</label><input type="text" id="br_colorPalette" /></div>
+            <div class="field"><label>Catatan Diet / F&amp;B</label><input type="text" id="br_dietaryNotes" /></div>
+            <div class="field span-2"><label>Catatan Tambahan / Akses VIP</label><textarea id="br_additionalNotes"></textarea></div>
+          </div>
+
+          <div class="btn-row" id="eventActions">
+            <button type="submit" class="primary">Simpan Detail Event</button>
+          </div>
+        </form>
+        <div id="evMsg" class="status"></div>
+      </section>
+
+      <!-- TAB 4: SUPERADMIN MANAGE USERS -->
       <section id="panel-users" class="card hidden">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-          <h2 style="margin:0;">Kelola User (Superadmin)</h2>
-          <button type="button" id="btnRefreshUsers">Refresh</button>
+          <h2 style="margin:0;">Manage Users &amp; Staff WO (Superadmin)</h2>
+          <button type="button" id="btnNewUser">+ User Baru</button>
         </div>
 
-        <form id="userForm" class="grid" style="margin-top:12px;">
-          <input type="hidden" id="userMode" value="create" />
-          <div class="field">
-            <label for="userNameInput">Username *</label>
-            <input type="text" id="userNameInput" required />
+        <form id="userForm" style="margin-top:12px;">
+          <input type="hidden" id="u_id" />
+          <h3>Data Akun &amp; Role</h3>
+          <div class="grid">
+            <div class="field">
+              <label for="u_username">Username *</label>
+              <input type="text" id="u_username" required />
+            </div>
+            <div class="field">
+              <label for="u_fullName">Nama Lengkap *</label>
+              <input type="text" id="u_fullName" required />
+            </div>
+            <div class="field">
+              <label for="u_position">Jabatan / Position</label>
+              <input type="text" id="u_position" placeholder="OWNER / ADMIN / LEADER WO" />
+            </div>
+            <div class="field">
+              <label for="u_role">Role *</label>
+              <select id="u_role">
+                <option value="superadmin">superadmin</option>
+                <option value="admin">admin</option>
+                <option value="editor">editor</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="u_password">Password *</label>
+              <input type="text" id="u_password" required />
+            </div>
           </div>
-          <div class="field">
-            <label for="userRoleInput">Role</label>
-            <select id="userRoleInput">
-              <option value="superadmin">superadmin</option>
-              <option value="admin">admin</option>
-              <option value="editor">editor</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="userPassInput">Password</label>
-            <input type="password" id="userPassInput" placeholder="Min. 6 karakter (kosongkan saat edit jika tetap)" />
-          </div>
-          <div class="field check-row">
-            <input type="checkbox" id="userPrimaryInput" />
-            <label for="userPrimaryInput">Primary Account</label>
-          </div>
-          <div class="btn-row" style="margin-top:0;">
+
+          <h3>Hak Akses Tab (Tab Permissions)</h3>
+          <div class="perm-grid" id="permGrid"></div>
+
+          <div class="btn-row">
             <button type="submit" class="primary" id="btnSaveUser">Simpan User</button>
-            <button type="button" id="btnResetUser">Batal</button>
+            <button type="button" id="btnResetUser">Reset</button>
           </div>
         </form>
 
@@ -484,9 +425,10 @@
             <thead>
               <tr>
                 <th>Username</th>
+                <th>Nama Lengkap</th>
+                <th>Position</th>
                 <th>Role</th>
-                <th>Primary</th>
-                <th>Updated At</th>
+                <th>Password</th>
                 <th>Aksi</th>
               </tr>
             </thead>
@@ -498,103 +440,225 @@
   </div>
 
   <script>
-    const SESSION_KEY = 'liexiande_workspace_session_v1';
-    let clientsData = [];
+    // URL Web App Apps Script (momentumates WO)
+    const GAS_EXEC_URL = 'https://script.google.com/macros/s/AKfycbyZbPdZphb-GK6d9_0rAUuOEGUgb0oCvGQifGAwd6SNDRwcyyNfAiIUjB1FgJ2kx7PS0Q/exec';
+    const STORAGE_KEY = 'momentumates_main_state_cache_v1';
+    const SESSION_KEY = 'momentumates_session_v1';
 
-    function readSession() {
-      try { return JSON.parse(sessionStorage.getItem(SESSION_KEY) || 'null'); }
-      catch (_) { return null; }
-    }
+    const PERMISSION_KEYS = [
+      'projects', 'biodata', 'client-form', 'wo-rundown',
+      'vendors', 'vendor-info', 'payments', 'invoices',
+      'internal-ops', 'users'
+    ];
 
-    function writeSession(data) {
-      if (data) sessionStorage.setItem(SESSION_KEY, JSON.stringify(data));
-      else sessionStorage.removeItem(SESSION_KEY);
-    }
+    let appState = {
+      adminTabOrder: ['wo-rundown','vendors','biodata','payments','invoices','client-form','internal-ops','projects','users'],
+      clients: [],
+      staffUsers: []
+    };
 
-    function setMsg(id, text, state = '') {
-      const el = document.getElementById(id);
-      el.textContent = text || '';
-      el.className = 'status' + (state ? ' ' + state : '');
-    }
+    let currentSession = null;
+    let selectedClientId = null;
 
     function esc(val) {
-      return String(val ?? '').replace(/[&<>"']/g, ch => ({
+      return String(val ?? '').replace(/[&<>"']/g, m => ({
         '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-      }[ch]));
+      }[m]));
     }
 
-    function gsCall(fnName, ...args) {
-      return new Promise((resolve, reject) => {
-        if (!window.google || !google.script || !google.script.run) {
-          reject(new Error('google.script.run tidak tersedia.'));
+    function setMsg(id, msg, type = '') {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.textContent = msg || '';
+      el.className = 'status' + (type ? ' ' + type : '');
+    }
+
+    function buildPermissionInputs() {
+      const grid = document.getElementById('permGrid');
+      grid.innerHTML = PERMISSION_KEYS.map(key => `
+        <div class="field">
+          <label for="perm_${key}">${key}</label>
+          <select id="perm_${key}" data-perm-key="${key}">
+            <option value="edit">edit</option>
+            <option value="view">view</option>
+            <option value="none">none</option>
+          </select>
+        </div>
+      `).join('');
+    }
+
+    function setFormPermissions(perms = {}, role = 'editor') {
+      PERMISSION_KEYS.forEach(k => {
+        const sel = document.getElementById('perm_' + k);
+        if (!sel) return;
+        if (role === 'superadmin') {
+          sel.value = 'edit';
+        } else if (perms && perms[k]) {
+          sel.value = perms[k];
+        } else {
+          sel.value = k === 'users' ? 'none' : (role === 'admin' ? 'edit' : 'view');
+        }
+      });
+    }
+
+    function readFormPermissions(role) {
+      const out = {};
+      PERMISSION_KEYS.forEach(k => {
+        if (role === 'superadmin') {
+          out[k] = 'edit';
+        } else {
+          const sel = document.getElementById('perm_' + k);
+          out[k] = sel ? sel.value : 'none';
+        }
+      });
+      return out;
+    }
+
+    // Load MAIN_STATE dari GAS (GET) dengan fallback localStorage
+    async function fetchMainState() {
+      try {
+        const res = await fetch(GAS_EXEC_URL + '?action=getState&t=' + Date.now(), { method: 'GET' });
+        const data = await res.json();
+        const candidate = data?.state || data?.MAIN_STATE || (Array.isArray(data?.clients) ? data : null);
+        if (candidate && Array.isArray(candidate.clients)) {
+          appState = {
+            adminTabOrder: candidate.adminTabOrder || appState.adminTabOrder,
+            clients: candidate.clients || [],
+            staffUsers: candidate.staffUsers || []
+          };
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
           return;
         }
-        google.script.run
-          .withSuccessHandler(resolve)
-          .withFailureHandler(err => reject(new Error(err?.message || String(err))))
-          [fnName](...args);
+      } catch (_) {
+        // fallback ke cache lokal bila offline / endpoint belum mengembalikan getState
+      }
+
+      try {
+        const cached = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+        if (cached && Array.isArray(cached.clients)) {
+          appState = cached;
+        }
+      } catch (_) {}
+    }
+
+    // Simpan MAIN_STATE ke GAS (POST text/plain agar bebas CORS preflight) + localStorage
+    async function persistMainState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+      const res = await fetch(GAS_EXEC_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({
+          action: 'saveState',
+          key: 'MAIN_STATE',
+          state: appState
+        })
       });
+      if (!res.ok) {
+        throw new Error('Gagal menyinkronkan ke Google Sheets (' + res.status + ').');
+      }
     }
 
     function openTab(tabName) {
-      document.querySelectorAll('.tab-btn').forEach(b => {
-        b.classList.toggle('active', b.dataset.tab === tabName);
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.tab === tabName);
       });
-      document.getElementById('panel-clients').classList.toggle('hidden', tabName !== 'clients');
-      document.getElementById('panel-users').classList.toggle('hidden', tabName !== 'users');
+      ['projects', 'biodata', 'client-form', 'users'].forEach(id => {
+        const panel = document.getElementById('panel-' + id);
+        if (panel) panel.classList.toggle('hidden', id !== tabName);
+      });
     }
 
     document.querySelectorAll('.tab-btn').forEach(btn => {
       btn.addEventListener('click', () => openTab(btn.dataset.tab));
     });
 
-    function refreshViewBySession() {
-      const session = readSession();
-      const loggedIn = Boolean(session && session.token && session.user);
-
-      document.getElementById('loginSection').classList.toggle('hidden', loggedIn);
-      document.getElementById('sessionBar').classList.toggle('hidden', !loggedIn);
-      document.getElementById('appSection').classList.toggle('hidden', !loggedIn);
-
-      if (!loggedIn) return;
-
-      const role = String(session.user.role || '').toLowerCase();
-      const isSuperadmin = role === 'superadmin';
-
-      document.getElementById('sessionUser').textContent = session.user.username;
-      document.getElementById('sessionRole').textContent = session.user.role;
-      document.getElementById('navUsersTab').classList.toggle('hidden', !isSuperadmin);
-
-      if (!isSuperadmin && document.querySelector('.tab-btn[data-tab="users"]').classList.contains('active')) {
-        openTab('clients');
-      }
-
-      loadClientsList();
-      if (isSuperadmin) loadUsersList();
+    function getSelectedClient() {
+      return appState.clients.find(c => c.id === selectedClientId) || appState.clients[0] || null;
     }
 
-    // --- KLIEN ---
+    function selectClient(clientId) {
+      selectedClientId = clientId;
+      const c = getSelectedClient();
+      if (!c) return;
+
+      document.getElementById('c_id').value = c.id || '';
+      document.getElementById('c_coupleShort').value = c.coupleShort || '';
+      document.getElementById('c_packageTier').value = c.packageTier || '';
+      document.getElementById('c_projectStatus').value = c.projectStatus || 'Active';
+      document.getElementById('c_phone').value = c.phone || '';
+      document.getElementById('c_username').value = c.username || '';
+      document.getElementById('c_password').value = c.password || '';
+      document.getElementById('c_historyNotes').value = c.historyNotes || '';
+
+      document.getElementById('bioClientTitle').textContent = c.coupleShort || '-';
+      const bio = c.biodata || {};
+      const g = bio.groom || {};
+      const gp = bio.groomParents || {};
+      const b = bio.bride || {};
+      const bp = bio.brideParents || {};
+
+      document.getElementById('g_fullName').value = g.fullName || c.groomFullName || '';
+      document.getElementById('g_nickname').value = g.nickname || '';
+      document.getElementById('g_birthOrder').value = g.birthOrder || '';
+      document.getElementById('g_phone').value = g.phone || '';
+      document.getElementById('g_instagram').value = g.instagram || '';
+      document.getElementById('g_address').value = g.address || '';
+      document.getElementById('g_fatherName').value = gp.fatherName || '';
+      document.getElementById('g_fatherPhone').value = gp.fatherPhone || '';
+      document.getElementById('g_motherName').value = gp.motherName || '';
+      document.getElementById('g_motherPhone').value = gp.motherPhone || '';
+
+      document.getElementById('b_fullName').value = b.fullName || c.brideFullName || '';
+      document.getElementById('b_nickname').value = b.nickname || '';
+      document.getElementById('b_birthOrder').value = b.birthOrder || '';
+      document.getElementById('b_phone').value = b.phone || '';
+      document.getElementById('b_instagram').value = b.instagram || '';
+      document.getElementById('b_address').value = b.address || '';
+      document.getElementById('b_fatherName').value = bp.fatherName || '';
+      document.getElementById('b_fatherPhone').value = bp.fatherPhone || '';
+      document.getElementById('b_motherName').value = bp.motherName || '';
+      document.getElementById('b_motherPhone').value = bp.motherPhone || '';
+
+      document.getElementById('evClientTitle').textContent = c.coupleShort || '-';
+      const ev = (c.events && c.events[0]) || {};
+      const br = ev.formBrief || {};
+      document.getElementById('ev_eventName').value = ev.eventName || 'Wedding Day';
+      document.getElementById('ev_eventType').value = ev.eventType || 'Wedding Day';
+      document.getElementById('ev_eventDate').value = ev.eventDate || '';
+      document.getElementById('ev_venue').value = ev.venue || '';
+      document.getElementById('ev_woStatus').value = ev.woProgress?.status || 'Draft';
+      document.getElementById('br_ceremonyTime').value = br.ceremonyTime || '';
+      document.getElementById('br_receptionTime').value = br.receptionTime || '';
+      document.getElementById('br_guestCount').value = br.guestCount || '';
+      document.getElementById('br_themeConcept').value = br.themeConcept || '';
+      document.getElementById('br_colorPalette').value = br.colorPalette || '';
+      document.getElementById('br_dietaryNotes').value = br.dietaryNotes || '';
+      document.getElementById('br_additionalNotes').value = br.additionalNotes || '';
+    }
+
     function renderClientsTable() {
-      const q = document.getElementById('clientSearch').value.trim().toLowerCase();
-      const filtered = clientsData.filter(c => {
-        if (!q) return true;
-        const ev = (c.events && c.events[0]) || {};
-        const hay = [
-          c.coupleShort, c.packageTier, c.projectStatus,
-          ev.eventName, ev.eventDate, ev.venue
-        ].join(' ').toLowerCase();
-        return hay.includes(q);
-      });
+      const q = document.getElementById('searchClient').value.trim().toLowerCase();
+      const visibleClients = currentSession?.type === 'client'
+        ? appState.clients.filter(c => c.id === currentSession.clientId)
+        : appState.clients.filter(c => {
+            if (!q) return true;
+            const ev = (c.events && c.events[0]) || {};
+            return [c.coupleShort, c.packageTier, ev.venue, ev.eventDate, c.username]
+              .join(' ').toLowerCase().includes(q);
+          });
 
       const tbody = document.getElementById('clientsTbody');
       tbody.innerHTML = '';
 
-      if (!filtered.length) {
-        tbody.innerHTML = '<tr><td colspan="6" style="color:var(--muted);">Tidak ada data klien yang cocok.</td></tr>';
+      if (!visibleClients.length) {
+        tbody.innerHTML = '<tr><td colspan="7" style="color:var(--muted);">Belum ada data klien.</td></tr>';
         return;
       }
 
-      filtered.forEach(c => {
+      const canDelete = currentSession?.type === 'staff' &&
+        ['superadmin', 'admin'].includes(String(currentSession.role).toLowerCase());
+
+      visibleClients.forEach(c => {
         const ev = (c.events && c.events[0]) || {};
         const tr = document.createElement('tr');
         tr.innerHTML = `
@@ -602,265 +666,462 @@
           <td>${esc(c.packageTier || '-')}</td>
           <td>${esc(ev.eventName || '-')} (${esc(ev.eventDate || '-')})</td>
           <td>${esc(ev.venue || '-')}</td>
+          <td>${esc(c.username || '-')}</td>
           <td>${esc(c.projectStatus || 'Active')}</td>
           <td class="btn-row" style="margin-top:0;">
-            <button type="button" onclick="fillClientForm('${esc(c.id)}')">Edit Detail</button>
-            <button type="button" class="danger" onclick="removeClient('${esc(c.id)}')">Hapus</button>
+            <button type="button" onclick="handlePickClient('${esc(c.id)}')">Pilih / Edit</button>
+            ${canDelete ? `<button type="button" class="danger" onclick="handleDeleteClient('${esc(c.id)}')">Hapus</button>` : ''}
           </td>
         `;
         tbody.appendChild(tr);
       });
     }
 
-    async function loadClientsList() {
-      const session = readSession();
-      if (!session) return;
+    function handlePickClient(id) {
+      selectClient(id);
+      setMsg('clientMsg', 'Klien dipilih. Edit tab Biodata atau Event & Brief di atas.');
+    }
+
+    async function handleDeleteClient(id) {
+      if (!confirm('Hapus data klien ini secara permanen?')) return;
+      appState.clients = appState.clients.filter(c => c.id !== id);
+      if (selectedClientId === id) selectedClientId = appState.clients[0]?.id || null;
       try {
-        setMsg('clientMsg', 'Memuat klien...');
-        const res = await gsCall('getAllClients', session.token);
-        clientsData = Array.isArray(res) ? res : [];
+        await persistMainState();
         renderClientsTable();
-        setMsg('clientMsg', `Total ${clientsData.length} klien.`, 'ok');
+        if (selectedClientId) selectClient(selectedClientId);
+        setMsg('clientMsg', 'Klien berhasil dihapus.', 'ok');
       } catch (err) {
         setMsg('clientMsg', err.message, 'err');
       }
     }
 
-    function fillClientForm(id) {
-      const c = clientsData.find(item => item.id === id);
-      if (!c) return;
-      const ev = (c.events && c.events[0]) || {};
-      const brief = ev.formBrief || {};
-      const bio = c.biodata || {};
+    // --- SUPERADMIN MANAGE USERS ---
+    function renderUsersTable() {
+      const tbody = document.getElementById('usersTbody');
+      tbody.innerHTML = '';
 
-      document.getElementById('clientId').value = c.id || '';
-      document.getElementById('coupleShort').value = c.coupleShort || '';
-      document.getElementById('clientUsername').value = c.username || '';
-      document.getElementById('clientPassword').value = c.password || '';
-      document.getElementById('clientPhone').value = c.phone || '';
-      document.getElementById('packageTier').value = c.packageTier || '';
-      document.getElementById('projectStatus').value = c.projectStatus || 'Active';
-
-      document.getElementById('groomFullName').value = bio.groom?.fullName || c.groomFullName || '';
-      document.getElementById('groomPhone').value = bio.groom?.phone || '';
-      document.getElementById('groomIg').value = bio.groom?.instagram || '';
-      document.getElementById('brideFullName').value = bio.bride?.fullName || c.brideFullName || '';
-      document.getElementById('bridePhone').value = bio.bride?.phone || '';
-      document.getElementById('brideIg').value = bio.bride?.instagram || '';
-
-      document.getElementById('eventName').value = ev.eventName || '';
-      document.getElementById('eventDate').value = ev.eventDate || '';
-      document.getElementById('eventVenue').value = ev.venue || '';
-      document.getElementById('woStatus').value = ev.woProgress?.status || 'Draft';
-      document.getElementById('ceremonyTime').value = brief.ceremonyTime || '';
-      document.getElementById('receptionTime').value = brief.receptionTime || '';
-      document.getElementById('guestCount').value = brief.guestCount || '';
-      document.getElementById('themeConcept').value = brief.themeConcept || '';
-      document.getElementById('colorPalette').value = brief.colorPalette || '';
-      document.getElementById('dietaryNotes').value = brief.dietaryNotes || '';
-      document.getElementById('additionalNotes').value = brief.additionalNotes || '';
-      document.getElementById('historyNotes').value = c.historyNotes || '';
-
-      document.getElementById('btnSaveClient').textContent = 'Update Klien & Detail';
-      setMsg('clientMsg', `Mode edit: ${c.coupleShort}`);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function clearClientForm() {
-      document.getElementById('clientForm').reset();
-      document.getElementById('clientId').value = '';
-      document.getElementById('btnSaveClient').textContent = 'Simpan Klien';
-    }
-
-    async function removeClient(id) {
-      const session = readSession();
-      if (!session || !confirm('Hapus data klien ini?')) return;
-      try {
-        const res = await gsCall('deleteClient', session.token, id);
-        setMsg('clientMsg', res.message || 'Klien dihapus.', 'ok');
-        await loadClientsList();
-      } catch (err) {
-        setMsg('clientMsg', err.message, 'err');
+      if (!appState.staffUsers.length) {
+        tbody.innerHTML = '<tr><td colspan="6" style="color:var(--muted);">Belum ada staff user.</td></tr>';
+        return;
       }
+
+      appState.staffUsers.forEach(u => {
+        const isPrimarySuper = String(u.role).toLowerCase() === 'superadmin' && u.isPrimary;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${esc(u.username)}</strong></td>
+          <td>${esc(u.fullName || u.name || '-')}</td>
+          <td>${esc(u.position || '-')}</td>
+          <td>${esc(u.role)}</td>
+          <td>${esc(u.password || '')}</td>
+          <td class="btn-row" style="margin-top:0;">
+            <button type="button" onclick="editStaffUser('${esc(u.id)}')">Edit</button>
+            ${isPrimarySuper ? '' : `<button type="button" class="danger" onclick="deleteStaffUser('${esc(u.id)}')">Hapus</button>`}
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
     }
 
-    document.getElementById('clientForm').addEventListener('submit', async e => {
-      e.preventDefault();
-      const session = readSession();
-      if (!session) return;
-
-      const payload = {
-        id: document.getElementById('clientId').value.trim(),
-        coupleShort: document.getElementById('coupleShort').value.trim(),
-        username: document.getElementById('clientUsername').value.trim(),
-        password: document.getElementById('clientPassword').value.trim(),
-        phone: document.getElementById('clientPhone').value.trim(),
-        packageTier: document.getElementById('packageTier').value.trim(),
-        projectStatus: document.getElementById('projectStatus').value,
-        historyNotes: document.getElementById('historyNotes').value.trim(),
-        biodata: {
-          groom: {
-            fullName: document.getElementById('groomFullName').value.trim(),
-            phone: document.getElementById('groomPhone').value.trim(),
-            instagram: document.getElementById('groomIg').value.trim()
-          },
-          bride: {
-            fullName: document.getElementById('brideFullName').value.trim(),
-            phone: document.getElementById('bridePhone').value.trim(),
-            instagram: document.getElementById('brideIg').value.trim()
-          }
-        },
-        primaryEvent: {
-          eventName: document.getElementById('eventName').value.trim(),
-          eventDate: document.getElementById('eventDate').value,
-          venue: document.getElementById('eventVenue').value.trim(),
-          woProgress: { status: document.getElementById('woStatus').value },
-          formBrief: {
-            ceremonyTime: document.getElementById('ceremonyTime').value.trim(),
-            receptionTime: document.getElementById('receptionTime').value.trim(),
-            guestCount: document.getElementById('guestCount').value.trim(),
-            themeConcept: document.getElementById('themeConcept').value.trim(),
-            colorPalette: document.getElementById('colorPalette').value.trim(),
-            dietaryNotes: document.getElementById('dietaryNotes').value.trim(),
-            additionalNotes: document.getElementById('additionalNotes').value.trim()
-          }
-        }
-      };
-
-      try {
-        setMsg('clientMsg', 'Menyimpan data klien...');
-        const res = await gsCall('saveClient', session.token, payload);
-        setMsg('clientMsg', res.message || 'Tersimpan.', 'ok');
-        clearClientForm();
-        await loadClientsList();
-      } catch (err) {
-        setMsg('clientMsg', err.message, 'err');
-      }
-    });
-
-    // --- SUPERADMIN USERS ---
-    async function loadUsersList() {
-      const session = readSession();
-      if (!session) return;
-      try {
-        const users = await gsCall('getAllUsers', session.token);
-        const tbody = document.getElementById('usersTbody');
-        tbody.innerHTML = '';
-
-        users.forEach(u => {
-          const tr = document.createElement('tr');
-          const encoded = esc(JSON.stringify(u));
-          tr.innerHTML = `
-            <td>${esc(u.username)}</td>
-            <td>${esc(u.role)}</td>
-            <td>${u.isPrimary ? 'Yes' : 'No'}</td>
-            <td>${esc(u.updatedAt || '-')}</td>
-            <td class="btn-row" style="margin-top:0;">
-              <button type="button" onclick='beginUserEdit("${encoded}")'>Edit</button>
-              ${u.isPrimary ? '' : `<button type="button" class="danger" onclick="removeUser('${esc(u.username)}')">Hapus</button>`}
-            </td>
-          `;
-          tbody.appendChild(tr);
-        });
-      } catch (err) {
-        setMsg('userMsg', err.message, 'err');
-      }
-    }
-
-    function beginUserEdit(encodedJson) {
-      const u = JSON.parse(encodedJson);
-      document.getElementById('userMode').value = 'edit';
-      const inp = document.getElementById('userNameInput');
-      inp.value = u.username;
-      inp.readOnly = true;
-      document.getElementById('userRoleInput').value = u.role;
-      document.getElementById('userPassInput').value = '';
-      document.getElementById('userPrimaryInput').checked = Boolean(u.isPrimary);
+    function editStaffUser(id) {
+      const u = appState.staffUsers.find(item => item.id === id);
+      if (!u) return;
+      document.getElementById('u_id').value = u.id;
+      document.getElementById('u_username').value = u.username || '';
+      document.getElementById('u_fullName').value = u.fullName || u.name || '';
+      document.getElementById('u_position').value = u.position || '';
+      document.getElementById('u_role').value = u.role || 'editor';
+      document.getElementById('u_password').value = u.password || '';
+      setFormPermissions(u.tabPermissions, u.role);
       document.getElementById('btnSaveUser').textContent = 'Update User';
+      setMsg('userMsg', `Mode edit user: ${u.username}`);
     }
 
-    function clearUserForm() {
-      document.getElementById('userMode').value = 'create';
-      const inp = document.getElementById('userNameInput');
-      inp.value = '';
-      inp.readOnly = false;
-      document.getElementById('userRoleInput').value = 'admin';
-      document.getElementById('userPassInput').value = '';
-      document.getElementById('userPrimaryInput').checked = false;
+    function resetStaffUserForm() {
+      document.getElementById('userForm').reset();
+      document.getElementById('u_id').value = '';
+      document.getElementById('u_role').value = 'editor';
+      setFormPermissions({}, 'editor');
       document.getElementById('btnSaveUser').textContent = 'Simpan User';
     }
 
-    async function removeUser(username) {
-      const session = readSession();
-      if (!session || !confirm(`Hapus user "${username}"?`)) return;
+    async function deleteStaffUser(id) {
+      const target = appState.staffUsers.find(u => u.id === id);
+      if (!target || !confirm(`Hapus user "${target.username}"?`)) return;
+      appState.staffUsers = appState.staffUsers.filter(u => u.id !== id);
       try {
-        const res = await gsCall('deleteAdminUser', session.token, username);
-        setMsg('userMsg', res.message || 'User dihapus.', 'ok');
-        await loadUsersList();
+        await persistMainState();
+        renderUsersTable();
+        setMsg('userMsg', `User "${target.username}" dihapus.`, 'ok');
       } catch (err) {
         setMsg('userMsg', err.message, 'err');
       }
     }
 
-    document.getElementById('userForm').addEventListener('submit', async e => {
-      e.preventDefault();
-      const session = readSession();
-      if (!session) return;
+    function applySessionUI() {
+      const loggedIn = Boolean(currentSession);
+      document.getElementById('loginCard').classList.toggle('hidden', loggedIn);
+      document.getElementById('sessionBar').classList.toggle('hidden', !loggedIn);
+      document.getElementById('workspace').classList.toggle('hidden', !loggedIn);
 
-      const mode = document.getElementById('userMode').value;
-      const payload = {
-        username: document.getElementById('userNameInput').value.trim(),
-        role: document.getElementById('userRoleInput').value,
-        password: document.getElementById('userPassInput').value,
-        isPrimary: document.getElementById('userPrimaryInput').checked
+      if (!loggedIn) return;
+
+      document.getElementById('lblUser').textContent = currentSession.displayName;
+      document.getElementById('lblRole').textContent = currentSession.role;
+
+      const isSuperadmin = currentSession.type === 'staff' &&
+        String(currentSession.role).toLowerCase() === 'superadmin';
+      const isClient = currentSession.type === 'client';
+
+      document.getElementById('tabUsersBtn').classList.toggle('hidden', !isSuperadmin);
+      document.getElementById('btnNewClient').classList.toggle('hidden', isClient);
+      document.getElementById('clientsTableWrap').classList.toggle('hidden', isClient);
+
+      if (!isSuperadmin && document.querySelector('.tab-btn[data-tab="users"]').classList.contains('active')) {
+        openTab('projects');
+      }
+
+      if (isClient) {
+        selectClient(currentSession.clientId);
+      } else if (!selectedClientId && appState.clients.length) {
+        selectClient(appState.clients[0].id);
+      }
+
+      renderClientsTable();
+      if (isSuperadmin) renderUsersTable();
+    }
+
+    // --- EVENT LISTENERS ---
+    document.getElementById('loginForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const uInput = document.getElementById('loginUsername').value.trim();
+      const pInput = document.getElementById('loginPassword').value;
+
+      setMsg('loginStatus', 'Memuat database & memverifikasi akun...');
+      await fetchMainState();
+
+      // 1. Cek superadmin bawaan atau staffUsers di MAIN_STATE
+      const staff = appState.staffUsers.find(
+        s => String(s.username || '').trim().toLowerCase() === uInput.toLowerCase() &&
+             String(s.password || '') === pInput
+      );
+
+      if (staff) {
+        currentSession = {
+          type: 'staff',
+          id: staff.id,
+          username: staff.username,
+          displayName: staff.fullName || staff.username,
+          role: staff.role || 'editor'
+        };
+        sessionStorage.setItem(SESSION_KEY, JSON.stringify(currentSession));
+        document.getElementById('loginForm').reset();
+        setMsg('loginStatus', '');
+        applySessionUI();
+        return;
+      }
+
+      // Bootstrap superadmin default jika belum ada superadmin di staffUsers
+      const hasSuper = appState.staffUsers.some(s => String(s.role).toLowerCase() === 'superadmin');
+      if (!hasSuper && uInput.toLowerCase() === 'superadmin' && pInput === 'lxdsuperadmin') {
+        const superObj = {
+          id: 'staff-superadmin-primary',
+          username: 'superadmin',
+          fullName: 'SUPERADMIN',
+          position: 'OWNER',
+          role: 'superadmin',
+          password: pInput,
+          isPrimary: true,
+          tabPermissions: readFormPermissions('superadmin')
+        };
+        appState.staffUsers.unshift(superObj);
+        try { await persistMainState(); } catch (_) {}
+        currentSession = {
+          type: 'staff',
+          id: superObj.id,
+          username: superObj.username,
+          displayName: superObj.fullName,
+          role: 'superadmin'
+        };
+        sessionStorage.setItem(SESSION_KEY, JSON.stringify(currentSession));
+        document.getElementById('loginForm').reset();
+        setMsg('loginStatus', '');
+        applySessionUI();
+        return;
+      }
+
+      // 2. Cek login klien di MAIN_STATE.clients
+      const client = appState.clients.find(
+        c => String(c.username || '').trim().toLowerCase() === uInput.toLowerCase() &&
+             String(c.password || '') === pInput
+      );
+
+      if (client) {
+        currentSession = {
+          type: 'client',
+          clientId: client.id,
+          username: client.username,
+          displayName: client.coupleShort,
+          role: 'client'
+        };
+        sessionStorage.setItem(SESSION_KEY, JSON.stringify(currentSession));
+        document.getElementById('loginForm').reset();
+        setMsg('loginStatus', '');
+        applySessionUI();
+        return;
+      }
+
+      setMsg('loginStatus', 'Username atau password tidak cocok.', 'err');
+    });
+
+    document.getElementById('btnLogout').addEventListener('click', () => {
+      currentSession = null;
+      selectedClientId = null;
+      sessionStorage.removeItem(SESSION_KEY);
+      applySessionUI();
+    });
+
+    document.getElementById('btnSyncNow').addEventListener('click', async () => {
+      await fetchMainState();
+      applySessionUI();
+      setMsg('clientMsg', 'Data disinkronkan dari database.', 'ok');
+    });
+
+    document.getElementById('btnNewClient').addEventListener('click', () => {
+      document.getElementById('clientMainForm').reset();
+      document.getElementById('c_id').value = '';
+      selectedClientId = null;
+      setMsg('clientMsg', 'Isi form di atas untuk membuat klien baru.');
+    });
+
+    document.getElementById('btnResetClientForm').addEventListener('click', () => {
+      if (selectedClientId) selectClient(selectedClientId);
+      else document.getElementById('clientMainForm').reset();
+    });
+
+    document.getElementById('clientMainForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const existingId = document.getElementById('c_id').value.trim();
+      const coupleShort = document.getElementById('c_coupleShort').value.trim();
+      if (!coupleShort) return;
+
+      let target = appState.clients.find(c => c.id === existingId);
+      if (!target) {
+        const newId = 'client-' + Date.now();
+        target = {
+          id: newId,
+          coupleShort,
+          packageTier: '',
+          projectStatus: 'Active',
+          phone: '',
+          username: '',
+          password: '',
+          historyNotes: '',
+          groomFullName: '',
+          brideFullName: '',
+          biodata: {
+            groom: { fullName: '', nickname: '', birthOrder: '', phone: '', instagram: '', address: '' },
+            bride: { fullName: '', nickname: '', birthOrder: '', phone: '', instagram: '', address: '' },
+            groomParents: { fatherName: '', fatherPhone: '', motherName: '', motherPhone: '' },
+            brideParents: { fatherName: '', fatherPhone: '', motherName: '', motherPhone: '' },
+            groomSiblings: [],
+            brideSiblings: []
+          },
+          events: [{
+            id: 'ev-' + Date.now(),
+            eventName: 'Wedding Day',
+            eventType: 'Wedding Day',
+            eventDate: '',
+            venue: '',
+            woProgress: { status: 'Draft' },
+            formBrief: {
+              ceremonyTime: '', receptionTime: '', guestCount: '',
+              themeConcept: '', colorPalette: '', dietaryNotes: '',
+              additionalNotes: '', extraSections: [], customFields: []
+            },
+            vendors: [],
+            confirmedVendorList: [],
+            invoices: []
+          }]
+        };
+        appState.clients.unshift(target);
+      }
+
+      target.coupleShort = coupleShort;
+      target.packageTier = document.getElementById('c_packageTier').value.trim();
+      target.projectStatus = document.getElementById('c_projectStatus').value;
+      target.phone = document.getElementById('c_phone').value.trim();
+      target.username = document.getElementById('c_username').value.trim();
+      target.password = document.getElementById('c_password').value.trim();
+      target.historyNotes = document.getElementById('c_historyNotes').value.trim();
+
+      try {
+        setMsg('clientMsg', 'Menyimpan data klien...');
+        await persistMainState();
+        selectClient(target.id);
+        renderClientsTable();
+        setMsg('clientMsg', `Klien "${target.coupleShort}" tersimpan.`, 'ok');
+      } catch (err) {
+        setMsg('clientMsg', err.message, 'err');
+      }
+    });
+
+    document.getElementById('biodataForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const c = getSelectedClient();
+      if (!c) return;
+
+      c.biodata = c.biodata || {};
+      c.biodata.groom = {
+        ...(c.biodata.groom || {}),
+        fullName: document.getElementById('g_fullName').value.trim(),
+        nickname: document.getElementById('g_nickname').value.trim(),
+        birthOrder: document.getElementById('g_birthOrder').value.trim(),
+        phone: document.getElementById('g_phone').value.trim(),
+        instagram: document.getElementById('g_instagram').value.trim(),
+        address: document.getElementById('g_address').value.trim()
+      };
+      c.biodata.groomParents = {
+        fatherName: document.getElementById('g_fatherName').value.trim(),
+        fatherPhone: document.getElementById('g_fatherPhone').value.trim(),
+        motherName: document.getElementById('g_motherName').value.trim(),
+        motherPhone: document.getElementById('g_motherPhone').value.trim()
+      };
+      c.biodata.bride = {
+        ...(c.biodata.bride || {}),
+        fullName: document.getElementById('b_fullName').value.trim(),
+        nickname: document.getElementById('b_nickname').value.trim(),
+        birthOrder: document.getElementById('b_birthOrder').value.trim(),
+        phone: document.getElementById('b_phone').value.trim(),
+        instagram: document.getElementById('b_instagram').value.trim(),
+        address: document.getElementById('b_address').value.trim()
+      };
+      c.biodata.brideParents = {
+        fatherName: document.getElementById('b_fatherName').value.trim(),
+        fatherPhone: document.getElementById('b_fatherPhone').value.trim(),
+        motherName: document.getElementById('b_motherName').value.trim(),
+        motherPhone: document.getElementById('b_motherPhone').value.trim()
+      };
+      c.groomFullName = c.biodata.groom.fullName || c.groomFullName;
+      c.brideFullName = c.biodata.bride.fullName || c.brideFullName;
+
+      try {
+        setMsg('bioMsg', 'Menyimpan biodata...');
+        await persistMainState();
+        setMsg('bioMsg', 'Biodata pasangan berhasil diperbarui.', 'ok');
+      } catch (err) {
+        setMsg('bioMsg', err.message, 'err');
+      }
+    });
+
+    document.getElementById('eventDetailForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const c = getSelectedClient();
+      if (!c) return;
+      c.events = Array.isArray(c.events) && c.events.length ? c.events : [{ id: 'ev-' + Date.now() }];
+      const ev = c.events[0];
+
+      ev.eventName = document.getElementById('ev_eventName').value.trim() || 'Wedding Day';
+      ev.eventType = document.getElementById('ev_eventType').value.trim() || 'Wedding Day';
+      ev.eventDate = document.getElementById('ev_eventDate').value;
+      ev.venue = document.getElementById('ev_venue').value.trim();
+      ev.woProgress = { ...(ev.woProgress || {}), status: document.getElementById('ev_woStatus').value };
+      ev.formBrief = {
+        ...(ev.formBrief || {}),
+        ceremonyTime: document.getElementById('br_ceremonyTime').value.trim(),
+        receptionTime: document.getElementById('br_receptionTime').value.trim(),
+        guestCount: document.getElementById('br_guestCount').value.trim(),
+        themeConcept: document.getElementById('br_themeConcept').value.trim(),
+        colorPalette: document.getElementById('br_colorPalette').value.trim(),
+        dietaryNotes: document.getElementById('br_dietaryNotes').value.trim(),
+        additionalNotes: document.getElementById('br_additionalNotes').value.trim()
       };
 
       try {
+        setMsg('evMsg', 'Menyimpan detail event...');
+        await persistMainState();
+        renderClientsTable();
+        setMsg('evMsg', 'Detail event & brief berhasil diperbarui.', 'ok');
+      } catch (err) {
+        setMsg('evMsg', err.message, 'err');
+      }
+    });
+
+    document.getElementById('u_role').addEventListener('change', e => {
+      setFormPermissions({}, e.target.value);
+    });
+
+    document.getElementById('btnNewUser').addEventListener('click', resetStaffUserForm);
+    document.getElementById('btnResetUser').addEventListener('click', resetStaffUserForm);
+
+    document.getElementById('userForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const id = document.getElementById('u_id').value.trim();
+      const username = document.getElementById('u_username').value.trim();
+      const fullName = document.getElementById('u_fullName').value.trim();
+      const position = document.getElementById('u_position').value.trim();
+      const role = document.getElementById('u_role').value;
+      const password = document.getElementById('u_password').value;
+
+      if (!username || !password) return;
+
+      const duplicate = appState.staffUsers.some(
+        u => u.id !== id && String(u.username || '').trim().toLowerCase() === username.toLowerCase()
+      );
+      if (duplicate) {
+        setMsg('userMsg', `Username "${username}" sudah dipakai.`, 'err');
+        return;
+      }
+
+      const tabPermissions = readFormPermissions(role);
+      const existing = appState.staffUsers.find(u => u.id === id);
+
+      if (existing) {
+        existing.username = username;
+        existing.fullName = fullName;
+        existing.name = fullName.toLowerCase();
+        existing.position = position;
+        existing.role = role;
+        existing.password = password;
+        existing.tabPermissions = tabPermissions;
+      } else {
+        appState.staffUsers.push({
+          id: 'staff-' + Date.now(),
+          username,
+          fullName,
+          name: fullName.toLowerCase(),
+          position,
+          role,
+          password,
+          tabPermissions
+        });
+      }
+
+      try {
         setMsg('userMsg', 'Menyimpan user...');
-        const res = mode === 'create'
-          ? await gsCall('createAdminUser', session.token, payload)
-          : await gsCall('updateAdminUser', session.token, payload);
-        setMsg('userMsg', res.message || 'Berhasil.', 'ok');
-        clearUserForm();
-        await loadUsersList();
+        await persistMainState();
+        resetStaffUserForm();
+        renderUsersTable();
+        setMsg('userMsg', `User "${username}" berhasil disimpan.`, 'ok');
       } catch (err) {
         setMsg('userMsg', err.message, 'err');
       }
     });
 
-    document.getElementById('loginForm').addEventListener('submit', async e => {
-      e.preventDefault();
+    document.getElementById('searchClient').addEventListener('input', renderClientsTable);
+
+    (async function init() {
+      buildPermissionInputs();
+      setFormPermissions({}, 'editor');
       try {
-        setMsg('loginMsg', 'Masuk...');
-        const res = await gsCall(
-          'loginUser',
-          document.getElementById('loginUser').value.trim(),
-          document.getElementById('loginPass').value
-        );
-        if (!res || !res.ok || !res.token) throw new Error(res?.error || 'Login gagal.');
-        writeSession({ token: res.token, user: res.user });
-        document.getElementById('loginForm').reset();
-        setMsg('loginMsg', '');
-        refreshViewBySession();
-      } catch (err) {
-        setMsg('loginMsg', err.message, 'err');
+        currentSession = JSON.parse(sessionStorage.getItem(SESSION_KEY) || 'null');
+      } catch (_) {
+        currentSession = null;
       }
-    });
-
-    document.getElementById('btnLogout').addEventListener('click', () => {
-      writeSession(null);
-      clearClientForm();
-      clearUserForm();
-      refreshViewBySession();
-    });
-
-    document.getElementById('clientSearch').addEventListener('input', renderClientsTable);
-    document.getElementById('btnRefreshClients').addEventListener('click', loadClientsList);
-    document.getElementById('btnResetClient').addEventListener('click', clearClientForm);
-    document.getElementById('btnRefreshUsers').addEventListener('click', loadUsersList);
-    document.getElementById('btnResetUser').addEventListener('click', clearUserForm);
-
-    refreshViewBySession();
+      await fetchMainState();
+      applySessionUI();
+    })();
   </script>
 </body>
 </html>
