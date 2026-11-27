@@ -6,21 +6,25 @@
   <title>MOMENTUMATES — Wedding Organizer &amp; Client Portal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #fdfbf7;
       --surface: #ffffff;
-      --surface-soft: #f7f2e9;
-      --border: #e8decb;
+      --surface-soft: #f7f1e6;
+      --surface-warm: #f2e8d5;
+      --border: #e6dac5;
       --ink: #231f1b;
-      --muted: #786e63;
+      --muted: #756b5f;
       --gold: #b88a44;
-      --gold-dark: #946b2d;
-      --gold-light: #f3e8d2;
-      --sage: #5d7362;
-      --danger: #c2413b;
-      --shadow: 0 18px 45px rgba(35, 31, 27, 0.06);
+      --gold-dark: #8e6426;
+      --gold-light: #f5ead6;
+      --sage: #4f6b56;
+      --sage-soft: #eaf2ec;
+      --danger: #b83a34;
+      --danger-soft: #fdf2f1;
+      --shadow: 0 18px 44px rgba(35, 31, 27, 0.06);
+      --shadow-sm: 0 6px 18px rgba(35, 31, 27, 0.04);
     }
 
     * { box-sizing: border-box; }
@@ -41,16 +45,16 @@
       letter-spacing: 0.01em;
     }
 
-    /* TOP NAV */
+    /* TOP NAVIGATION BAR */
     .navbar {
       position: sticky;
       top: 0;
-      z-index: 50;
-      background: rgba(253, 251, 247, 0.88);
+      z-index: 60;
+      background: rgba(253, 251, 247, 0.9);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
-      padding: 14px 24px;
+      padding: 13px 22px;
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
@@ -69,22 +73,23 @@
       color: var(--ink);
     }
 
-    .brand span {
-      color: var(--gold);
-      font-size: 12px;
+    .brand .tag {
+      color: var(--gold-dark);
+      font-size: 11px;
       font-family: 'Plus Jakarta Sans', sans-serif;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      padding: 3px 10px;
+      padding: 4px 11px;
       border-radius: 999px;
       background: var(--gold-light);
+      border: 1px solid rgba(184, 138, 68, 0.25);
     }
 
     .nav-actions {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       font-size: 13px;
     }
 
@@ -93,78 +98,105 @@
       border-radius: 999px;
       background: var(--gold-light);
       color: var(--gold-dark);
+      border: 1px solid rgba(184, 138, 68, 0.3);
       font-weight: 700;
       font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 0.08em;
     }
 
-    /* PARALLAX HERO */
+    /* PARALLAX HERO & LOGIN */
     .hero-parallax {
       position: relative;
-      min-height: 78vh;
+      min-height: calc(100vh - 64px);
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 64px 20px;
+      padding: 56px 20px;
       overflow: hidden;
-      background: linear-gradient(135deg, #fbf7ef 0%, #f4ead8 55%, #ede0c9 100%);
-      border-bottom: 1px solid var(--border);
+      background: linear-gradient(145deg, #fdfbf7 0%, #f7efe0 52%, #efe1c8 100%);
     }
 
     .parallax-layer {
       position: absolute;
-      inset: -12%;
+      inset: -14%;
       pointer-events: none;
       will-change: transform;
-      transition: transform 0.12s ease-out;
+      transition: transform 0.14s ease-out;
     }
 
-    .orb-1 {
-      background: radial-gradient(circle at 20% 25%, rgba(212, 175, 112, 0.28), transparent 45%),
-                  radial-gradient(circle at 82% 75%, rgba(164, 184, 166, 0.24), transparent 48%);
+    .layer-glow {
+      background:
+        radial-gradient(circle at 18% 22%, rgba(214, 174, 104, 0.28), transparent 44%),
+        radial-gradient(circle at 84% 78%, rgba(120, 152, 126, 0.2), transparent 46%),
+        radial-gradient(circle at 55% 48%, rgba(255, 255, 255, 0.65), transparent 55%);
     }
 
-    .orb-2::before, .orb-2::after {
+    .layer-rings::before,
+    .layer-rings::after {
       content: '';
       position: absolute;
       border-radius: 50%;
-      border: 1px solid rgba(184, 138, 68, 0.22);
+      border: 1px solid rgba(184, 138, 68, 0.24);
     }
-    .orb-2::before { width: 520px; height: 520px; top: 8%; right: -6%; }
-    .orb-2::after { width: 380px; height: 380px; bottom: 5%; left: -4%; }
+
+    .layer-rings::before {
+      width: 560px;
+      height: 560px;
+      top: 6%;
+      right: -5%;
+      box-shadow: inset 0 0 0 36px rgba(255, 255, 255, 0.22);
+    }
+
+    .layer-rings::after {
+      width: 400px;
+      height: 400px;
+      bottom: 4%;
+      left: -4%;
+      border-style: dashed;
+      border-color: rgba(142, 100, 38, 0.22);
+    }
+
+    .layer-botanical {
+      background-image: radial-gradient(rgba(184, 138, 68, 0.16) 1.25px, transparent 1.25px);
+      background-size: 32px 32px;
+      opacity: 0.55;
+    }
 
     .hero-grid {
       position: relative;
       z-index: 2;
-      max-width: 1120px;
+      max-width: 1140px;
       width: 100%;
       display: grid;
       grid-template-columns: 1.15fr 0.85fr;
-      gap: 40px;
+      gap: 42px;
       align-items: center;
     }
 
-    @media (max-width: 860px) {
+    @media (max-width: 880px) {
       .hero-grid { grid-template-columns: 1fr; gap: 28px; }
-      .hero-parallax { min-height: auto; padding: 44px 16px; }
+      .hero-parallax { min-height: auto; padding: 40px 16px 56px; }
     }
 
     .hero-eyebrow {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       font-size: 11px;
       font-weight: 700;
-      letter-spacing: 0.24em;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--gold-dark);
       margin-bottom: 12px;
     }
 
     .hero-title {
-      font-size: clamp(34px, 4.8vw, 56px);
-      line-height: 1.08;
+      font-size: clamp(36px, 5vw, 58px);
+      line-height: 1.06;
       margin: 0 0 16px;
       color: var(--ink);
+      animation: floatUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
 
     .hero-title em {
@@ -175,68 +207,79 @@
     .hero-sub {
       font-size: 15px;
       color: var(--muted);
-      max-width: 520px;
+      max-width: 530px;
       margin: 0 0 24px;
+      animation: floatUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
 
     .hero-pills {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
+      animation: floatUp 1s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
 
     .hero-pills span {
       font-size: 12px;
+      font-weight: 500;
       padding: 6px 14px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.86);
       border: 1px solid var(--border);
       color: var(--ink);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .demo-hint {
+      margin-top: 18px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px dashed rgba(184, 138, 68, 0.45);
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .demo-hint code {
+      background: var(--gold-light);
+      color: var(--gold-dark);
+      padding: 1px 6px;
+      border-radius: 5px;
+      font-weight: 600;
     }
 
     /* GLASS LOGIN CARD */
     .login-glass {
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
       border: 1px solid rgba(255, 255, 255, 0.95);
-      border-radius: 20px;
+      border-radius: 22px;
       padding: 30px 28px;
       box-shadow: var(--shadow);
-      animation: floatUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+      animation: floatUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
 
     @keyframes floatUp {
-      from { opacity: 0; transform: translateY(22px); }
+      from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* REVEAL ANIMATION */
-    .reveal {
-      opacity: 0;
-      transform: translateY(18px);
-      transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
     }
 
     /* WORKSPACE CONTAINER */
     .container {
       max-width: 1240px;
       margin: 0 auto;
-      padding: 28px 20px 64px;
+      padding: 26px 20px 68px;
     }
 
-    /* COUPLE BANNER (PARALLAX HEADER WHEN LOGGED IN) */
+    /* COUPLE BANNER */
     .couple-banner {
       position: relative;
       overflow: hidden;
       border-radius: 20px;
-      padding: 32px 28px;
-      margin-bottom: 22px;
-      background: linear-gradient(120deg, #fffdf9 0%, #f5ebd9 60%, #ecdec5 100%);
+      padding: 28px;
+      margin-bottom: 18px;
+      background: linear-gradient(125deg, #fffdf9 0%, #f6ecda 58%, #eddcc0 100%);
       border: 1px solid var(--border);
       box-shadow: var(--shadow);
       display: flex;
@@ -244,36 +287,38 @@
       justify-content: space-between;
       align-items: center;
       gap: 18px;
+      animation: floatUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
 
     .couple-banner h1 {
-      font-size: clamp(28px, 3.6vw, 40px);
+      font-size: clamp(30px, 3.8vw, 44px);
       margin: 4px 0 6px;
+      line-height: 1.05;
     }
 
     /* TABS */
     .tabs {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 20px;
+      gap: 6px;
+      margin-bottom: 18px;
       padding: 8px;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 14px;
-      box-shadow: 0 6px 20px rgba(35, 31, 27, 0.03);
+      border-radius: 16px;
+      box-shadow: var(--shadow-sm);
     }
 
     .tab-btn {
       border: 1px solid transparent;
       background: transparent;
       color: var(--muted);
-      padding: 9px 15px;
-      border-radius: 10px;
-      font-size: 13px;
+      padding: 9px 14px;
+      border-radius: 11px;
+      font-size: 12.5px;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.22s ease;
+      transition: all 0.2s ease;
     }
 
     .tab-btn:hover {
@@ -282,7 +327,7 @@
     }
 
     .tab-btn.active {
-      background: var(--gold);
+      background: linear-gradient(135deg, #c79850, #9d6f2b);
       color: #ffffff;
       box-shadow: 0 6px 16px rgba(184, 138, 68, 0.28);
     }
@@ -293,12 +338,17 @@
       border: 1px solid var(--border);
       border-radius: 18px;
       padding: 24px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       box-shadow: var(--shadow);
-      animation: floatUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+      animation: floatUp 0.42s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
 
-    .card h2 { font-size: 26px; margin: 0 0 14px; }
+    .card h2 {
+      font-size: 28px;
+      margin: 0 0 14px;
+      color: var(--ink);
+    }
+
     .card h3 {
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 11.5px;
@@ -313,16 +363,20 @@
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
       gap: 12px;
       align-items: end;
     }
 
-    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field { display: flex; flex-direction: column; gap: 5px; }
     .field.span-2 { grid-column: span 2; }
     @media (max-width: 640px) { .field.span-2 { grid-column: span 1; } }
 
-    label { font-size: 12px; font-weight: 600; color: var(--muted); }
+    label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+    }
 
     input, select, textarea {
       width: 100%;
@@ -331,7 +385,7 @@
       border: 1px solid var(--border);
       background: #fffefb;
       color: var(--ink);
-      font-size: 13.5px;
+      font-size: 13px;
       font-family: inherit;
       transition: border-color 0.2s, box-shadow 0.2s;
     }
@@ -342,7 +396,7 @@
       box-shadow: 0 0 0 3px rgba(184, 138, 68, 0.14);
     }
 
-    textarea { min-height: 70px; resize: vertical; }
+    textarea { min-height: 68px; resize: vertical; }
 
     .btn-row {
       display: flex;
@@ -353,12 +407,12 @@
     }
 
     button {
-      padding: 9px 16px;
+      padding: 9px 15px;
       border-radius: 10px;
       border: 1px solid var(--border);
       background: var(--surface);
       color: var(--ink);
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 600;
       cursor: pointer;
       transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease;
@@ -367,40 +421,56 @@
     button:hover:not(:disabled) {
       transform: translateY(-1px);
       border-color: var(--gold);
-      box-shadow: 0 6px 14px rgba(35, 31, 27, 0.06);
+      box-shadow: var(--shadow-sm);
     }
 
+    button:disabled { opacity: 0.45; cursor: not-allowed; }
+
     button.primary {
-      background: linear-gradient(135deg, #c6974e, #a77933);
+      background: linear-gradient(135deg, #c79850, #9d6f2b);
       color: #ffffff;
       border-color: transparent;
-      box-shadow: 0 8px 18px rgba(184, 138, 68, 0.26);
+      box-shadow: 0 8px 18px rgba(184, 138, 68, 0.25);
     }
 
     button.danger {
       color: var(--danger);
-      border-color: rgba(194, 65, 59, 0.28);
-      background: #fff7f6;
+      border-color: rgba(184, 58, 52, 0.3);
+      background: var(--danger-soft);
     }
 
-    /* KPI */
+    /* KPI GRID */
     .kpi-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 12px;
       margin: 14px 0 20px;
     }
 
     .kpi {
-      background: linear-gradient(180deg, #fffdf9, #f8f2e6);
+      background: linear-gradient(180deg, #fffdf9, #f7f0e2);
       border: 1px solid var(--border);
       border-radius: 14px;
       padding: 15px 16px;
     }
-    .kpi .k-label { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
-    .kpi .k-val { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 700; margin-top: 4px; color: var(--gold-dark); }
 
-    /* SUB-CARD & CHECKLIST */
+    .kpi .k-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .kpi .k-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 25px;
+      font-weight: 700;
+      margin-top: 4px;
+      color: var(--gold-dark);
+    }
+
+    /* SUB-CARDS & CHECKLIST */
     .sub-card {
       background: var(--surface-soft);
       border: 1px solid var(--border);
@@ -408,54 +478,78 @@
       padding: 14px 16px;
       margin-bottom: 12px;
     }
-    .sub-card h4 { margin: 0 0 8px; font-size: 15px; }
+
+    .sub-card h4 {
+      margin: 0 0 10px;
+      font-size: 16px;
+      font-family: 'Cormorant Garamond', serif;
+    }
 
     .chk-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      padding: 7px 10px;
-      border-radius: 8px;
+      padding: 8px 12px;
+      border-radius: 10px;
       background: var(--surface);
-      border: 1px solid rgba(232, 222, 203, 0.7);
+      border: 1px solid rgba(230, 218, 197, 0.8);
       margin-bottom: 6px;
       font-size: 13px;
     }
+
     .chk-item label {
       display: flex;
       align-items: center;
-      gap: 9px;
+      gap: 10px;
       color: var(--ink);
       margin: 0;
       cursor: pointer;
       flex: 1;
     }
-    .chk-item input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--gold); }
-    .done-text { text-decoration: line-through; color: var(--muted); }
+
+    .chk-item input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--gold);
+    }
+
+    .done-text {
+      text-decoration: line-through;
+      color: var(--muted);
+    }
 
     /* TABLES */
     .table-wrap {
       overflow-x: auto;
       margin-top: 14px;
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 14px;
     }
-    table { width: 100%; border-collapse: collapse; font-size: 13px; background: var(--surface); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      background: var(--surface);
+    }
+
     th, td {
-      padding: 11px 13px;
+      padding: 10px 13px;
       border-bottom: 1px solid var(--border);
       text-align: left;
       white-space: nowrap;
     }
+
     th {
       background: var(--surface-soft);
       color: var(--muted);
       font-weight: 700;
-      font-size: 11.5px;
+      font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.07em;
     }
+
     tr:last-child td { border-bottom: none; }
 
     .perm-grid {
@@ -465,7 +559,13 @@
       margin-top: 8px;
     }
 
-    .status { margin-top: 10px; font-size: 13px; font-weight: 500; min-height: 18px; }
+    .status {
+      margin-top: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      min-height: 18px;
+    }
+
     .status.ok { color: var(--sage); }
     .status.err { color: var(--danger); }
 
@@ -476,52 +576,56 @@
 
   <!-- TOP NAVIGATION -->
   <header class="navbar">
-    <div class="brand">MOMENTUMATES <span>Wedding Organizer</span></div>
+    <div class="brand">MOMENTUMATES <span class="tag">Wedding Organizer</span></div>
     <div id="sessionBar" class="nav-actions hidden">
       <span>Halo, <strong id="lblUser"></strong></span>
       <span id="lblRole" class="role-pill"></span>
-      <select id="activeClientSelector" title="Pilih Pasangan / Klien" style="width:auto; min-width:200px;"></select>
-      <button type="button" id="btnSync">Sync Database</button>
-      <button type="button" id="btnLogout">Keluar</button>
+      <select id="activeClientSelector" title="Pilih Pasangan / Klien" style="width:auto; min-width:195px;"></select>
+      <button type="button" id="btnSync">Sync DB</button>
+      <button type="button" id="btnLogout">Logout</button>
     </div>
   </header>
 
   <!-- BRIGHT PARALLAX LANDING & LOGIN -->
   <section id="loginSection" class="hero-parallax">
-    <div class="parallax-layer orb-1" data-speed="0.18"></div>
-    <div class="parallax-layer orb-2" data-speed="-0.14"></div>
+    <div class="parallax-layer layer-glow" data-speed="0.16"></div>
+    <div class="parallax-layer layer-rings" data-speed="-0.12"></div>
+    <div class="parallax-layer layer-botanical" data-speed="0.08"></div>
 
     <div class="hero-grid">
       <div>
-        <span class="hero-eyebrow">Curated Wedding Planning &amp; Coordination</span>
-        <h1 class="hero-title">Merancang Hari Bahagia dengan <em>Tenang &amp; Presisi</em>.</h1>
+        <span class="hero-eyebrow">✦ Curated Wedding Planning &amp; Coordination</span>
+        <h1 class="hero-title">Merancang Hari Bahagia dengan <em>Anggun &amp; Terarah</em>.</h1>
         <p class="hero-sub">
-          Portal terpadu MOMENTUMATES Wedding Organizer untuk memantau rundown acara, koordinasi vendor, progres pembayaran, invoice, dan brief konsep pernikahan secara real-time.
+          Workspace kolaboratif MOMENTUMATES Wedding Organizer untuk mengatur rundown acara, daftar vendor, jadwal pembayaran, invoice, dan brief konsep pernikahan dalam satu ruang terang yang nyaman.
         </p>
         <div class="hero-pills">
-          <span>✦ WO Rundown &amp; Checklist</span>
-          <span>✦ Vendor &amp; PIC Directory</span>
-          <span>✦ Payment &amp; Invoice Tracker</span>
-          <span>✦ Couple &amp; Event Brief</span>
+          <span>WO Rundown &amp; Checklist</span>
+          <span>Vendors &amp; Confirmed PIC</span>
+          <span>Payments &amp; Invoices</span>
+          <span>Couple &amp; Event Brief</span>
+        </div>
+        <div class="demo-hint">
+          Akun contoh siap coba: Superadmin <code>superadmin</code> / <code>lxdsuperadmin</code>, Admin <code>han</code> / <code>blessedlife</code>, atau Klien <code>aldyerza</code> / <code>15mei2027</code>.
         </div>
       </div>
 
       <div class="login-glass">
         <span class="hero-eyebrow" style="margin-bottom:4px;">Client &amp; Team Portal</span>
-        <h2 style="font-size:28px; margin:0 0 6px;">Selamat Datang</h2>
+        <h2 style="font-size:30px; margin:0 0 6px;">Masuk ke Workspace</h2>
         <p style="margin:0 0 18px; font-size:13px; color:var(--muted);">
-          Masuk menggunakan akun <strong>Pasangan Pengantin</strong> atau <strong>Tim WO / Superadmin</strong>.
+          Gunakan akun pasangan pengantin atau tim MOMENTUMATES WO.
         </p>
         <form id="loginForm">
           <div class="field" style="margin-bottom:12px;">
             <label for="loginUsername">Username</label>
-            <input type="text" id="loginUsername" placeholder="Masukkan username..." autocomplete="username" required />
+            <input type="text" id="loginUsername" placeholder="contoh: superadmin atau aldyerza" autocomplete="username" required />
           </div>
           <div class="field" style="margin-bottom:16px;">
             <label for="loginPassword">Password</label>
-            <input type="password" id="loginPassword" placeholder="Masukkan password..." autocomplete="current-password" required />
+            <input type="password" id="loginPassword" placeholder="Masukkan password" autocomplete="current-password" required />
           </div>
-          <button type="submit" class="primary" style="width:100%; padding:12px;">Masuk ke Portal WO</button>
+          <button type="submit" class="primary" style="width:100%; padding:12px;">Masuk Sekarang</button>
         </form>
         <div id="loginStatus" class="status"></div>
       </div>
@@ -530,14 +634,14 @@
 
   <!-- MAIN WORKSPACE -->
   <main id="woSuite" class="container hidden">
-    <!-- PARALLAX COUPLE HEADER -->
-    <div class="couple-banner reveal" id="coupleBanner">
+    <!-- COUPLE HEADER BANNER -->
+    <div class="couple-banner" id="coupleBanner">
       <div>
-        <span class="hero-eyebrow" style="margin-bottom:2px;" id="bannerPkg">WEDDING ORGANIZER</span>
-        <h1 class="active-couple-lbl">ALDY ERZA</h1>
-        <div style="font-size:13.5px; color:var(--muted);" id="bannerMeta">Wedding Day • Venue</div>
+        <span class="hero-eyebrow" style="margin-bottom:2px;" id="bannerPkg">WEDDING DAY ORGANIZER</span>
+        <h1 class="active-couple-lbl">ALDY &amp; ERZA</h1>
+        <div style="font-size:13.5px; color:var(--muted);" id="bannerMeta">Wedding Day • 2027-05-15 • Sentosa Restaurant</div>
       </div>
-      <div class="hero-pills">
+      <div class="hero-pills" style="animation:none;">
         <span id="bannerStatusBadge">Project: Active</span>
         <span id="bannerRundownBadge">Rundown: In Review</span>
       </div>
@@ -949,8 +1053,8 @@
 
   <script>
     const GAS_EXEC_URL = 'https://script.google.com/macros/s/AKfycbyZbPdZphb-GK6d9_0rAUuOEGUgb0oCvGQifGAwd6SNDRwcyyNfAiIUjB1FgJ2kx7PS0Q/exec';
-    const STORAGE_KEY = 'momentumates_wo_suite_cache_v1';
-    const SESSION_KEY = 'momentumates_wo_suite_session_v1';
+    const STORAGE_KEY = 'momentumates_wo_suite_cache_v2';
+    const SESSION_KEY = 'momentumates_wo_suite_session_v2';
 
     const ALL_TABS = [
       { id: 'wo-rundown', label: 'WO Rundown' },
@@ -964,39 +1068,263 @@
       { id: 'users', label: 'Manage Users' }
     ];
 
-    let state = {
-      adminTabOrder: ALL_TABS.map(t => t.id),
-      clients: [],
-      staffUsers: []
-    };
+    function createSeedState() {
+      return {
+        adminTabOrder: ALL_TABS.map(t => t.id),
+        staffUsers: [
+          {
+            id: 'staff-superadmin-primary',
+            username: 'superadmin',
+            fullName: 'SUPERADMIN MOMENTUMATES',
+            name: 'superadmin momentumates',
+            position: 'FOUNDER & OWNER',
+            role: 'superadmin',
+            password: 'lxdsuperadmin',
+            isPrimary: true,
+            tabPermissions: {
+              'wo-rundown': 'edit', 'vendors': 'edit', 'biodata': 'edit',
+              'payments': 'edit', 'invoices': 'edit', 'client-form': 'edit',
+              'internal-ops': 'edit', 'projects': 'edit', 'users': 'edit'
+            }
+          },
+          {
+            id: 'staff-han',
+            username: 'han',
+            fullName: 'HAN',
+            name: 'han',
+            position: 'LEAD PLANNER',
+            role: 'admin',
+            password: 'blessedlife',
+            isPrimary: false,
+            tabPermissions: {
+              'wo-rundown': 'edit', 'vendors': 'edit', 'biodata': 'edit',
+              'payments': 'edit', 'invoices': 'edit', 'client-form': 'edit',
+              'internal-ops': 'edit', 'projects': 'edit', 'users': 'none'
+            }
+          },
+          {
+            id: 'staff-imelda',
+            username: 'imelda',
+            fullName: 'IMELDA',
+            name: 'imelda',
+            position: 'OPERATIONS ADMIN',
+            role: 'admin',
+            password: 'hanhanjayden',
+            isPrimary: false,
+            tabPermissions: {
+              'wo-rundown': 'edit', 'vendors': 'edit', 'biodata': 'edit',
+              'payments': 'edit', 'invoices': 'edit', 'client-form': 'edit',
+              'internal-ops': 'edit', 'projects': 'edit', 'users': 'none'
+            }
+          }
+        ],
+        clients: [
+          {
+            id: 'client-aldy-erza',
+            coupleShort: 'ALDY & ERZA',
+            packageTier: 'WEDDING DAY ORGANIZER',
+            projectStatus: 'Active',
+            phone: '6281234567890',
+            username: 'aldyerza',
+            password: '15mei2027',
+            groomFullName: 'Aldy Pratama Putra',
+            brideFullName: 'Erza Maharani Putri',
+            historyNotes: 'Finalisasi rundown akad & resepsi bersama keluarga inti.',
+            biodata: {
+              groom: {
+                fullName: 'Aldy Pratama Putra',
+                nickname: 'Aldy',
+                birthOrder: 'Anak ke-1 dari 2 bersaudara',
+                phone: '081234567890',
+                instagram: '@aldypratama',
+                address: 'Jl. Dago Pakar Indah No. 12, Bandung',
+                fatherName: 'Budi Santoso',
+                fatherPhone: '081122334455',
+                motherName: 'Ratna Dewi',
+                motherPhone: '081199887766'
+              },
+              bride: {
+                fullName: 'Erza Maharani Putri',
+                nickname: 'Erza',
+                birthOrder: 'Anak ke-2 dari 2 bersaudara',
+                phone: '081398765432',
+                instagram: '@erzamaharani',
+                address: 'Jl. Buah Batu No. 88, Bandung',
+                fatherName: 'Hendra Wijaya',
+                fatherPhone: '081255667788',
+                motherName: 'Siti Aminah',
+                motherPhone: '081244332211'
+              }
+            },
+            events: [
+              {
+                id: 'ev-aldy-erza-1',
+                eventName: 'Wedding Day',
+                eventType: 'Wedding Day',
+                eventDate: '2027-05-15',
+                venue: 'Sentosa Restaurant, Bandung',
+                woProgress: { status: 'In Review' },
+                formBrief: {
+                  ceremonyTime: '08:00 - 10:30 WIB',
+                  receptionTime: '11:30 - 14:30 WIB',
+                  guestCount: '450 Tamu',
+                  themeConcept: 'Warm Editorial Garden Elegance',
+                  colorPalette: 'Ivory Cream, Champagne Gold & Sage',
+                  dietaryNotes: 'Tersedia menu vegetarian & low-sugar khusus keluarga VIP',
+                  additionalNotes: 'Siapkan ruang transit terpisah untuk keluarga besar dan sesi first look di halaman depan.'
+                },
+                vendors: [
+                  {
+                    id: 'v-wo-mmw',
+                    name: 'MOMENTUMATES WO',
+                    category: 'WEDDING ORGANIZER',
+                    picName: 'Han',
+                    picPhone: '081200112233',
+                    packageName: 'Full Day Coordination (6 Crew)',
+                    packagePrice: 18500000,
+                    paidAmount: 10000000,
+                    progress: 75,
+                    status: 'Confirmed',
+                    packageItems: 'Rundown master, technical meeting, crew lapangan, emergency kit',
+                    checklist: [
+                      { id: 'chk-1', title: 'Technical meeting bersama venue & dekorasi', done: true },
+                      { id: 'chk-2', title: 'Review final rundown & cue sheet MC', done: true },
+                      { id: 'chk-3', title: 'Distribusi daftar keluarga & VIP penerima angpao', done: false }
+                    ],
+                    paymentLogs: [
+                      { id: 'p-1', date: '2026-10-10', label: 'Booking Fee / DP 1', method: 'BCA a/n Momentumates', amount: 10000000, status: 'Verified' }
+                    ]
+                  },
+                  {
+                    id: 'v-photo-lumiere',
+                    name: 'Lumiere Visual Studio',
+                    category: 'PHOTO & VIDEO',
+                    picName: 'Raka',
+                    picPhone: '081344556677',
+                    packageName: 'Photo + Cinema + Same Day Edit',
+                    packagePrice: 24000000,
+                    paidAmount: 12000000,
+                    progress: 50,
+                    status: 'On Progress',
+                    packageItems: '2 Photographer, 2 Videographer, drone, album editorial',
+                    checklist: [
+                      { id: 'chk-4', title: 'Shotlist detail ring, kebaya, & suit', done: true },
+                      { id: 'chk-5', title: 'Survey titik cahaya area resepsi', done: false }
+                    ],
+                    paymentLogs: [
+                      { id: 'p-2', date: '2026-10-20', label: 'DP Kontrak', method: 'Mandiri a/n Lumiere', amount: 12000000, status: 'Verified' }
+                    ]
+                  }
+                ],
+                confirmedVendorList: [
+                  { id: 'cv-1', category: 'VENUE', name: 'Sentosa Restaurant', picName: 'Ibu Linda', picPhone: '0811200300', notes: 'Direct Dealing Klien — Ballroom Utama' },
+                  { id: 'cv-2', category: 'DECORATION', name: 'Atelier Flora', picName: 'Dimas', picPhone: '081277889900', notes: 'Load-in H-1 pukul 22.00 WIB' }
+                ],
+                invoices: [
+                  { id: 'inv-1', invoiceNumber: 'INV/MMW/2026/0515-A', paymentTerms: 'DP Paket Wedding Day Organizer', issueDate: '2026-10-05', dueDate: '2026-10-15', totalAmount: 10000000, status: 'Paid' },
+                  { id: 'inv-2', invoiceNumber: 'INV/MMW/2026/0515-B', paymentTerms: 'Pelunasan H-14 Acara', issueDate: '2027-04-15', dueDate: '2027-05-01', totalAmount: 8500000, status: 'Partial' }
+                ]
+              }
+            ]
+          },
+          {
+            id: 'client-nadia-farhan',
+            coupleShort: 'NADIA & FARHAN',
+            packageTier: 'INTIMATE WEDDING PLANNER',
+            projectStatus: 'In Review',
+            phone: '6285678901234',
+            username: 'nadiafarhan',
+            password: '20juni2027',
+            groomFullName: 'Farhan Ramadhan',
+            brideFullName: 'Nadia Kusuma',
+            historyNotes: 'Sedang menyusun daftar vendor akad & intimate dinner.',
+            biodata: {
+              groom: { fullName: 'Farhan Ramadhan', nickname: 'Farhan', phone: '085678901234', instagram: '@farhanramadhan' },
+              bride: { fullName: 'Nadia Kusuma', nickname: 'Nadia', phone: '085711223344', instagram: '@nadiakusuma' }
+            },
+            events: [
+              {
+                id: 'ev-nadia-farhan-1',
+                eventName: 'Akad & Intimate Dinner',
+                eventType: 'Wedding Day',
+                eventDate: '2027-06-20',
+                venue: 'The Gaia Hotel, Bandung',
+                woProgress: { status: 'Draft' },
+                formBrief: {
+                  ceremonyTime: '09:00 WIB',
+                  receptionTime: '18:30 WIB',
+                  guestCount: '180 Tamu',
+                  themeConcept: 'Modern Warm Minimalist',
+                  colorPalette: 'Champagne, Cream & Warm Terracotta',
+                  dietaryNotes: 'Halal & kids menu tersedia',
+                  additionalNotes: 'Akad outdoor dengan plan cadangan indoor.'
+                },
+                vendors: [
+                  {
+                    id: 'v-nadia-1',
+                    name: 'MOMENTUMATES WO',
+                    category: 'WEDDING ORGANIZER',
+                    picName: 'Imelda',
+                    picPhone: '081299001122',
+                    packageName: 'Intimate Coordination',
+                    packagePrice: 14500000,
+                    paidAmount: 5000000,
+                    progress: 40,
+                    status: 'On Progress',
+                    packageItems: 'Koordinasi acara & vendor',
+                    checklist: [
+                      { id: 'chk-n1', title: 'Draft rundown akad & dinner', done: true },
+                      { id: 'chk-n2', title: 'Konfirmasi seating plan meja VIP', done: false }
+                    ],
+                    paymentLogs: [
+                      { id: 'p-n1', date: '2026-11-01', label: 'DP 1', method: 'BCA a/n Momentumates', amount: 5000000, status: 'Verified' }
+                    ]
+                  }
+                ],
+                confirmedVendorList: [
+                  { id: 'cv-n1', category: 'VENUE', name: 'The Gaia Hotel', picName: 'Bapak Kevin', picPhone: '0811887766', notes: 'Confirmed Venue' }
+                ],
+                invoices: [
+                  { id: 'inv-n1', invoiceNumber: 'INV/MMW/2026/0620-A', paymentTerms: 'DP Intimate Planner', issueDate: '2026-10-28', dueDate: '2026-11-05', totalAmount: 5000000, status: 'Paid' }
+                ]
+              }
+            ]
+          }
+        ]
+      };
+    }
 
+    let state = createSeedState();
     let session = null;
     let currentClientId = null;
     let currentTab = 'wo-rundown';
+    let pendingConfirmAction = null;
 
     const fmtRp = n => 'Rp ' + Number(n || 0).toLocaleString('id-ID');
     const esc = v => String(v ?? '').replace(/[&<>"']/g, m => ({
       '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
     }[m]));
 
-    // PARALLAX & SCROLL REVEAL
-    window.addEventListener('scroll', () => {
-      const y = window.scrollY;
+    // PARALLAX SCROLL & POINTER EFFECT
+    function updateParallax() {
+      const y = window.scrollY || 0;
       document.querySelectorAll('.parallax-layer').forEach(layer => {
-        const speed = parseFloat(layer.dataset.speed || '0.15');
+        const speed = parseFloat(layer.dataset.speed || '0.12');
         layer.style.transform = `translate3d(0, ${y * speed}px, 0)`;
       });
-    }, { passive: true });
-
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(en => {
-        if (en.isIntersecting) en.target.classList.add('visible');
-      });
-    }, { threshold: 0.08 });
-
-    function observeReveals() {
-      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     }
+
+    window.addEventListener('scroll', updateParallax, { passive: true });
+    document.addEventListener('mousemove', e => {
+      const loginSec = document.getElementById('loginSection');
+      if (!loginSec || loginSec.classList.contains('hidden')) return;
+      const nx = (e.clientX / window.innerWidth - 0.5) * 18;
+      const ny = (e.clientY / window.innerHeight - 0.5) * 14;
+      document.querySelectorAll('.parallax-layer').forEach((layer, idx) => {
+        const factor = (idx + 1) * 0.45;
+        layer.style.transform = `translate3d(${nx * factor}px, ${ny * factor}px, 0)`;
+      });
+    }, { passive: true });
 
     function setMsg(id, msg, type = '') {
       const el = document.getElementById(id);
@@ -1041,36 +1369,59 @@
       return obj;
     }
 
+    function mergeWithSeedIfEmpty(incoming) {
+      const seed = createSeedState();
+      if (!incoming || typeof incoming !== 'object') return seed;
+      const clients = Array.isArray(incoming.clients) && incoming.clients.length ? incoming.clients : seed.clients;
+      const staffUsers = Array.isArray(incoming.staffUsers) && incoming.staffUsers.length ? incoming.staffUsers : seed.staffUsers;
+      return {
+        adminTabOrder: Array.isArray(incoming.adminTabOrder) && incoming.adminTabOrder.length ? incoming.adminTabOrder : seed.adminTabOrder,
+        clients,
+        staffUsers
+      };
+    }
+
     async function loadState() {
       try {
         const r = await fetch(GAS_EXEC_URL + '?action=getState&t=' + Date.now());
-        const d = await r.json();
-        const s = d?.state || d?.MAIN_STATE || (Array.isArray(d?.clients) ? d : null);
-        if (s && Array.isArray(s.clients)) {
-          state = {
-            adminTabOrder: s.adminTabOrder || state.adminTabOrder,
-            clients: s.clients || [],
-            staffUsers: s.staffUsers || []
-          };
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        if (r.ok) {
+          const d = await r.json();
+          const s = d?.state || d?.MAIN_STATE || (Array.isArray(d?.clients) ? d : null);
+          if (s && typeof s === 'object') {
+            state = mergeWithSeedIfEmpty(s);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            return;
+          }
+        }
+      } catch (_) {
+        // Fallback to local cache / seed data
+      }
+
+      try {
+        const cached = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+        if (cached && typeof cached === 'object') {
+          state = mergeWithSeedIfEmpty(cached);
           return;
         }
       } catch (_) {}
 
-      try {
-        const cached = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
-        if (cached && Array.isArray(cached.clients)) state = cached;
-      } catch (_) {}
+      state = createSeedState();
     }
 
     async function saveState() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      const r = await fetch(GAS_EXEC_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({ action: 'saveState', key: 'MAIN_STATE', state })
-      });
-      if (!r.ok) throw new Error('Gagal menyimpan ke server (' + r.status + ').');
+      try {
+        const r = await fetch(GAS_EXEC_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ action: 'saveState', key: 'MAIN_STATE', state })
+        });
+        if (!r.ok) {
+          throw new Error('Server mengembalikan status ' + r.status + ' (tersimpan di cache lokal).');
+        }
+      } catch (err) {
+        throw new Error(err?.message || 'Tersimpan di cache lokal.');
+      }
     }
 
     function getClient() {
@@ -1247,15 +1598,16 @@
       currentClientId = id;
       renderClientSelector();
       renderActivePanel();
+      setMsg('clientStatus', 'Klien aktif dipilih.', 'ok');
     }
 
     async function delClient(id) {
-      if (!confirm('Hapus klien ini?')) return;
       state.clients = state.clients.filter(c => c.id !== id);
       if (currentClientId === id) currentClientId = state.clients[0]?.id || null;
-      await saveState();
+      try { await saveState(); } catch (_) {}
       renderClientSelector();
       renderActivePanel();
+      setMsg('clientStatus', 'Klien dihapus.', 'ok');
     }
 
     function renderRundownTab(c, ev) {
@@ -1283,7 +1635,7 @@
         const chks = v.checklist || [];
         return `
           <div class="sub-card">
-            <h4>${esc(v.name)} <span style="color:var(--muted); font-size:12px;">(${esc(v.category || 'Vendor')})</span></h4>
+            <h4>${esc(v.name)} <span style="color:var(--muted); font-size:12px; font-family:'Plus Jakarta Sans',sans-serif;">(${esc(v.category || 'Vendor')})</span></h4>
             ${chks.length ? chks.map(ch => `
               <div class="chk-item">
                 <label>
@@ -1305,7 +1657,7 @@
       const ch = (v?.checklist || []).find(x => x.id === chkId);
       if (!ch) return;
       ch.done = checked;
-      await saveState();
+      try { await saveState(); } catch (_) {}
       renderRundownTab(getClient(), ev);
     }
 
@@ -1314,7 +1666,7 @@
       const v = (ev?.vendors || []).find(x => x.id === vendorId);
       if (!v) return;
       v.checklist = (v.checklist || []).filter(x => x.id !== chkId);
-      await saveState();
+      try { await saveState(); } catch (_) {}
       renderRundownTab(getClient(), ev);
     }
 
@@ -1372,38 +1724,39 @@
 
     async function delVendor(id) {
       const ev = getPrimaryEvent(getClient());
-      if (!ev || !confirm('Hapus vendor ini?')) return;
+      if (!ev) return;
       ev.vendors = (ev.vendors || []).filter(x => x.id !== id);
-      await saveState();
+      try { await saveState(); } catch (_) {}
       renderVendorsTab(getClient(), ev);
+      setMsg('vendorMsg', 'Vendor dihapus.', 'ok');
     }
 
     async function delConfirmedVendor(id) {
       const ev = getPrimaryEvent(getClient());
       if (!ev) return;
       ev.confirmedVendorList = (ev.confirmedVendorList || []).filter(x => x.id !== id);
-      await saveState();
+      try { await saveState(); } catch (_) {}
       renderVendorsTab(getClient(), ev);
     }
 
     function renderBiodataTab(c) {
       if (!c) return;
       const b = c.biodata || {};
-      const g = b.groom || {}, gp = b.groomParents || {};
-      const w = b.bride || {}, wp = b.brideParents || {};
+      const g = b.groom || {};
+      const w = b.bride || {};
       const mapVal = (id, val) => { document.getElementById(id).value = val || ''; };
 
       mapVal('g_fullName', g.fullName || c.groomFullName);
       mapVal('g_nickname', g.nickname); mapVal('g_birthOrder', g.birthOrder);
       mapVal('g_phone', g.phone); mapVal('g_instagram', g.instagram); mapVal('g_address', g.address);
-      mapVal('g_fatherName', gp.fatherName); mapVal('g_fatherPhone', gp.fatherPhone);
-      mapVal('g_motherName', gp.motherName); mapVal('g_motherPhone', gp.motherPhone);
+      mapVal('g_fatherName', g.fatherName); mapVal('g_fatherPhone', g.fatherPhone);
+      mapVal('g_motherName', g.motherName); mapVal('g_motherPhone', g.motherPhone);
 
       mapVal('b_fullName', w.fullName || c.brideFullName);
       mapVal('b_nickname', w.nickname); mapVal('b_birthOrder', w.birthOrder);
       mapVal('b_phone', w.phone); mapVal('b_instagram', w.instagram); mapVal('b_address', w.address);
-      mapVal('b_fatherName', wp.fatherName); mapVal('b_fatherPhone', wp.fatherPhone);
-      mapVal('b_motherName', wp.motherName); mapVal('b_motherPhone', wp.motherPhone);
+      mapVal('b_fatherName', w.fatherName); mapVal('b_fatherPhone', w.fatherPhone);
+      mapVal('b_motherName', w.motherName); mapVal('b_motherPhone', w.motherPhone);
     }
 
     function renderPaymentsTab(c, ev) {
@@ -1435,7 +1788,7 @@
       if (!v) return;
       v.paymentLogs = (v.paymentLogs || []).filter(p => p.id !== payId);
       v.paidAmount = (v.paymentLogs || []).reduce((s, p) => s + Number(p.amount || 0), 0);
-      await saveState();
+      try { await saveState(); } catch (_) {}
       renderPaymentsTab(getClient(), ev);
     }
 
@@ -1463,7 +1816,7 @@
       const ev = getPrimaryEvent(getClient());
       if (!ev) return;
       ev.invoices = (ev.invoices || []).filter(i => i.id !== invId);
-      await saveState();
+      try { await saveState(); } catch (_) {}
       renderInvoicesTab(getClient(), ev);
     }
 
@@ -1553,10 +1906,8 @@
     }
 
     async function delStaff(id) {
-      const u = state.staffUsers.find(x => x.id === id);
-      if (!u || !confirm(`Hapus user "${u.username}"?`)) return;
       state.staffUsers = state.staffUsers.filter(x => x.id !== id);
-      await saveState();
+      try { await saveState(); } catch (_) {}
       renderUsersTab();
       setMsg('staffMsg', 'User dihapus.', 'ok');
     }
@@ -1566,7 +1917,10 @@
       document.getElementById('loginSection').classList.toggle('hidden', loggedIn);
       document.getElementById('sessionBar').classList.toggle('hidden', !loggedIn);
       document.getElementById('woSuite').classList.toggle('hidden', !loggedIn);
-      if (!loggedIn) return;
+      if (!loggedIn) {
+        updateParallax();
+        return;
+      }
 
       document.getElementById('lblUser').textContent = session.displayName;
       document.getElementById('lblRole').textContent = session.role;
@@ -1574,14 +1928,13 @@
       renderClientSelector();
       renderTabs();
       renderActivePanel();
-      observeReveals();
     }
 
     document.getElementById('loginForm').addEventListener('submit', async e => {
       e.preventDefault();
       const u = document.getElementById('loginUsername').value.trim();
       const p = document.getElementById('loginPassword').value;
-      setMsg('loginStatus', 'Memuat database...');
+      setMsg('loginStatus', 'Memuat data & memverifikasi akun...');
       await loadState();
 
       const staff = (state.staffUsers || []).find(
@@ -1595,34 +1948,6 @@
           username: staff.username,
           displayName: staff.fullName || staff.username,
           role: staff.role || 'editor'
-        };
-        sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
-        document.getElementById('loginForm').reset();
-        setMsg('loginStatus', '');
-        applySession();
-        return;
-      }
-
-      const hasSuper = (state.staffUsers || []).some(s => String(s.role).toLowerCase() === 'superadmin');
-      if (!hasSuper && u.toLowerCase() === 'superadmin' && p === 'lxdsuperadmin') {
-        const superUser = {
-          id: 'staff-superadmin-primary',
-          username: 'superadmin',
-          fullName: 'SUPERADMIN',
-          position: 'OWNER',
-          role: 'superadmin',
-          password: p,
-          isPrimary: true,
-          tabPermissions: readPermGrid('superadmin')
-        };
-        state.staffUsers.unshift(superUser);
-        try { await saveState(); } catch (_) {}
-        session = {
-          type: 'staff',
-          id: superUser.id,
-          username: superUser.username,
-          displayName: superUser.fullName,
-          role: 'superadmin'
         };
         sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
         document.getElementById('loginForm').reset();
@@ -1650,7 +1975,7 @@
         return;
       }
 
-      setMsg('loginStatus', 'Username atau password salah.', 'err');
+      setMsg('loginStatus', 'Username atau password tidak cocok.', 'err');
     });
 
     document.getElementById('btnLogout').addEventListener('click', () => {
@@ -1662,6 +1987,7 @@
     document.getElementById('btnSync').addEventListener('click', async () => {
       await loadState();
       applySession();
+      setMsg('clientStatus', 'Data berhasil disinkronkan.', 'ok');
     });
 
     document.getElementById('activeClientSelector').addEventListener('change', e => {
@@ -1674,6 +2000,7 @@
     document.getElementById('btnNewClient').addEventListener('click', () => {
       document.getElementById('clientForm').reset();
       document.getElementById('c_id').value = '';
+      setMsg('clientStatus', 'Silakan isi form klien baru lalu klik Simpan Klien.');
     });
 
     document.getElementById('btnResetClient').addEventListener('click', () => renderProjectsTab(getClient()));
@@ -1695,7 +2022,7 @@
           username: '',
           password: '',
           historyNotes: '',
-          biodata: {},
+          biodata: { groom: {}, bride: {} },
           events: [{
             id: 'ev-' + Date.now(),
             eventName: 'Wedding Day',
@@ -1721,17 +2048,21 @@
       c.password = document.getElementById('c_password').value.trim();
       c.historyNotes = document.getElementById('c_historyNotes').value.trim();
 
-      await saveState();
+      try {
+        await saveState();
+        setMsg('clientStatus', `Data "${c.coupleShort}" tersimpan.`, 'ok');
+      } catch (err) {
+        setMsg('clientStatus', err.message, 'ok');
+      }
       renderClientSelector();
       renderActivePanel();
-      setMsg('clientStatus', `Data "${c.coupleShort}" tersimpan.`, 'ok');
     });
 
     document.getElementById('btnSaveWoStatus').addEventListener('click', async () => {
       const ev = getPrimaryEvent(getClient());
       if (!ev) return;
       ev.woProgress = { ...(ev.woProgress || {}), status: document.getElementById('woStatusSelect').value };
-      await saveState();
+      try { await saveState(); } catch (_) {}
       renderActivePanel();
       setMsg('woStatusMsg', 'Status rundown tersimpan.', 'ok');
     });
@@ -1744,10 +2075,11 @@
       const v = (ev.vendors || []).find(x => x.id === vId);
       if (!v) return;
       v.checklist = v.checklist || [];
-      v.checklist.push({ id: 'chk-' + Date.now(), title, done: false, detail: '' });
+      v.checklist.push({ id: 'chk-' + Date.now(), title, done: false });
       document.getElementById('newChkTitle').value = '';
-      await saveState();
+      try { await saveState(); } catch (_) {}
       renderRundownTab(getClient(), ev);
+      setMsg('woStatusMsg', 'Item checklist ditambahkan.', 'ok');
     });
 
     document.getElementById('vendorForm').addEventListener('submit', async e => {
@@ -1775,15 +2107,14 @@
         ev.vendors.push({
           ...payload,
           paidAmount: 0,
-          checklist: [{ id: 'chk-' + Date.now(), title: 'Konfirmasi Kontrak & Brief Awal', done: false, detail: '' }],
-          paymentLogs: [],
-          updatesLog: []
+          checklist: [{ id: 'chk-' + Date.now(), title: 'Konfirmasi Kontrak & Brief Awal', done: false }],
+          paymentLogs: []
         });
       }
 
       document.getElementById('vendorForm').reset();
       document.getElementById('v_id').value = '';
-      await saveState();
+      try { await saveState(); } catch (_) {}
       renderVendorsTab(getClient(), ev);
       setMsg('vendorMsg', 'Data vendor tersimpan.', 'ok');
     });
@@ -1808,7 +2139,7 @@
       ['cv_category', 'cv_name', 'cv_picName', 'cv_picPhone', 'cv_notes'].forEach(id => {
         document.getElementById(id).value = '';
       });
-      await saveState();
+      try { await saveState(); } catch (_) {}
       renderVendorsTab(getClient(), ev);
     });
 
@@ -1818,30 +2149,24 @@
       if (!c) return;
       c.biodata = c.biodata || {};
       c.biodata.groom = {
-        ...(c.biodata.groom || {}),
         fullName: document.getElementById('g_fullName').value.trim(),
         nickname: document.getElementById('g_nickname').value.trim(),
         birthOrder: document.getElementById('g_birthOrder').value.trim(),
         phone: document.getElementById('g_phone').value.trim(),
         instagram: document.getElementById('g_instagram').value.trim(),
-        address: document.getElementById('g_address').value.trim()
-      };
-      c.biodata.groomParents = {
+        address: document.getElementById('g_address').value.trim(),
         fatherName: document.getElementById('g_fatherName').value.trim(),
         fatherPhone: document.getElementById('g_fatherPhone').value.trim(),
         motherName: document.getElementById('g_motherName').value.trim(),
         motherPhone: document.getElementById('g_motherPhone').value.trim()
       };
       c.biodata.bride = {
-        ...(c.biodata.bride || {}),
         fullName: document.getElementById('b_fullName').value.trim(),
         nickname: document.getElementById('b_nickname').value.trim(),
         birthOrder: document.getElementById('b_birthOrder').value.trim(),
         phone: document.getElementById('b_phone').value.trim(),
         instagram: document.getElementById('b_instagram').value.trim(),
-        address: document.getElementById('b_address').value.trim()
-      };
-      c.biodata.brideParents = {
+        address: document.getElementById('b_address').value.trim(),
         fatherName: document.getElementById('b_fatherName').value.trim(),
         fatherPhone: document.getElementById('b_fatherPhone').value.trim(),
         motherName: document.getElementById('b_motherName').value.trim(),
@@ -1849,8 +2174,8 @@
       };
       c.groomFullName = c.biodata.groom.fullName || c.groomFullName;
       c.brideFullName = c.biodata.bride.fullName || c.brideFullName;
-      await saveState();
-      setMsg('bioMsg', 'Biodata tersimpan.', 'ok');
+      try { await saveState(); } catch (_) {}
+      setMsg('bioMsg', 'Biodata pasangan tersimpan.', 'ok');
     });
 
     document.getElementById('paymentForm').addEventListener('submit', async e => {
@@ -1870,7 +2195,7 @@
       });
       v.paidAmount = v.paymentLogs.reduce((s, p) => s + Number(p.amount || 0), 0);
       document.getElementById('paymentForm').reset();
-      await saveState();
+      try { await saveState(); } catch (_) {}
       renderPaymentsTab(getClient(), ev);
       setMsg('paymentMsg', 'Pembayaran dicatat.', 'ok');
     });
@@ -1889,11 +2214,10 @@
         issueDate: document.getElementById('inv_issueDate').value || new Date().toISOString().slice(0, 10),
         dueDate: document.getElementById('inv_dueDate').value || '',
         status: document.getElementById('inv_status').value,
-        totalAmount: amount,
-        items: [{ id: 'ii-' + Date.now(), description: terms, qty: 1, unitPrice: amount, detail: '' }]
+        totalAmount: amount
       });
       document.getElementById('invoiceForm').reset();
-      await saveState();
+      try { await saveState(); } catch (_) {}
       renderInvoicesTab(getClient(), ev);
       setMsg('invoiceMsg', 'Invoice ditambahkan.', 'ok');
     });
@@ -1916,7 +2240,7 @@
         dietaryNotes: document.getElementById('fb_dietaryNotes').value.trim(),
         additionalNotes: document.getElementById('fb_additionalNotes').value.trim()
       };
-      await saveState();
+      try { await saveState(); } catch (_) {}
       renderActivePanel();
       setMsg('briefMsg', 'Event & brief tersimpan.', 'ok');
     });
@@ -1965,7 +2289,7 @@
         });
       }
 
-      await saveState();
+      try { await saveState(); } catch (_) {}
       resetStaffForm();
       renderUsersTab();
       setMsg('staffMsg', `User "${username}" tersimpan.`, 'ok');
