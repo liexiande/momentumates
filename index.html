@@ -1035,6 +1035,24 @@
             return order;
         }
 
+        function getTabPermissionMode(client, tabKey = activeTab) {
+            if (!currentUser) return 'view';
+            if (currentUser.role === 'admin' && !clientPageMode) return 'edit';
+            if (isEffectiveClientView()) {
+                const mode = client?.roleAccess?.clientPermissions?.[tabKey];
+                return mode === 'edit' ? 'edit' : 'view';
+            }
+            if (currentUser.role === 'crew') {
+                const mode = client?.roleAccess?.crewPermissions?.[tabKey];
+                return mode === 'view' ? 'view' : 'edit';
+            }
+            return 'view';
+        }
+
+        function canEditCurrentTab(client, tabKey = activeTab) {
+            return getTabPermissionMode(client, tabKey) === 'edit';
+        }
+
         function computeRundownDurationText(timeRange, savedDuration) {
             if (savedDuration && String(savedDuration).trim()) return String(savedDuration).trim();
             const match = String(timeRange || '').match(/(\d{1,2})[:.](\d{2})\s*-\s*(\d{1,2})[:.](\d{2})/);
@@ -1457,7 +1475,8 @@
         // =====================================================================
         function renderVendorProgressTab(client, ev) {
             const isAdmin = currentUser?.role === 'admin' && !clientPageMode;
-            const canCheck = !isEffectiveClientView() && (currentUser?.role === 'admin' || currentUser?.role === 'crew');
+            const canEditTab = canEditCurrentTab(client, 'vendor');
+            const canCheck = !isEffectiveClientView() && canEditTab && (currentUser?.role === 'admin' || currentUser?.role === 'crew');
             const vendors = ev.vendors || [];
             const confirmedVendors = ev.confirmedVendorList || [];
 
@@ -2087,6 +2106,7 @@
         // =====================================================================
         function renderRundownTab(client, ev) {
             const isAdmin = currentUser?.role === 'admin' && !clientPageMode;
+            const canEditTab = canEditCurrentTab(client, 'rundown');
             const isClient = isEffectiveClientView();
             const wo = ev.woProgress || createDefaultWoProgress(ev.eventName, ev.venue);
             const items = wo.rundown || [];
@@ -2141,11 +2161,13 @@
                                     <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
                                     <span>${wo.clientApproved ? 'Rundown Disetujui' : 'Setujui Rundown'}</span>
                                 </button>
-                                <button type="button" onclick="openClientFeedbackModal('rundown')"
-                                    class="px-3.5 py-2 rounded-xl border border-stoneborder bg-butter/80 hover:bg-butter text-xs font-bold text-charcoal-900 inline-flex items-center gap-1.5 transition">
-                                    <i data-lucide="message-square-plus" class="w-3.5 h-3.5 text-champagne-600"></i>
-                                    <span>Request Revisi</span>
-                                </button>
+                                ${canEditTab ? `
+                                    <button type="button" onclick="openClientFeedbackModal('rundown')"
+                                        class="px-3.5 py-2 rounded-xl border border-stoneborder bg-butter/80 hover:bg-butter text-xs font-bold text-charcoal-900 inline-flex items-center gap-1.5 transition">
+                                        <i data-lucide="message-square-plus" class="w-3.5 h-3.5 text-champagne-600"></i>
+                                        <span>Request Revisi</span>
+                                    </button>
+                                ` : ''}
                             ` : ''}
                             ${isAdmin ? `
                                 <button type="button" onclick="toggleRundownStatus()"
@@ -2842,7 +2864,7 @@
         // 9. TAB 3: BIODATA KELUARGA
         // =====================================================================
         function renderBiodataTab(client, ev) {
-            const canEdit = Boolean(currentUser);
+            const canEdit = Boolean(currentUser) && canEditCurrentTab(client, 'biodata');
             const bio = ev.biodata || createDefaultBiodata();
             const contacts = bio.familyContacts || [];
 
@@ -3645,7 +3667,7 @@
         // 11. TAB 5: DATA BRIEF KLIEN (FLEXIBLE CUSTOM FIELDS & EXTRA SECTIONS)
         // =====================================================================
         function renderBriefTab(client, ev) {
-            const canEdit = Boolean(currentUser);
+            const canEdit = Boolean(currentUser) && canEditCurrentTab(client, 'brief');
             const brief = ev.brief || createDefaultBrief(ev.eventName);
             const customFields = brief.customFields || [];
             const extraSections = brief.extraSections || [];
@@ -3897,7 +3919,7 @@
         // 12. TAB 6: CREW & TUGAS HARI-H + EQUIPMENT CHECKLIST
         // =====================================================================
         function renderOpsTab(client, ev) {
-            const canEdit = !isEffectiveClientView() && (currentUser?.role === 'admin' || currentUser?.role === 'crew');
+            const canEdit = !isEffectiveClientView() && canEditCurrentTab(client, 'ops') && (currentUser?.role === 'admin' || currentUser?.role === 'crew');
             const ops = ev.ops || createDefaultOps();
             const crew = ops.crew || [];
             const equipment = ops.equipment || [];
@@ -4368,12 +4390,15 @@
             if (currentUser?.role !== 'admin') return;
             const users = appState.staffUsers || [];
             openModal(`
-                <div class="bg-white rounded-3xl border border-stoneborder w-full max-w-lg p-6 space-y-4 shadow-xl my-auto">
+                <div class="bg-white rounded-3xl border border-stoneborder w-full max-w-2xl p-6 space-y-4 shadow-xl my-auto">
                     <div class="flex items-center justify-between">
-                        <h3 class="font-editorial text-2xl font-bold text-charcoal-900">Kelola Akun Tim WO</h3>
+                        <div>
+                            <div class="text-[10px] font-extrabold uppercase tracking-widest text-champagne-600">User Management</div>
+                            <h3 class="font-editorial text-2xl font-bold text-charcoal-900">Kelola Akun User (Tambah, Edit &amp; Hapus)</h3>
+                        </div>
                         <button type="button" onclick="closeModal()" class="p-1.5 rounded-xl hover:bg-alabaster"><i data-lucide="x" class="w-4 h-4"></i></button>
                     </div>
-                    <form onsubmit="saveStaffUserModal(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 p-3.5 rounded-2xl bg-alabaster border border-stoneborder/70">
+                    <form onsubmit="saveStaffUserModal(event)" class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 p-3.5 rounded-2xl bg-alabaster border border-stoneborder/70">
                         <input id="stf-name" type="text" required placeholder="Nama Lengkap" class="px-3 py-2 rounded-xl border border-stoneborder bg-white text-xs" />
                         <input id="stf-pos" type="text" placeholder="Jabatan (Contoh: LEAD PLANNER)" class="px-3 py-2 rounded-xl border border-stoneborder bg-white text-xs" />
                         <input id="stf-user" type="text" required placeholder="Username" class="px-3 py-2 rounded-xl border border-stoneborder bg-white text-xs" />
@@ -4384,18 +4409,25 @@
                         </select>
                         <button type="submit" class="px-4 py-2 rounded-xl bg-charcoal-900 text-white text-xs font-bold">+ Tambah User</button>
                     </form>
-                    <div class="space-y-2 max-h-60 overflow-y-auto editorial-scroll">
+                    <div class="space-y-2 max-h-64 overflow-y-auto editorial-scroll">
                         ${users.map((u) => `
                             <div class="p-3 rounded-2xl bg-alabaster border border-stoneborder/70 flex items-center justify-between gap-2">
                                 <div>
                                     <div class="text-xs font-extrabold text-charcoal-900">${escapeHtml(u.name)} <span class="text-champagne-600">(${escapeHtml(u.username)})</span></div>
-                                    <div class="text-[11px] text-charcoal-700">Role: <strong>${escapeHtml(u.role)}</strong> ${u.position ? `&bull; ${escapeHtml(u.position)}` : ''}</div>
+                                    <div class="text-[11px] text-charcoal-700">Role: <strong>${escapeHtml(u.role)}</strong> &bull; Password: <strong>${escapeHtml(u.password)}</strong> ${u.position ? `&bull; ${escapeHtml(u.position)}` : ''}</div>
                                 </div>
-                                ${u.isPrimary ? '<span class="text-[10px] font-bold text-champagne-600">Primary</span>' : `
-                                    <button type="button" onclick="deleteStaffUser('${escapeHtml(u.id)}')" class="p-1.5 rounded-xl hover:bg-blush text-red-600">
-                                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                <div class="flex items-center gap-1.5 shrink-0">
+                                    <button type="button" onclick="openEditStaffUserModal('${escapeHtml(u.id)}')" title="Edit User"
+                                        class="p-1.5 rounded-xl bg-white border border-stoneborder hover:bg-champagne-100 text-charcoal-800">
+                                        <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
                                     </button>
-                                `}
+                                    ${u.isPrimary ? '<span class="text-[10px] font-bold text-champagne-600 px-1.5">Primary</span>' : `
+                                        <button type="button" onclick="deleteStaffUser('${escapeHtml(u.id)}')" title="Hapus User"
+                                            class="p-1.5 rounded-xl bg-white border border-stoneborder hover:bg-blush text-red-600">
+                                            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                        </button>
+                                    `}
+                                </div>
                             </div>
                         `).join('')}
                     </div>
@@ -4403,91 +4435,85 @@
             `);
         }
 
-        function saveStaffUserModal(e) {
-            e.preventDefault();
+        function openEditStaffUserModal(userId) {
             if (currentUser?.role !== 'admin') return;
-            const name = (document.getElementById('stf-name')?.value || '').trim();
-            const position = (document.getElementById('stf-pos')?.value || '').trim();
-            const username = (document.getElementById('stf-user')?.value || '').trim();
-            const password = (document.getElementById('stf-pass')?.value || '').trim();
-            const role = document.getElementById('stf-role')?.value || 'crew';
-            if (!name || !username || !password) return;
-            if ((appState.staffUsers || []).some((u) => u.username.toLowerCase() === username.toLowerCase())) {
-                showToast('Username sudah digunakan.', 'error');
-                return;
-            }
-            appState.staffUsers.push({
-                id: 'st-' + Date.now(),
-                name,
-                position,
-                username,
-                password,
-                role,
-                isPrimary: false,
-            });
-            saveAppData();
-            showToast(`Akun ${username} ditambahkan.`, 'success');
-            openStaffUsersModal();
-        }
+            const target = (appState.staffUsers || []).find((u) => u.id === userId);
+            if (!target) return;
 
-        function deleteStaffUser(id) {
-            if (currentUser?.role !== 'admin') return;
-            appState.staffUsers = (appState.staffUsers || []).filter((u) => u.id !== id || u.isPrimary);
-            saveAppData();
-            openStaffUsersModal();
-        }
-
-        function openAddEventModal() {
-            if (currentUser?.role !== 'admin') return;
             openModal(`
                 <div class="bg-white rounded-3xl border border-stoneborder w-full max-w-md p-6 space-y-4 shadow-xl">
-                    <h3 class="font-editorial text-2xl font-bold text-charcoal-900">Tambah Event</h3>
-                    <form onsubmit="saveNewEvent(event)" class="space-y-3">
-                        <input id="nev-name" type="text" required placeholder="Nama Event (Contoh: Akad / Holy Matrimony)" class="w-full px-3.5 py-2 rounded-2xl border border-stoneborder bg-alabaster text-sm" />
-                        <input id="nev-type" type="text" value="Ceremony" class="w-full px-3.5 py-2 rounded-2xl border border-stoneborder bg-alabaster text-sm" />
-                        <input id="nev-date" type="date" value="${escapeHtml(getActiveClient()?.weddingDate || '2027-05-15')}" class="w-full px-3.5 py-2 rounded-2xl border border-stoneborder bg-alabaster text-sm" />
-                        <input id="nev-venue" type="text" placeholder="Lokasi / Venue" class="w-full px-3.5 py-2 rounded-2xl border border-stoneborder bg-alabaster text-sm" />
-                        <div class="flex justify-end gap-2">
-                            <button type="button" onclick="closeModal()" class="px-4 py-2 rounded-2xl border border-stoneborder text-xs font-bold">Batal</button>
-                            <button type="submit" class="px-5 py-2 rounded-2xl bg-charcoal-900 text-white text-xs font-bold">Tambah Event</button>
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-editorial text-2xl font-bold text-charcoal-900">Edit Akun User</h3>
+                        <button type="button" onclick="openStaffUsersModal()" class="p-1.5 rounded-xl hover:bg-alabaster"><i data-lucide="x" class="w-4 h-4"></i></button>
+                    </div>
+                    <form onsubmit="updateStaffUserModal(event, '${escapeHtml(target.id)}')" class="space-y-3">
+                        <div>
+                            <label class="block text-xs font-bold mb-1">Nama Lengkap</label>
+                            <input id="estf-name" type="text" required value="${escapeHtml(target.name)}" class="w-full px-3.5 py-2 rounded-2xl border border-stoneborder bg-alabaster text-sm" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">Jabatan</label>
+                            <input id="estf-pos" type="text" value="${escapeHtml(target.position || '')}" class="w-full px-3.5 py-2 rounded-2xl border border-stoneborder bg-alabaster text-sm" />
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold mb-1">Username</label>
+                                <input id="estf-user" type="text" required value="${escapeHtml(target.username)}" class="w-full px-3.5 py-2 rounded-2xl border border-stoneborder bg-alabaster text-sm" />
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold mb-1">Password</label>
+                                <input id="estf-pass" type="text" required value="${escapeHtml(target.password)}" class="w-full px-3.5 py-2 rounded-2xl border border-stoneborder bg-alabaster text-sm" />
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">Role</label>
+                            <select id="estf-role" ${target.isPrimary ? 'disabled' : ''} class="w-full px-3.5 py-2 rounded-2xl border border-stoneborder bg-alabaster text-sm">
+                                <option value="admin" ${target.role === 'admin' ? 'selected' : ''}>Super Admin (admin)</option>
+                                <option value="crew" ${target.role === 'crew' ? 'selected' : ''}>Crew WO (crew)</option>
+                            </select>
+                        </div>
+                        <div class="flex justify-end gap-2 pt-1">
+                            <button type="button" onclick="openStaffUsersModal()" class="px-4 py-2 rounded-2xl border border-stoneborder text-xs font-bold">Kembali</button>
+                            <button type="submit" class="px-5 py-2 rounded-2xl bg-charcoal-900 text-white text-xs font-bold">Simpan Perubahan</button>
                         </div>
                     </form>
                 </div>
             `);
         }
 
-        function saveNewEvent(e) {
+        function updateStaffUserModal(e, userId) {
             e.preventDefault();
             if (currentUser?.role !== 'admin') return;
-            const cl = getActiveClient();
-            if (!cl) return;
-            const eventName = (document.getElementById('nev-name')?.value || '').trim();
-            const eventType = (document.getElementById('nev-type')?.value || 'Event').trim();
-            const eventDate = document.getElementById('nev-date')?.value || cl.weddingDate;
-            const venue = (document.getElementById('nev-venue')?.value || '').trim();
-            if (!eventName) return;
+            const target = (appState.staffUsers || []).find((u) => u.id === userId);
+            if (!target) return;
 
-            const newEv = {
-                id: 'ev-' + Date.now(),
-                eventName,
-                eventType,
-                eventDate,
-                venue,
-                vendors: [],
-                confirmedVendorList: [],
-                woProgress: createDefaultWoProgress(eventName, venue),
-                biodata: createDefaultBiodata(),
-                brief: createDefaultBrief(eventName),
-                ops: createDefaultOps(),
-                finance: createDefaultFinance(),
-                payments: [],
-                invoices: [],
-            };
-            cl.events.push(newEv);
-            activeEventId = newEv.id;
+            const name = (document.getElementById('estf-name')?.value || '').trim();
+            const position = (document.getElementById('estf-pos')?.value || '').trim();
+            const username = (document.getElementById('estf-user')?.value || '').trim();
+            const password = (document.getElementById('estf-pass')?.value || '').trim();
+            const role = target.isPrimary ? 'admin' : (document.getElementById('estf-role')?.value || 'crew');
+            if (!name || !username || !password) return;
+
+            if ((appState.staffUsers || []).some((u) => u.id !== userId && u.username.toLowerCase() === username.toLowerCase())) {
+                showToast('Username sudah dipakai user lain.', 'error');
+                return;
+            }
+
+            target.name = name;
+            target.position = position;
+            target.username = username;
+            target.password = password;
+            target.role = role;
+
+            if (currentUser?.username && currentUser.username.toLowerCase() === target.username.toLowerCase()) {
+                currentUser.name = name;
+                currentUser.role = role;
+                sessionStorage.setItem(SESSION_KEY, JSON.stringify(currentUser));
+            }
+
             saveAppData();
-            closeModal();
-            showToast(`Event "${eventName}" ditambahkan.`, 'success');
+            showToast(`User ${username} diperbarui.`, 'success');
+            openStaffUsersModal();
             renderApp();
         }
 
@@ -4580,32 +4606,57 @@
             if (!cl) return;
             const crewTabs = cl.roleAccess?.crewTabs || [];
             const clientTabs = cl.roleAccess?.clientTabs || [];
+            const crewPerms = cl.roleAccess?.crewPermissions || {};
+            const clientPerms = cl.roleAccess?.clientPermissions || {};
 
             openModal(`
-                <div class="bg-white rounded-3xl border border-stoneborder w-full max-w-lg p-6 space-y-4 shadow-xl">
+                <div class="bg-white rounded-3xl border border-stoneborder w-full max-w-3xl p-6 space-y-4 shadow-xl my-auto">
                     <div class="flex items-center justify-between">
-                        <h3 class="font-editorial text-2xl font-bold text-charcoal-900">Pengaturan Akses Tab Role</h3>
+                        <div>
+                            <div class="text-[10px] font-extrabold uppercase tracking-widest text-champagne-600">Tab Visibility &amp; Permissions</div>
+                            <h3 class="font-editorial text-2xl font-bold text-charcoal-900">Pengaturan Tab per Role (Tampil / Sembunyikan &amp; Edit / View Saja)</h3>
+                        </div>
                         <button type="button" onclick="closeModal()" class="p-1.5 rounded-xl hover:bg-alabaster"><i data-lucide="x" class="w-4 h-4"></i></button>
                     </div>
                     <form onsubmit="saveRoleAccessModal(event)" class="space-y-4">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div class="p-3.5 rounded-2xl bg-alabaster space-y-2">
-                                <div class="text-xs font-extrabold uppercase text-champagne-600">Akses Crew WO</div>
-                                ${DEFAULT_TABS.map((key) => `
-                                    <label class="flex items-center gap-2 text-xs font-medium">
-                                        <input type="checkbox" name="crewTab" value="${key}" ${crewTabs.includes(key) ? 'checked' : ''} class="rounded accent-charcoal-900" />
-                                        <span>${escapeHtml(TAB_META[key].label)}</span>
-                                    </label>
-                                `).join('')}
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="p-3.5 rounded-2xl bg-alabaster border border-stoneborder/70 space-y-2">
+                                <div class="text-xs font-extrabold uppercase text-champagne-600">Role Crew WO (Tampil &amp; Mode Akses)</div>
+                                ${DEFAULT_TABS.map((key) => {
+                                    const isVisible = crewTabs.includes(key);
+                                    const mode = crewPerms[key] === 'view' ? 'view' : 'edit';
+                                    return `
+                                        <div class="flex items-center justify-between gap-2 py-1 border-b border-stoneborder/50 last:border-none">
+                                            <label class="flex items-center gap-2 text-xs font-semibold text-charcoal-900">
+                                                <input type="checkbox" name="crewTab" value="${key}" ${isVisible ? 'checked' : ''} class="rounded accent-charcoal-900" />
+                                                <span>${escapeHtml(TAB_META[key].label)}</span>
+                                            </label>
+                                            <select name="crewPerm_${key}" class="px-2 py-1 rounded-lg border border-stoneborder bg-white text-[11px] font-bold">
+                                                <option value="edit" ${mode === 'edit' ? 'selected' : ''}>Bisa Edit</option>
+                                                <option value="view" ${mode === 'view' ? 'selected' : ''}>View Saja</option>
+                                            </select>
+                                        </div>
+                                    `;
+                                }).join('')}
                             </div>
-                            <div class="p-3.5 rounded-2xl bg-alabaster space-y-2">
-                                <div class="text-xs font-extrabold uppercase text-sage-700">Akses Client Portal</div>
-                                ${DEFAULT_TABS.map((key) => `
-                                    <label class="flex items-center gap-2 text-xs font-medium">
-                                        <input type="checkbox" name="clientTab" value="${key}" ${clientTabs.includes(key) ? 'checked' : ''} class="rounded accent-charcoal-900" />
-                                        <span>${escapeHtml(TAB_META[key].label)}</span>
-                                    </label>
-                                `).join('')}
+                            <div class="p-3.5 rounded-2xl bg-alabaster border border-stoneborder/70 space-y-2">
+                                <div class="text-xs font-extrabold uppercase text-sage-700">Role Client Portal (Tampil &amp; Mode Akses)</div>
+                                ${DEFAULT_TABS.map((key) => {
+                                    const isVisible = clientTabs.includes(key);
+                                    const mode = clientPerms[key] === 'edit' ? 'edit' : 'view';
+                                    return `
+                                        <div class="flex items-center justify-between gap-2 py-1 border-b border-stoneborder/50 last:border-none">
+                                            <label class="flex items-center gap-2 text-xs font-semibold text-charcoal-900">
+                                                <input type="checkbox" name="clientTab" value="${key}" ${isVisible ? 'checked' : ''} class="rounded accent-charcoal-900" />
+                                                <span>${escapeHtml(TAB_META[key].label)}</span>
+                                            </label>
+                                            <select name="clientPerm_${key}" class="px-2 py-1 rounded-lg border border-stoneborder bg-white text-[11px] font-bold">
+                                                <option value="view" ${mode === 'view' ? 'selected' : ''}>View Saja</option>
+                                                <option value="edit" ${mode === 'edit' ? 'selected' : ''}>Bisa Edit</option>
+                                            </select>
+                                        </div>
+                                    `;
+                                }).join('')}
                             </div>
                         </div>
                         <div class="flex justify-end gap-2">
@@ -4624,13 +4675,21 @@
             if (!cl) return;
             const crewChecked = Array.from(document.querySelectorAll('input[name="crewTab"]:checked')).map((el) => el.value);
             const clientChecked = Array.from(document.querySelectorAll('input[name="clientTab"]:checked')).map((el) => el.value);
+            const crewPermissions = {};
+            const clientPermissions = {};
+            DEFAULT_TABS.forEach((key) => {
+                crewPermissions[key] = document.querySelector(`select[name="crewPerm_${key}"]`)?.value || 'edit';
+                clientPermissions[key] = document.querySelector(`select[name="clientPerm_${key}"]`)?.value || 'view';
+            });
             cl.roleAccess = {
                 crewTabs: crewChecked.length ? crewChecked : ['vendor'],
                 clientTabs: clientChecked.length ? clientChecked : ['vendor'],
+                crewPermissions,
+                clientPermissions,
             };
             saveAppData();
             closeModal();
-            showToast('Hak akses role diperbarui.', 'success');
+            showToast('Hak akses tab & mode edit/view diperbarui.', 'success');
             renderApp();
         }
 
