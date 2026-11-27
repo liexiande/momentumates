@@ -3,216 +3,460 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MOMENTUMATES WO APPS — Wedding Organizer Suite</title>
+  <title>MOMENTUMATES — Wedding Organizer &amp; Client Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0b0d11;
-      --panel: #131720;
-      --panel-2: #1a202c;
-      --border: #283040;
-      --text: #f3f4f6;
-      --muted: #9ca3af;
-      --gold: #e5b869;
-      --gold-ink: #111317;
-      --green: #22c55e;
-      --red: #ef4444;
-      --blue: #60a5fa;
+      --bg: #fdfbf7;
+      --surface: #ffffff;
+      --surface-soft: #f7f2e9;
+      --border: #e8decb;
+      --ink: #231f1b;
+      --muted: #786e63;
+      --gold: #b88a44;
+      --gold-dark: #946b2d;
+      --gold-light: #f3e8d2;
+      --sage: #5d7362;
+      --danger: #c2413b;
+      --shadow: 0 18px 45px rgba(35, 31, 27, 0.06);
     }
 
     * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
-      padding: 18px 16px 48px;
       background: var(--bg);
-      color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      line-height: 1.45;
+      color: var(--ink);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.55;
+      overflow-x: hidden;
     }
 
-    .container { max-width: 1240px; margin: 0 auto; }
+    h1, h2, h3, .serif {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
 
-    .topbar {
+    /* TOP NAV */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(253, 251, 247, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 24px;
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
       gap: 12px;
-      padding-bottom: 14px;
-      margin-bottom: 16px;
-      border-bottom: 1px solid var(--border);
     }
 
-    .brand { font-size: 17px; font-weight: 700; letter-spacing: 0.08em; }
-    .brand span { color: var(--gold); }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--ink);
+    }
 
-    .session-bar {
+    .brand span {
+      color: var(--gold);
+      font-size: 12px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--gold-light);
+    }
+
+    .nav-actions {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       font-size: 13px;
-      color: var(--muted);
     }
 
-    .badge {
-      padding: 2px 9px;
+    .role-pill {
+      padding: 4px 12px;
       border-radius: 999px;
-      background: var(--panel-2);
-      border: 1px solid var(--border);
-      color: var(--gold);
+      background: var(--gold-light);
+      color: var(--gold-dark);
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* PARALLAX HERO */
+    .hero-parallax {
+      position: relative;
+      min-height: 78vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 64px 20px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #fbf7ef 0%, #f4ead8 55%, #ede0c9 100%);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .parallax-layer {
+      position: absolute;
+      inset: -12%;
+      pointer-events: none;
+      will-change: transform;
+      transition: transform 0.12s ease-out;
+    }
+
+    .orb-1 {
+      background: radial-gradient(circle at 20% 25%, rgba(212, 175, 112, 0.28), transparent 45%),
+                  radial-gradient(circle at 82% 75%, rgba(164, 184, 166, 0.24), transparent 48%);
+    }
+
+    .orb-2::before, .orb-2::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(184, 138, 68, 0.22);
+    }
+    .orb-2::before { width: 520px; height: 520px; top: 8%; right: -6%; }
+    .orb-2::after { width: 380px; height: 380px; bottom: 5%; left: -4%; }
+
+    .hero-grid {
+      position: relative;
+      z-index: 2;
+      max-width: 1120px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    @media (max-width: 860px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 28px; }
+      .hero-parallax { min-height: auto; padding: 44px 16px; }
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
       font-size: 11px;
       font-weight: 700;
+      letter-spacing: 0.24em;
       text-transform: uppercase;
+      color: var(--gold-dark);
+      margin-bottom: 12px;
     }
 
-    .card {
-      background: var(--panel);
+    .hero-title {
+      font-size: clamp(34px, 4.8vw, 56px);
+      line-height: 1.08;
+      margin: 0 0 16px;
+      color: var(--ink);
+    }
+
+    .hero-title em {
+      color: var(--gold-dark);
+      font-style: italic;
+    }
+
+    .hero-sub {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 520px;
+      margin: 0 0 24px;
+    }
+
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .hero-pills span {
+      font-size: 12px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.8);
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 18px;
-      margin-bottom: 16px;
+      color: var(--ink);
     }
 
+    /* GLASS LOGIN CARD */
+    .login-glass {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      padding: 30px 28px;
+      box-shadow: var(--shadow);
+      animation: floatUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    @keyframes floatUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* REVEAL ANIMATION */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* WORKSPACE CONTAINER */
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 28px 20px 64px;
+    }
+
+    /* COUPLE BANNER (PARALLAX HEADER WHEN LOGGED IN) */
+    .couple-banner {
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px;
+      padding: 32px 28px;
+      margin-bottom: 22px;
+      background: linear-gradient(120deg, #fffdf9 0%, #f5ebd9 60%, #ecdec5 100%);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .couple-banner h1 {
+      font-size: clamp(28px, 3.6vw, 40px);
+      margin: 4px 0 6px;
+    }
+
+    /* TABS */
     .tabs {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 16px;
+      gap: 8px;
+      margin-bottom: 20px;
+      padding: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 6px 20px rgba(35, 31, 27, 0.03);
+    }
+
+    .tab-btn {
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      padding: 9px 15px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.22s ease;
+    }
+
+    .tab-btn:hover {
+      color: var(--ink);
+      background: var(--surface-soft);
     }
 
     .tab-btn.active {
       background: var(--gold);
-      color: var(--gold-ink);
-      border-color: var(--gold);
+      color: #ffffff;
+      box-shadow: 0 6px 16px rgba(184, 138, 68, 0.28);
     }
 
-    h1, h2, h3, h4 { margin: 0 0 10px; }
-    h1, h2 { font-size: 17px; }
-    h3 {
-      font-size: 12px;
+    /* CARDS & FORMS */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+      animation: floatUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .card h2 { font-size: 26px; margin: 0 0 14px; }
+    .card h3 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 11.5px;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--gold);
-      margin-top: 18px;
-      padding-bottom: 5px;
+      letter-spacing: 0.14em;
+      color: var(--gold-dark);
+      margin: 22px 0 12px;
+      padding-bottom: 6px;
       border-bottom: 1px solid var(--border);
     }
-    h4 { font-size: 14px; color: var(--text); }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
-      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
+      gap: 12px;
       align-items: end;
     }
 
-    .field { display: flex; flex-direction: column; gap: 5px; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
     .field.span-2 { grid-column: span 2; }
     @media (max-width: 640px) { .field.span-2 { grid-column: span 1; } }
 
-    label { font-size: 12px; color: var(--muted); }
+    label { font-size: 12px; font-weight: 600; color: var(--muted); }
 
     input, select, textarea {
       width: 100%;
-      padding: 8px 10px;
-      border-radius: 7px;
+      padding: 10px 12px;
+      border-radius: 10px;
       border: 1px solid var(--border);
-      background: var(--panel-2);
-      color: var(--text);
-      font-size: 13px;
+      background: #fffefb;
+      color: var(--ink);
+      font-size: 13.5px;
       font-family: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
 
     input:focus, select:focus, textarea:focus {
       outline: none;
       border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(184, 138, 68, 0.14);
     }
 
-    textarea { min-height: 64px; resize: vertical; }
+    textarea { min-height: 70px; resize: vertical; }
 
     .btn-row {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-top: 12px;
+      margin-top: 14px;
       align-items: center;
     }
 
     button {
-      padding: 7px 13px;
-      border-radius: 7px;
+      padding: 9px 16px;
+      border-radius: 10px;
       border: 1px solid var(--border);
-      background: var(--panel-2);
-      color: var(--text);
-      font-size: 12.5px;
+      background: var(--surface);
+      color: var(--ink);
+      font-size: 13px;
       font-weight: 600;
       cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     }
 
-    button:hover:not(:disabled) { border-color: var(--gold); }
-    button:disabled { opacity: 0.45; cursor: not-allowed; }
-    button.primary { background: var(--gold); color: var(--gold-ink); border-color: var(--gold); }
-    button.danger { color: #fca5a5; border-color: rgba(239, 68, 68, 0.45); }
+    button:hover:not(:disabled) {
+      transform: translateY(-1px);
+      border-color: var(--gold);
+      box-shadow: 0 6px 14px rgba(35, 31, 27, 0.06);
+    }
 
-    .status { margin-top: 10px; font-size: 13px; min-height: 18px; }
-    .status.ok { color: var(--green); }
-    .status.err { color: var(--red); }
+    button.primary {
+      background: linear-gradient(135deg, #c6974e, #a77933);
+      color: #ffffff;
+      border-color: transparent;
+      box-shadow: 0 8px 18px rgba(184, 138, 68, 0.26);
+    }
 
+    button.danger {
+      color: var(--danger);
+      border-color: rgba(194, 65, 59, 0.28);
+      background: #fff7f6;
+    }
+
+    /* KPI */
     .kpi-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
-      gap: 10px;
-      margin: 12px 0 16px;
+      grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+      gap: 12px;
+      margin: 14px 0 20px;
     }
 
     .kpi {
-      background: var(--panel-2);
+      background: linear-gradient(180deg, #fffdf9, #f8f2e6);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 12px;
+      border-radius: 14px;
+      padding: 15px 16px;
     }
-    .kpi .k-label { font-size: 11px; color: var(--muted); text-transform: uppercase; }
-    .kpi .k-val { font-size: 16px; font-weight: 700; margin-top: 4px; color: var(--gold); }
+    .kpi .k-label { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .kpi .k-val { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 700; margin-top: 4px; color: var(--gold-dark); }
 
+    /* SUB-CARD & CHECKLIST */
     .sub-card {
-      background: var(--panel-2);
+      background: var(--surface-soft);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 12px;
-      margin-bottom: 10px;
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
     }
+    .sub-card h4 { margin: 0 0 8px; font-size: 15px; }
 
     .chk-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
-      padding: 6px 8px;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+      gap: 10px;
+      padding: 7px 10px;
+      border-radius: 8px;
+      background: var(--surface);
+      border: 1px solid rgba(232, 222, 203, 0.7);
+      margin-bottom: 6px;
       font-size: 13px;
     }
     .chk-item label {
       display: flex;
       align-items: center;
-      gap: 8px;
-      color: var(--text);
+      gap: 9px;
+      color: var(--ink);
       margin: 0;
       cursor: pointer;
       flex: 1;
     }
-    .chk-item input[type="checkbox"] { width: auto; }
+    .chk-item input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--gold); }
     .done-text { text-decoration: line-through; color: var(--muted); }
 
-    .table-wrap { overflow-x: auto; margin-top: 12px; }
-    table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+    /* TABLES */
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; background: var(--surface); }
     th, td {
-      padding: 8px 10px;
+      padding: 11px 13px;
       border-bottom: 1px solid var(--border);
       text-align: left;
       white-space: nowrap;
     }
-    th { background: var(--panel-2); color: var(--muted); font-weight: 600; }
+    th {
+      background: var(--surface-soft);
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    tr:last-child td { border-bottom: none; }
 
     .perm-grid {
       display: grid;
@@ -221,498 +465,487 @@
       margin-top: 8px;
     }
 
+    .status { margin-top: 10px; font-size: 13px; font-weight: 500; min-height: 18px; }
+    .status.ok { color: var(--sage); }
+    .status.err { color: var(--danger); }
+
     .hidden { display: none !important; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header class="topbar">
-      <div class="brand">MOMENTUMATES <span>WO APPS</span></div>
-      <div id="sessionBar" class="session-bar hidden">
-        <span>User: <strong id="lblUser"></strong></span>
-        <span id="lblRole" class="badge"></span>
-        <select id="activeClientSelector" title="Pilih Klien Aktif" style="width:auto; min-width:190px;"></select>
-        <button type="button" id="btnSync">Sync DB</button>
-        <button type="button" id="btnLogout">Logout</button>
-      </div>
-    </header>
 
-    <!-- LOGIN -->
-    <section id="loginCard" class="card">
-      <h1>Login MOMENTUMATES WO</h1>
-      <p style="margin:0 0 12px; font-size:13px; color:var(--muted);">
-        Masuk menggunakan akun <strong>Superadmin / Staff WO</strong> atau akun <strong>Klien</strong>.
-      </p>
-      <form id="loginForm" class="grid">
+  <!-- TOP NAVIGATION -->
+  <header class="navbar">
+    <div class="brand">MOMENTUMATES <span>Wedding Organizer</span></div>
+    <div id="sessionBar" class="nav-actions hidden">
+      <span>Halo, <strong id="lblUser"></strong></span>
+      <span id="lblRole" class="role-pill"></span>
+      <select id="activeClientSelector" title="Pilih Pasangan / Klien" style="width:auto; min-width:200px;"></select>
+      <button type="button" id="btnSync">Sync Database</button>
+      <button type="button" id="btnLogout">Keluar</button>
+    </div>
+  </header>
+
+  <!-- BRIGHT PARALLAX LANDING & LOGIN -->
+  <section id="loginSection" class="hero-parallax">
+    <div class="parallax-layer orb-1" data-speed="0.18"></div>
+    <div class="parallax-layer orb-2" data-speed="-0.14"></div>
+
+    <div class="hero-grid">
+      <div>
+        <span class="hero-eyebrow">Curated Wedding Planning &amp; Coordination</span>
+        <h1 class="hero-title">Merancang Hari Bahagia dengan <em>Tenang &amp; Presisi</em>.</h1>
+        <p class="hero-sub">
+          Portal terpadu MOMENTUMATES Wedding Organizer untuk memantau rundown acara, koordinasi vendor, progres pembayaran, invoice, dan brief konsep pernikahan secara real-time.
+        </p>
+        <div class="hero-pills">
+          <span>✦ WO Rundown &amp; Checklist</span>
+          <span>✦ Vendor &amp; PIC Directory</span>
+          <span>✦ Payment &amp; Invoice Tracker</span>
+          <span>✦ Couple &amp; Event Brief</span>
+        </div>
+      </div>
+
+      <div class="login-glass">
+        <span class="hero-eyebrow" style="margin-bottom:4px;">Client &amp; Team Portal</span>
+        <h2 style="font-size:28px; margin:0 0 6px;">Selamat Datang</h2>
+        <p style="margin:0 0 18px; font-size:13px; color:var(--muted);">
+          Masuk menggunakan akun <strong>Pasangan Pengantin</strong> atau <strong>Tim WO / Superadmin</strong>.
+        </p>
+        <form id="loginForm">
+          <div class="field" style="margin-bottom:12px;">
+            <label for="loginUsername">Username</label>
+            <input type="text" id="loginUsername" placeholder="Masukkan username..." autocomplete="username" required />
+          </div>
+          <div class="field" style="margin-bottom:16px;">
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" placeholder="Masukkan password..." autocomplete="current-password" required />
+          </div>
+          <button type="submit" class="primary" style="width:100%; padding:12px;">Masuk ke Portal WO</button>
+        </form>
+        <div id="loginStatus" class="status"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN WORKSPACE -->
+  <main id="woSuite" class="container hidden">
+    <!-- PARALLAX COUPLE HEADER -->
+    <div class="couple-banner reveal" id="coupleBanner">
+      <div>
+        <span class="hero-eyebrow" style="margin-bottom:2px;" id="bannerPkg">WEDDING ORGANIZER</span>
+        <h1 class="active-couple-lbl">ALDY ERZA</h1>
+        <div style="font-size:13.5px; color:var(--muted);" id="bannerMeta">Wedding Day • Venue</div>
+      </div>
+      <div class="hero-pills">
+        <span id="bannerStatusBadge">Project: Active</span>
+        <span id="bannerRundownBadge">Rundown: In Review</span>
+      </div>
+    </div>
+
+    <nav class="tabs" id="mainTabs"></nav>
+
+    <!-- 1. WO RUNDOWN & CHECKLIST -->
+    <section id="tab-wo-rundown" class="card">
+      <h2>WO Rundown &amp; Checklist</h2>
+      <div class="kpi-grid">
+        <div class="kpi"><div class="k-label">Status Rundown</div><div class="k-val" id="kpiWoStatus">-</div></div>
+        <div class="kpi"><div class="k-label">Tanggal &amp; Venue</div><div class="k-val" id="kpiEventVenue" style="font-size:18px;">-</div></div>
+        <div class="kpi"><div class="k-label">Checklist Selesai</div><div class="k-val" id="kpiChecklist">0 / 0</div></div>
+        <div class="kpi"><div class="k-label">Rata-rata Progres</div><div class="k-val" id="kpiProgress">0%</div></div>
+      </div>
+
+      <div class="grid" id="woRundownControls">
         <div class="field">
-          <label for="loginUsername">Username</label>
-          <input type="text" id="loginUsername" autocomplete="username" required />
+          <label for="woStatusSelect">Status Rundown WO</label>
+          <select id="woStatusSelect">
+            <option value="Draft">Draft</option>
+            <option value="In Review">In Review</option>
+            <option value="Approved">Approved</option>
+          </select>
         </div>
         <div class="field">
-          <label for="loginPassword">Password</label>
-          <input type="password" id="loginPassword" autocomplete="current-password" required />
+          <label for="chkVendorSelect">Vendor / Divisi Checklist</label>
+          <select id="chkVendorSelect"></select>
+        </div>
+        <div class="field span-2">
+          <label for="newChkTitle">Item Checklist Baru</label>
+          <input type="text" id="newChkTitle" placeholder="Contoh: Technical meeting & floorplan final" />
         </div>
         <div class="btn-row" style="margin-top:0;">
-          <button type="submit" class="primary">Masuk</button>
+          <button type="button" class="primary" id="btnAddChk">+ Tambah Checklist</button>
+          <button type="button" id="btnSaveWoStatus">Simpan Status</button>
         </div>
-      </form>
-      <div id="loginStatus" class="status"></div>
+      </div>
+
+      <div id="checklistContainer" style="margin-top:16px;"></div>
+      <div id="woStatusMsg" class="status"></div>
     </section>
 
-    <!-- MAIN WO SUITE -->
-    <main id="woSuite" class="hidden">
-      <nav class="tabs" id="mainTabs"></nav>
+    <!-- 2. VENDORS -->
+    <section id="tab-vendors" class="card hidden">
+      <h2>Vendors &amp; Confirmed Vendor List</h2>
 
-      <!-- 1. PROJECTS & KLIEN -->
-      <section id="tab-projects" class="card">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-          <h2 style="margin:0;">Projects &amp; Klien</h2>
-          <div class="btn-row" style="margin-top:0;">
-            <input type="search" id="clientSearch" placeholder="Cari pasangan / venue..." style="width:220px;" />
-            <button type="button" id="btnNewClient">+ Klien Baru</button>
-          </div>
-        </div>
-
-        <form id="clientForm" style="margin-top:12px;">
-          <input type="hidden" id="c_id" />
-          <h3>Data Utama &amp; Portal Klien</h3>
-          <div class="grid">
-            <div class="field">
-              <label for="c_coupleShort">Nama Pasangan *</label>
-              <input type="text" id="c_coupleShort" placeholder="ALDY ERZA" required />
-            </div>
-            <div class="field">
-              <label for="c_packageTier">Paket WO</label>
-              <input type="text" id="c_packageTier" placeholder="WEDDING DAY ORGANIZER" />
-            </div>
-            <div class="field">
-              <label for="c_projectStatus">Status Project</label>
-              <select id="c_projectStatus">
-                <option value="Active">Active</option>
-                <option value="In Review">In Review</option>
-                <option value="Completed">Completed</option>
-                <option value="On Hold">On Hold</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="c_phone">No. WhatsApp</label>
-              <input type="text" id="c_phone" />
-            </div>
-            <div class="field">
-              <label for="c_username">Username Login Klien</label>
-              <input type="text" id="c_username" />
-            </div>
-            <div class="field">
-              <label for="c_password">Password Login Klien</label>
-              <input type="text" id="c_password" />
-            </div>
-            <div class="field span-2">
-              <label for="c_historyNotes">History / Catatan Klien</label>
-              <textarea id="c_historyNotes"></textarea>
-            </div>
-          </div>
-
-          <div class="btn-row" id="clientFormActions">
-            <button type="submit" class="primary">Simpan Klien</button>
-            <button type="button" id="btnResetClient">Reset</button>
-          </div>
-        </form>
-
-        <div id="clientStatus" class="status"></div>
-
-        <div class="table-wrap" id="clientsTableWrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Pasangan</th>
-                <th>Paket WO</th>
-                <th>Event &amp; Tanggal</th>
-                <th>Venue</th>
-                <th>Username</th>
-                <th>Status</th>
-                <th>Aksi</th>
-              </tr>
-            </thead>
-            <tbody id="clientsTbody"></tbody>
-          </table>
-        </div>
-      </section>
-
-      <!-- 2. WO RUNDOWN & CHECKLIST -->
-      <section id="tab-wo-rundown" class="card hidden">
-        <h2>WO Rundown &amp; Checklist (<span class="active-couple-lbl">-</span>)</h2>
-        <div class="kpi-grid">
-          <div class="kpi"><div class="k-label">Status Rundown</div><div class="k-val" id="kpiWoStatus">-</div></div>
-          <div class="kpi"><div class="k-label">Tanggal &amp; Venue</div><div class="k-val" id="kpiEventVenue" style="font-size:13px;">-</div></div>
-          <div class="kpi"><div class="k-label">Checklist Selesai</div><div class="k-val" id="kpiChecklist">0 / 0</div></div>
-          <div class="kpi"><div class="k-label">Rata-rata Progres</div><div class="k-val" id="kpiProgress">0%</div></div>
-        </div>
-
+      <form id="vendorForm">
+        <h3>Tambah / Edit Vendor Event</h3>
+        <input type="hidden" id="v_id" />
         <div class="grid">
+          <div class="field"><label>Nama Vendor *</label><input type="text" id="v_name" required /></div>
+          <div class="field"><label>Kategori</label><input type="text" id="v_category" placeholder="WEDDING ORGANIZER / PHOTO VIDEO / VENUE" /></div>
+          <div class="field"><label>PIC Name</label><input type="text" id="v_picName" /></div>
+          <div class="field"><label>PIC Phone</label><input type="text" id="v_picPhone" /></div>
+          <div class="field"><label>Package Name</label><input type="text" id="v_packageName" /></div>
+          <div class="field"><label>Package Price (Rp)</label><input type="number" id="v_packagePrice" min="0" value="0" /></div>
+          <div class="field"><label>Progress (%)</label><input type="number" id="v_progress" min="0" max="100" value="0" /></div>
           <div class="field">
-            <label for="woStatusSelect">Status Rundown WO</label>
-            <select id="woStatusSelect">
-              <option value="Draft">Draft</option>
-              <option value="In Review">In Review</option>
-              <option value="Approved">Approved</option>
+            <label>Status</label>
+            <select id="v_status">
+              <option value="On Progress">On Progress</option>
+              <option value="Confirmed">Confirmed</option>
+              <option value="Done">Done</option>
             </select>
           </div>
-          <div class="field">
-            <label for="chkVendorSelect">Pilih Vendor / Divisi Checklist</label>
-            <select id="chkVendorSelect"></select>
-          </div>
-          <div class="field span-2">
-            <label for="newChkTitle">Tambah Item Checklist Baru</label>
-            <input type="text" id="newChkTitle" placeholder="Contoh: Technical meeting & floorplan final" />
-          </div>
-          <div class="btn-row" style="margin-top:0;">
-            <button type="button" class="primary" id="btnAddChk">+ Tambah Checklist</button>
-            <button type="button" id="btnSaveWoStatus">Simpan Status</button>
-          </div>
+          <div class="field span-2"><label>Package Items / Notes</label><input type="text" id="v_packageItems" /></div>
         </div>
-
-        <div id="checklistContainer" style="margin-top:14px;"></div>
-        <div id="woStatusMsg" class="status"></div>
-      </section>
-
-      <!-- 3. VENDORS & VENDOR INFO -->
-      <section id="tab-vendors" class="card hidden">
-        <h2>Vendors &amp; Confirmed Vendor List (<span class="active-couple-lbl">-</span>)</h2>
-
-        <form id="vendorForm">
-          <h3>Tambah / Edit Vendor Event</h3>
-          <input type="hidden" id="v_id" />
-          <div class="grid">
-            <div class="field"><label>Nama Vendor *</label><input type="text" id="v_name" required /></div>
-            <div class="field"><label>Kategori</label><input type="text" id="v_category" placeholder="WEDDING ORGANIZER / PHOTO VIDEO / VENUE" /></div>
-            <div class="field"><label>PIC Name</label><input type="text" id="v_picName" /></div>
-            <div class="field"><label>PIC Phone</label><input type="text" id="v_picPhone" /></div>
-            <div class="field"><label>Package Name</label><input type="text" id="v_packageName" /></div>
-            <div class="field"><label>Package Price (Rp)</label><input type="number" id="v_packagePrice" min="0" value="0" /></div>
-            <div class="field"><label>Progress (%)</label><input type="number" id="v_progress" min="0" max="100" value="0" /></div>
-            <div class="field">
-              <label>Status</label>
-              <select id="v_status">
-                <option value="On Progress">On Progress</option>
-                <option value="Confirmed">Confirmed</option>
-                <option value="Done">Done</option>
-              </select>
-            </div>
-            <div class="field span-2"><label>Package Items / Notes</label><input type="text" id="v_packageItems" /></div>
-          </div>
-          <div class="btn-row" id="vendorFormActions">
-            <button type="submit" class="primary">Simpan Vendor</button>
-            <button type="button" id="btnResetVendor">Reset</button>
-          </div>
-        </form>
-
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Vendor</th>
-                <th>Kategori</th>
-                <th>PIC</th>
-                <th>Paket (Rp)</th>
-                <th>Terbayar (Rp)</th>
-                <th>Progress</th>
-                <th>Status</th>
-                <th>Aksi</th>
-              </tr>
-            </thead>
-            <tbody id="vendorsTbody"></tbody>
-          </table>
+        <div class="btn-row" id="vendorFormActions">
+          <button type="submit" class="primary">Simpan Vendor</button>
+          <button type="button" id="btnResetVendor">Reset</button>
         </div>
+      </form>
 
-        <h3>Confirmed Vendor List (Direct / Venue / PIC)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Vendor</th>
+              <th>Kategori</th>
+              <th>PIC</th>
+              <th>Paket (Rp)</th>
+              <th>Terbayar (Rp)</th>
+              <th>Progress</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="vendorsTbody"></tbody>
+        </table>
+      </div>
+
+      <h3>Confirmed Vendor List (Direct / Venue / PIC)</h3>
+      <div class="grid" id="confirmedVendorFormRow">
+        <div class="field"><label>Kategori</label><input type="text" id="cv_category" placeholder="VENUE / PHOTO VIDEO" /></div>
+        <div class="field"><label>Nama Vendor</label><input type="text" id="cv_name" /></div>
+        <div class="field"><label>PIC Name</label><input type="text" id="cv_picName" /></div>
+        <div class="field"><label>PIC Phone</label><input type="text" id="cv_picPhone" /></div>
+        <div class="field"><label>Catatan</label><input type="text" id="cv_notes" placeholder="Direct Dealing Klien" /></div>
+        <div class="btn-row" style="margin-top:0;">
+          <button type="button" class="primary" id="btnAddConfirmedVendor">+ Tambah</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Kategori</th>
+              <th>Vendor</th>
+              <th>PIC</th>
+              <th>Telepon</th>
+              <th>Catatan</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="confirmedVendorsTbody"></tbody>
+        </table>
+      </div>
+      <div id="vendorMsg" class="status"></div>
+    </section>
+
+    <!-- 3. BIODATA -->
+    <section id="tab-biodata" class="card hidden">
+      <h2>Biodata Pasangan &amp; Keluarga</h2>
+      <form id="biodataForm">
+        <h3>Mempelai Pria (Groom)</h3>
         <div class="grid">
-          <div class="field"><label>Kategori</label><input type="text" id="cv_category" placeholder="VENUE / PHOTO VIDEO" /></div>
-          <div class="field"><label>Nama Vendor</label><input type="text" id="cv_name" /></div>
-          <div class="field"><label>PIC Name</label><input type="text" id="cv_picName" /></div>
-          <div class="field"><label>PIC Phone</label><input type="text" id="cv_picPhone" /></div>
-          <div class="field"><label>Catatan</label><input type="text" id="cv_notes" placeholder="Direct Dealing Klien" /></div>
-          <div class="btn-row" style="margin-top:0;">
-            <button type="button" class="primary" id="btnAddConfirmedVendor">+ Tambah</button>
-          </div>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Kategori</th>
-                <th>Vendor</th>
-                <th>PIC</th>
-                <th>Telepon</th>
-                <th>Catatan</th>
-                <th>Aksi</th>
-              </tr>
-            </thead>
-            <tbody id="confirmedVendorsTbody"></tbody>
-          </table>
-        </div>
-        <div id="vendorMsg" class="status"></div>
-      </section>
-
-      <!-- 4. BIODATA PASANGAN -->
-      <section id="tab-biodata" class="card hidden">
-        <h2>Biodata Pasangan (<span class="active-couple-lbl">-</span>)</h2>
-        <form id="biodataForm">
-          <h3>Mempelai Pria (Groom)</h3>
-          <div class="grid">
-            <div class="field"><label>Nama Lengkap</label><input type="text" id="g_fullName" /></div>
-            <div class="field"><label>Nama Panggilan</label><input type="text" id="g_nickname" /></div>
-            <div class="field"><label>Anak Ke-</label><input type="text" id="g_birthOrder" /></div>
-            <div class="field"><label>No. HP</label><input type="text" id="g_phone" /></div>
-            <div class="field"><label>Instagram</label><input type="text" id="g_instagram" /></div>
-            <div class="field"><label>Alamat</label><input type="text" id="g_address" /></div>
-            <div class="field"><label>Nama Ayah</label><input type="text" id="g_fatherName" /></div>
-            <div class="field"><label>HP Ayah</label><input type="text" id="g_fatherPhone" /></div>
-            <div class="field"><label>Nama Ibu</label><input type="text" id="g_motherName" /></div>
-            <div class="field"><label>HP Ibu</label><input type="text" id="g_motherPhone" /></div>
-          </div>
-
-          <h3>Mempelai Wanita (Bride)</h3>
-          <div class="grid">
-            <div class="field"><label>Nama Lengkap</label><input type="text" id="b_fullName" /></div>
-            <div class="field"><label>Nama Panggilan</label><input type="text" id="b_nickname" /></div>
-            <div class="field"><label>Anak Ke-</label><input type="text" id="b_birthOrder" /></div>
-            <div class="field"><label>No. HP</label><input type="text" id="b_phone" /></div>
-            <div class="field"><label>Instagram</label><input type="text" id="b_instagram" /></div>
-            <div class="field"><label>Alamat</label><input type="text" id="b_address" /></div>
-            <div class="field"><label>Nama Ayah</label><input type="text" id="b_fatherName" /></div>
-            <div class="field"><label>HP Ayah</label><input type="text" id="b_fatherPhone" /></div>
-            <div class="field"><label>Nama Ibu</label><input type="text" id="b_motherName" /></div>
-            <div class="field"><label>HP Ibu</label><input type="text" id="b_motherPhone" /></div>
-          </div>
-
-          <div class="btn-row" id="biodataActions">
-            <button type="submit" class="primary">Simpan Biodata</button>
-          </div>
-        </form>
-        <div id="bioMsg" class="status"></div>
-      </section>
-
-      <!-- 5. PAYMENTS / CICILAN VENDOR -->
-      <section id="tab-payments" class="card hidden">
-        <h2>Payments &amp; Cicilan Vendor (<span class="active-couple-lbl">-</span>)</h2>
-        <form id="paymentForm">
-          <div class="grid">
-            <div class="field">
-              <label for="pay_vendorId">Vendor *</label>
-              <select id="pay_vendorId"></select>
-            </div>
-            <div class="field">
-              <label for="pay_label">Keterangan Pembayaran *</label>
-              <input type="text" id="pay_label" placeholder="DOWN PAYMENT / TERMIN 2" required />
-            </div>
-            <div class="field">
-              <label for="pay_method">Metode / Rekening</label>
-              <input type="text" id="pay_method" placeholder="Transfer BCA a/n ..." />
-            </div>
-            <div class="field">
-              <label for="pay_amount">Nominal (Rp) *</label>
-              <input type="number" id="pay_amount" min="1" required />
-            </div>
-            <div class="field">
-              <label for="pay_date">Tanggal</label>
-              <input type="date" id="pay_date" />
-            </div>
-            <div class="field">
-              <label for="pay_status">Status</label>
-              <select id="pay_status">
-                <option value="Verified">Verified</option>
-                <option value="Pending">Pending</option>
-              </select>
-            </div>
-          </div>
-          <div class="btn-row" id="paymentActions">
-            <button type="submit" class="primary">+ Catat Pembayaran</button>
-          </div>
-        </form>
-
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Tanggal</th>
-                <th>Vendor</th>
-                <th>Keterangan</th>
-                <th>Metode</th>
-                <th>Nominal (Rp)</th>
-                <th>Status</th>
-                <th>Aksi</th>
-              </tr>
-            </thead>
-            <tbody id="paymentsTbody"></tbody>
-          </table>
-        </div>
-        <div id="paymentMsg" class="status"></div>
-      </section>
-
-      <!-- 6. INVOICES -->
-      <section id="tab-invoices" class="card hidden">
-        <h2>Invoices (<span class="active-couple-lbl">-</span>)</h2>
-        <form id="invoiceForm">
-          <div class="grid">
-            <div class="field">
-              <label for="inv_number">No. Invoice *</label>
-              <input type="text" id="inv_number" placeholder="INV/MMW/2026/..." required />
-            </div>
-            <div class="field">
-              <label for="inv_terms">Keterangan Termin *</label>
-              <input type="text" id="inv_terms" placeholder="DP WO MOMENTUMATES" required />
-            </div>
-            <div class="field">
-              <label for="inv_amount">Total Tagihan (Rp) *</label>
-              <input type="number" id="inv_amount" min="0" required />
-            </div>
-            <div class="field">
-              <label for="inv_issueDate">Tanggal Terbit</label>
-              <input type="date" id="inv_issueDate" />
-            </div>
-            <div class="field">
-              <label for="inv_dueDate">Jatuh Tempo</label>
-              <input type="date" id="inv_dueDate" />
-            </div>
-            <div class="field">
-              <label for="inv_status">Status</label>
-              <select id="inv_status">
-                <option value="Partial">Partial</option>
-                <option value="Paid">Paid</option>
-                <option value="Unpaid">Unpaid</option>
-              </select>
-            </div>
-          </div>
-          <div class="btn-row" id="invoiceActions">
-            <button type="submit" class="primary">+ Tambah Invoice</button>
-          </div>
-        </form>
-
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>No. Invoice</th>
-                <th>Termin</th>
-                <th>Terbit</th>
-                <th>Jatuh Tempo</th>
-                <th>Total (Rp)</th>
-                <th>Status</th>
-                <th>Aksi</th>
-              </tr>
-            </thead>
-            <tbody id="invoicesTbody"></tbody>
-          </table>
-        </div>
-        <div id="invoiceMsg" class="status"></div>
-      </section>
-
-      <!-- 7. EVENT & BRIEF ACARA (CLIENT FORM) -->
-      <section id="tab-client-form" class="card hidden">
-        <h2>Event &amp; Brief Acara (<span class="active-couple-lbl">-</span>)</h2>
-        <form id="eventBriefForm">
-          <h3>Detail Event</h3>
-          <div class="grid">
-            <div class="field"><label>Nama Event</label><input type="text" id="fb_eventName" /></div>
-            <div class="field"><label>Jenis Event</label><input type="text" id="fb_eventType" /></div>
-            <div class="field"><label>Tanggal Event</label><input type="date" id="fb_eventDate" /></div>
-            <div class="field"><label>Venue</label><input type="text" id="fb_venue" /></div>
-          </div>
-
-          <h3>Form Brief &amp; Konsep</h3>
-          <div class="grid">
-            <div class="field"><label>Ceremony Time</label><input type="text" id="fb_ceremonyTime" /></div>
-            <div class="field"><label>Reception Time</label><input type="text" id="fb_receptionTime" /></div>
-            <div class="field"><label>Guest Count</label><input type="text" id="fb_guestCount" /></div>
-            <div class="field"><label>Theme Concept</label><input type="text" id="fb_themeConcept" /></div>
-            <div class="field"><label>Color Palette</label><input type="text" id="fb_colorPalette" /></div>
-            <div class="field"><label>Dietary Notes</label><input type="text" id="fb_dietaryNotes" /></div>
-            <div class="field span-2"><label>Additional Notes</label><textarea id="fb_additionalNotes"></textarea></div>
-          </div>
-
-          <div class="btn-row" id="eventBriefActions">
-            <button type="submit" class="primary">Simpan Event &amp; Brief</button>
-          </div>
-        </form>
-        <div id="briefMsg" class="status"></div>
-      </section>
-
-      <!-- 8. INTERNAL OPS -->
-      <section id="tab-internal-ops" class="card hidden">
-        <h2>Internal Ops &amp; Ringkasan Operasional</h2>
-        <div class="kpi-grid" id="opsKpiGrid"></div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Pasangan</th>
-                <th>Event &amp; Tanggal</th>
-                <th>Venue</th>
-                <th>Rundown</th>
-                <th>Vendor</th>
-                <th>Invoice</th>
-                <th>Project</th>
-              </tr>
-            </thead>
-            <tbody id="opsTbody"></tbody>
-          </table>
-        </div>
-      </section>
-
-      <!-- 9. SUPERADMIN MANAGE USERS -->
-      <section id="tab-users" class="card hidden">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-          <h2 style="margin:0;">Manage Users &amp; Hak Akses (Superadmin)</h2>
-          <button type="button" id="btnNewStaff">+ User Baru</button>
+          <div class="field"><label>Nama Lengkap</label><input type="text" id="g_fullName" /></div>
+          <div class="field"><label>Nama Panggilan</label><input type="text" id="g_nickname" /></div>
+          <div class="field"><label>Anak Ke-</label><input type="text" id="g_birthOrder" /></div>
+          <div class="field"><label>No. HP</label><input type="text" id="g_phone" /></div>
+          <div class="field"><label>Instagram</label><input type="text" id="g_instagram" /></div>
+          <div class="field"><label>Alamat</label><input type="text" id="g_address" /></div>
+          <div class="field"><label>Nama Ayah</label><input type="text" id="g_fatherName" /></div>
+          <div class="field"><label>HP Ayah</label><input type="text" id="g_fatherPhone" /></div>
+          <div class="field"><label>Nama Ibu</label><input type="text" id="g_motherName" /></div>
+          <div class="field"><label>HP Ibu</label><input type="text" id="g_motherPhone" /></div>
         </div>
 
-        <form id="staffForm" style="margin-top:12px;">
-          <input type="hidden" id="s_id" />
-          <h3>Akun &amp; Role</h3>
-          <div class="grid">
-            <div class="field"><label for="s_username">Username *</label><input type="text" id="s_username" required /></div>
-            <div class="field"><label for="s_fullName">Nama Lengkap *</label><input type="text" id="s_fullName" required /></div>
-            <div class="field"><label for="s_position">Position</label><input type="text" id="s_position" placeholder="OWNER / ADMIN / LEADER WO" /></div>
-            <div class="field">
-              <label for="s_role">Role *</label>
-              <select id="s_role">
-                <option value="superadmin">superadmin</option>
-                <option value="admin">admin</option>
-                <option value="editor">editor</option>
-              </select>
-            </div>
-            <div class="field"><label for="s_password">Password *</label><input type="text" id="s_password" required /></div>
-          </div>
-
-          <h3>Tab Permissions</h3>
-          <div class="perm-grid" id="staffPermGrid"></div>
-
-          <div class="btn-row">
-            <button type="submit" class="primary" id="btnSaveStaff">Simpan User</button>
-            <button type="button" id="btnResetStaff">Reset</button>
-          </div>
-        </form>
-
-        <div id="staffMsg" class="status"></div>
-
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Username</th>
-                <th>Nama</th>
-                <th>Position</th>
-                <th>Role</th>
-                <th>Password</th>
-                <th>Aksi</th>
-              </tr>
-            </thead>
-            <tbody id="staffTbody"></tbody>
-          </table>
+        <h3>Mempelai Wanita (Bride)</h3>
+        <div class="grid">
+          <div class="field"><label>Nama Lengkap</label><input type="text" id="b_fullName" /></div>
+          <div class="field"><label>Nama Panggilan</label><input type="text" id="b_nickname" /></div>
+          <div class="field"><label>Anak Ke-</label><input type="text" id="b_birthOrder" /></div>
+          <div class="field"><label>No. HP</label><input type="text" id="b_phone" /></div>
+          <div class="field"><label>Instagram</label><input type="text" id="b_instagram" /></div>
+          <div class="field"><label>Alamat</label><input type="text" id="b_address" /></div>
+          <div class="field"><label>Nama Ayah</label><input type="text" id="b_fatherName" /></div>
+          <div class="field"><label>HP Ayah</label><input type="text" id="b_fatherPhone" /></div>
+          <div class="field"><label>Nama Ibu</label><input type="text" id="b_motherName" /></div>
+          <div class="field"><label>HP Ibu</label><input type="text" id="b_motherPhone" /></div>
         </div>
-      </section>
-    </main>
-  </div>
+
+        <div class="btn-row" id="biodataActions">
+          <button type="submit" class="primary">Simpan Biodata</button>
+        </div>
+      </form>
+      <div id="bioMsg" class="status"></div>
+    </section>
+
+    <!-- 4. PAYMENTS -->
+    <section id="tab-payments" class="card hidden">
+      <h2>Payments &amp; Cicilan Vendor</h2>
+      <form id="paymentForm">
+        <div class="grid">
+          <div class="field"><label for="pay_vendorId">Vendor *</label><select id="pay_vendorId"></select></div>
+          <div class="field"><label for="pay_label">Keterangan Pembayaran *</label><input type="text" id="pay_label" placeholder="DOWN PAYMENT / TERMIN 2" required /></div>
+          <div class="field"><label for="pay_method">Metode / Rekening</label><input type="text" id="pay_method" placeholder="Transfer BCA a/n ..." /></div>
+          <div class="field"><label for="pay_amount">Nominal (Rp) *</label><input type="number" id="pay_amount" min="1" required /></div>
+          <div class="field"><label for="pay_date">Tanggal</label><input type="date" id="pay_date" /></div>
+          <div class="field">
+            <label for="pay_status">Status</label>
+            <select id="pay_status">
+              <option value="Verified">Verified</option>
+              <option value="Pending">Pending</option>
+            </select>
+          </div>
+        </div>
+        <div class="btn-row" id="paymentActions">
+          <button type="submit" class="primary">+ Catat Pembayaran</button>
+        </div>
+      </form>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Tanggal</th>
+              <th>Vendor</th>
+              <th>Keterangan</th>
+              <th>Metode</th>
+              <th>Nominal (Rp)</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="paymentsTbody"></tbody>
+        </table>
+      </div>
+      <div id="paymentMsg" class="status"></div>
+    </section>
+
+    <!-- 5. INVOICES -->
+    <section id="tab-invoices" class="card hidden">
+      <h2>Invoices &amp; Tagihan</h2>
+      <form id="invoiceForm">
+        <div class="grid">
+          <div class="field"><label for="inv_number">No. Invoice *</label><input type="text" id="inv_number" placeholder="INV/MMW/2026/..." required /></div>
+          <div class="field"><label for="inv_terms">Keterangan Termin *</label><input type="text" id="inv_terms" placeholder="DP WO MOMENTUMATES" required /></div>
+          <div class="field"><label for="inv_amount">Total Tagihan (Rp) *</label><input type="number" id="inv_amount" min="0" required /></div>
+          <div class="field"><label for="inv_issueDate">Tanggal Terbit</label><input type="date" id="inv_issueDate" /></div>
+          <div class="field"><label for="inv_dueDate">Jatuh Tempo</label><input type="date" id="inv_dueDate" /></div>
+          <div class="field">
+            <label for="inv_status">Status</label>
+            <select id="inv_status">
+              <option value="Partial">Partial</option>
+              <option value="Paid">Paid</option>
+              <option value="Unpaid">Unpaid</option>
+            </select>
+          </div>
+        </div>
+        <div class="btn-row" id="invoiceActions">
+          <button type="submit" class="primary">+ Tambah Invoice</button>
+        </div>
+      </form>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>No. Invoice</th>
+              <th>Termin</th>
+              <th>Terbit</th>
+              <th>Jatuh Tempo</th>
+              <th>Total (Rp)</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="invoicesTbody"></tbody>
+        </table>
+      </div>
+      <div id="invoiceMsg" class="status"></div>
+    </section>
+
+    <!-- 6. EVENT & BRIEF -->
+    <section id="tab-client-form" class="card hidden">
+      <h2>Event &amp; Brief Acara</h2>
+      <form id="eventBriefForm">
+        <h3>Detail Event</h3>
+        <div class="grid">
+          <div class="field"><label>Nama Event</label><input type="text" id="fb_eventName" /></div>
+          <div class="field"><label>Jenis Event</label><input type="text" id="fb_eventType" /></div>
+          <div class="field"><label>Tanggal Event</label><input type="date" id="fb_eventDate" /></div>
+          <div class="field"><label>Venue</label><input type="text" id="fb_venue" /></div>
+        </div>
+
+        <h3>Form Brief &amp; Konsep Pernikahan</h3>
+        <div class="grid">
+          <div class="field"><label>Ceremony Time</label><input type="text" id="fb_ceremonyTime" /></div>
+          <div class="field"><label>Reception Time</label><input type="text" id="fb_receptionTime" /></div>
+          <div class="field"><label>Guest Count</label><input type="text" id="fb_guestCount" /></div>
+          <div class="field"><label>Theme Concept</label><input type="text" id="fb_themeConcept" /></div>
+          <div class="field"><label>Color Palette</label><input type="text" id="fb_colorPalette" /></div>
+          <div class="field"><label>Dietary Notes</label><input type="text" id="fb_dietaryNotes" /></div>
+          <div class="field span-2"><label>Additional Notes</label><textarea id="fb_additionalNotes"></textarea></div>
+        </div>
+
+        <div class="btn-row" id="eventBriefActions">
+          <button type="submit" class="primary">Simpan Event &amp; Brief</button>
+        </div>
+      </form>
+      <div id="briefMsg" class="status"></div>
+    </section>
+
+    <!-- 7. INTERNAL OPS -->
+    <section id="tab-internal-ops" class="card hidden">
+      <h2>Internal Ops &amp; Ringkasan Studio</h2>
+      <div class="kpi-grid" id="opsKpiGrid"></div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Pasangan</th>
+              <th>Event &amp; Tanggal</th>
+              <th>Venue</th>
+              <th>Rundown</th>
+              <th>Vendor</th>
+              <th>Invoice</th>
+              <th>Project</th>
+            </tr>
+          </thead>
+          <tbody id="opsTbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 8. PROJECTS & KLIEN -->
+    <section id="tab-projects" class="card hidden">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+        <h2 style="margin:0;">Projects &amp; Klien</h2>
+        <div class="btn-row" style="margin-top:0;">
+          <input type="search" id="clientSearch" placeholder="Cari pasangan / venue..." style="width:220px;" />
+          <button type="button" id="btnNewClient">+ Klien Baru</button>
+        </div>
+      </div>
+
+      <form id="clientForm" style="margin-top:12px;">
+        <input type="hidden" id="c_id" />
+        <h3>Data Utama &amp; Portal Klien</h3>
+        <div class="grid">
+          <div class="field"><label for="c_coupleShort">Nama Pasangan *</label><input type="text" id="c_coupleShort" placeholder="ALDY ERZA" required /></div>
+          <div class="field"><label for="c_packageTier">Paket WO</label><input type="text" id="c_packageTier" placeholder="WEDDING DAY ORGANIZER" /></div>
+          <div class="field">
+            <label for="c_projectStatus">Status Project</label>
+            <select id="c_projectStatus">
+              <option value="Active">Active</option>
+              <option value="In Review">In Review</option>
+              <option value="Completed">Completed</option>
+              <option value="On Hold">On Hold</option>
+            </select>
+          </div>
+          <div class="field"><label for="c_phone">No. WhatsApp</label><input type="text" id="c_phone" /></div>
+          <div class="field"><label for="c_username">Username Login Klien</label><input type="text" id="c_username" /></div>
+          <div class="field"><label for="c_password">Password Login Klien</label><input type="text" id="c_password" /></div>
+          <div class="field span-2"><label for="c_historyNotes">History / Catatan Klien</label><textarea id="c_historyNotes"></textarea></div>
+        </div>
+
+        <div class="btn-row" id="clientFormActions">
+          <button type="submit" class="primary">Simpan Klien</button>
+          <button type="button" id="btnResetClient">Reset</button>
+        </div>
+      </form>
+
+      <div id="clientStatus" class="status"></div>
+
+      <div class="table-wrap" id="clientsTableWrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Pasangan</th>
+              <th>Paket WO</th>
+              <th>Event &amp; Tanggal</th>
+              <th>Venue</th>
+              <th>Username</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="clientsTbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 9. SUPERADMIN USERS -->
+    <section id="tab-users" class="card hidden">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+        <h2 style="margin:0;">Manage Users &amp; Hak Akses (Superadmin)</h2>
+        <button type="button" id="btnNewStaff">+ User Baru</button>
+      </div>
+
+      <form id="staffForm" style="margin-top:12px;">
+        <input type="hidden" id="s_id" />
+        <h3>Akun &amp; Role</h3>
+        <div class="grid">
+          <div class="field"><label for="s_username">Username *</label><input type="text" id="s_username" required /></div>
+          <div class="field"><label for="s_fullName">Nama Lengkap *</label><input type="text" id="s_fullName" required /></div>
+          <div class="field"><label for="s_position">Position</label><input type="text" id="s_position" placeholder="OWNER / ADMIN / LEADER WO" /></div>
+          <div class="field">
+            <label for="s_role">Role *</label>
+            <select id="s_role">
+              <option value="superadmin">superadmin</option>
+              <option value="admin">admin</option>
+              <option value="editor">editor</option>
+            </select>
+          </div>
+          <div class="field"><label for="s_password">Password *</label><input type="text" id="s_password" required /></div>
+        </div>
+
+        <h3>Tab Permissions</h3>
+        <div class="perm-grid" id="staffPermGrid"></div>
+
+        <div class="btn-row">
+          <button type="submit" class="primary" id="btnSaveStaff">Simpan User</button>
+          <button type="button" id="btnResetStaff">Reset</button>
+        </div>
+      </form>
+
+      <div id="staffMsg" class="status"></div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Nama</th>
+              <th>Position</th>
+              <th>Role</th>
+              <th>Password</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="staffTbody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
 
   <script>
     const GAS_EXEC_URL = 'https://script.google.com/macros/s/AKfycbyZbPdZphb-GK6d9_0rAUuOEGUgb0oCvGQifGAwd6SNDRwcyyNfAiIUjB1FgJ2kx7PS0Q/exec';
@@ -745,6 +978,25 @@
     const esc = v => String(v ?? '').replace(/[&<>"']/g, m => ({
       '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
     }[m]));
+
+    // PARALLAX & SCROLL REVEAL
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      document.querySelectorAll('.parallax-layer').forEach(layer => {
+        const speed = parseFloat(layer.dataset.speed || '0.15');
+        layer.style.transform = `translate3d(0, ${y * speed}px, 0)`;
+      });
+    }, { passive: true });
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if (en.isIntersecting) en.target.classList.add('visible');
+      });
+    }, { threshold: 0.08 });
+
+    function observeReveals() {
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    }
 
     function setMsg(id, msg, type = '') {
       const el = document.getElementById(id);
@@ -866,9 +1118,7 @@
         .filter(t => t && getTabAccess(t.id) !== 'none');
 
       if (!visibleTabs.length) return;
-      if (!visibleTabs.some(t => t.id === currentTab)) {
-        currentTab = visibleTabs[0].id;
-      }
+      if (!visibleTabs.some(t => t.id === currentTab)) currentTab = visibleTabs[0].id;
 
       nav.innerHTML = visibleTabs.map(t => `
         <button type="button" class="tab-btn ${t.id === currentTab ? 'active' : ''}" data-tab="${t.id}">
@@ -892,11 +1142,11 @@
 
     function applyReadOnlyPermissions() {
       const canEdit = getTabAccess(currentTab) === 'edit';
-      const actionGroups = [
+      [
         'clientFormActions', 'vendorFormActions', 'biodataActions',
-        'paymentActions', 'invoiceActions', 'eventBriefActions'
-      ];
-      actionGroups.forEach(id => {
+        'paymentActions', 'invoiceActions', 'eventBriefActions',
+        'woRundownControls', 'confirmedVendorFormRow'
+      ].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.classList.toggle('hidden', !canEdit);
       });
@@ -913,10 +1163,7 @@
         currentClientId = null;
         return;
       }
-
-      if (!list.some(c => c.id === currentClientId)) {
-        currentClientId = list[0].id;
-      }
+      if (!list.some(c => c.id === currentClientId)) currentClientId = list[0].id;
 
       sel.innerHTML = list.map(c => `
         <option value="${esc(c.id)}" ${c.id === currentClientId ? 'selected' : ''}>
@@ -931,10 +1178,16 @@
       document.querySelectorAll('.active-couple-lbl').forEach(el => {
         el.textContent = c ? c.coupleShort : '-';
       });
+      if (c) {
+        document.getElementById('bannerPkg').textContent = c.packageTier || 'WEDDING ORGANIZER';
+        document.getElementById('bannerMeta').textContent = `${ev?.eventName || 'Wedding Day'} • ${ev?.eventDate || '-'} • ${ev?.venue || '-'}`;
+        document.getElementById('bannerStatusBadge').textContent = `Project: ${c.projectStatus || 'Active'}`;
+        document.getElementById('bannerRundownBadge').textContent = `Rundown: ${ev?.woProgress?.status || 'Draft'}`;
+      }
 
       applyReadOnlyPermissions();
 
-      if (currentTab === 'projects') renderProjectsTab(c, ev);
+      if (currentTab === 'projects') renderProjectsTab(c);
       else if (currentTab === 'wo-rundown') renderRundownTab(c, ev);
       else if (currentTab === 'vendors') renderVendorsTab(c, ev);
       else if (currentTab === 'biodata') renderBiodataTab(c);
@@ -945,8 +1198,7 @@
       else if (currentTab === 'users') renderUsersTab();
     }
 
-    // --- 1. PROJECTS & KLIEN ---
-    function renderProjectsTab(c, ev) {
+    function renderProjectsTab(c) {
       const isClient = session?.type === 'client';
       document.getElementById('btnNewClient').classList.toggle('hidden', isClient);
       document.getElementById('clientsTableWrap').classList.toggle('hidden', isClient);
@@ -971,8 +1223,7 @@
           .join(' ').toLowerCase().includes(q);
       });
 
-      const tbody = document.getElementById('clientsTbody');
-      tbody.innerHTML = rows.length ? rows.map(item => {
+      document.getElementById('clientsTbody').innerHTML = rows.length ? rows.map(item => {
         const e0 = (item.events && item.events[0]) || {};
         const canDel = session?.type === 'staff' && ['superadmin', 'admin'].includes(String(session.role).toLowerCase());
         return `
@@ -996,7 +1247,6 @@
       currentClientId = id;
       renderClientSelector();
       renderActivePanel();
-      setMsg('clientStatus', 'Klien aktif diperbarui.', 'ok');
     }
 
     async function delClient(id) {
@@ -1006,10 +1256,8 @@
       await saveState();
       renderClientSelector();
       renderActivePanel();
-      setMsg('clientStatus', 'Klien dihapus.', 'ok');
     }
 
-    // --- 2. WO RUNDOWN ---
     function renderRundownTab(c, ev) {
       if (!ev) return;
       const vendors = ev.vendors || [];
@@ -1020,25 +1268,18 @@
       let totalChk = 0, doneChk = 0, progSum = 0;
       vendors.forEach(v => {
         progSum += Number(v.progress || 0);
-        (v.checklist || []).forEach(ch => {
-          totalChk++;
-          if (ch.done) doneChk++;
-        });
+        (v.checklist || []).forEach(ch => { totalChk++; if (ch.done) doneChk++; });
       });
 
       document.getElementById('kpiChecklist').textContent = `${doneChk} / ${totalChk}`;
-      document.getElementById('kpiProgress').textContent = vendors.length
-        ? Math.round(progSum / vendors.length) + '%'
-        : '0%';
+      document.getElementById('kpiProgress').textContent = vendors.length ? Math.round(progSum / vendors.length) + '%' : '0%';
 
-      const vSel = document.getElementById('chkVendorSelect');
-      vSel.innerHTML = vendors.length
+      document.getElementById('chkVendorSelect').innerHTML = vendors.length
         ? vendors.map(v => `<option value="${esc(v.id)}">${esc(v.name)} (${esc(v.category)})</option>`).join('')
         : '<option value="">-- Tambah vendor terlebih dahulu --</option>';
 
-      const container = document.getElementById('checklistContainer');
       const canEdit = getTabAccess('wo-rundown') === 'edit';
-      container.innerHTML = vendors.length ? vendors.map(v => {
+      document.getElementById('checklistContainer').innerHTML = vendors.length ? vendors.map(v => {
         const chks = v.checklist || [];
         return `
           <div class="sub-card">
@@ -1050,12 +1291,12 @@
                     onchange="toggleChecklist('${esc(v.id)}', '${esc(ch.id)}', this.checked)" />
                   <span class="${ch.done ? 'done-text' : ''}">${esc(ch.title)}</span>
                 </label>
-                ${canEdit ? `<button type="button" class="danger" onclick="delChecklist('${esc(v.id)}', '${esc(ch.id)}')">x</button>` : ''}
+                ${canEdit ? `<button type="button" class="danger" onclick="delChecklist('${esc(v.id)}', '${esc(ch.id)}')">Hapus</button>` : ''}
               </div>
-            `).join('') : '<div style="font-size:12px; color:var(--muted);">Belum ada item checklist.</div>'}
+            `).join('') : '<div style="font-size:12.5px; color:var(--muted);">Belum ada item checklist.</div>'}
           </div>
         `;
-      }).join('') : '<div style="color:var(--muted); font-size:13px;">Belum ada vendor pada event ini.</div>';
+      }).join('') : '<div style="color:var(--muted); font-size:13.5px;">Belum ada vendor pada event ini.</div>';
     }
 
     async function toggleChecklist(vendorId, chkId, checked) {
@@ -1077,9 +1318,9 @@
       renderRundownTab(getClient(), ev);
     }
 
-    // --- 3. VENDORS ---
     function renderVendorsTab(c, ev) {
       if (!ev) return;
+      const canEdit = getTabAccess('vendors') === 'edit';
       const vendors = ev.vendors || [];
       document.getElementById('vendorsTbody').innerHTML = vendors.length ? vendors.map(v => {
         const paid = (v.paymentLogs || []).reduce((acc, p) => acc + Number(p.amount || 0), 0);
@@ -1093,8 +1334,8 @@
             <td>${Number(v.progress || 0)}%</td>
             <td>${esc(v.status || 'On Progress')}</td>
             <td class="btn-row" style="margin-top:0;">
-              <button type="button" onclick="editVendor('${esc(v.id)}')">Edit</button>
-              <button type="button" class="danger" onclick="delVendor('${esc(v.id)}')">Hapus</button>
+              ${canEdit ? `<button type="button" onclick="editVendor('${esc(v.id)}')">Edit</button>
+              <button type="button" class="danger" onclick="delVendor('${esc(v.id)}')">Hapus</button>` : '-'}
             </td>
           </tr>
         `;
@@ -1108,7 +1349,7 @@
           <td>${esc(cv.picName || '-')}</td>
           <td>${esc(cv.picPhone || '-')}</td>
           <td>${esc(cv.notes || '-')}</td>
-          <td><button type="button" class="danger" onclick="delConfirmedVendor('${esc(cv.id)}')">Hapus</button></td>
+          <td>${canEdit ? `<button type="button" class="danger" onclick="delConfirmedVendor('${esc(cv.id)}')">Hapus</button>` : '-'}</td>
         </tr>
       `).join('') : '<tr><td colspan="6" style="color:var(--muted);">Belum ada confirmed vendor.</td></tr>';
     }
@@ -1145,7 +1386,6 @@
       renderVendorsTab(getClient(), ev);
     }
 
-    // --- 4. BIODATA ---
     function renderBiodataTab(c) {
       if (!c) return;
       const b = c.biodata || {};
@@ -1166,7 +1406,6 @@
       mapVal('b_motherName', wp.motherName); mapVal('b_motherPhone', wp.motherPhone);
     }
 
-    // --- 5. PAYMENTS ---
     function renderPaymentsTab(c, ev) {
       if (!ev) return;
       const vendors = ev.vendors || [];
@@ -1175,11 +1414,7 @@
         : '<option value="">-- Tambah vendor dulu --</option>';
 
       const logs = [];
-      vendors.forEach(v => {
-        (v.paymentLogs || []).forEach(p => {
-          logs.push({ ...p, vendorId: v.id, vendorName: v.name });
-        });
-      });
+      vendors.forEach(v => (v.paymentLogs || []).forEach(p => logs.push({ ...p, vendorId: v.id, vendorName: v.name })));
 
       document.getElementById('paymentsTbody').innerHTML = logs.length ? logs.map(p => `
         <tr>
@@ -1204,9 +1439,9 @@
       renderPaymentsTab(getClient(), ev);
     }
 
-    // --- 6. INVOICES ---
     function renderInvoicesTab(c, ev) {
       if (!ev) return;
+      const canEdit = getTabAccess('invoices') === 'edit';
       const invs = ev.invoices || [];
       document.getElementById('invoicesTbody').innerHTML = invs.length ? invs.map(inv => {
         const total = inv.totalAmount ?? (inv.items || []).reduce((s, it) => s + Number(it.unitPrice || 0) * Number(it.qty || 1), 0);
@@ -1218,7 +1453,7 @@
             <td>${esc(inv.dueDate || '-')}</td>
             <td>${fmtRp(total)}</td>
             <td>${esc(inv.status || 'Partial')}</td>
-            <td><button type="button" class="danger" onclick="delInvoice('${esc(inv.id)}')">Hapus</button></td>
+            <td>${canEdit ? `<button type="button" class="danger" onclick="delInvoice('${esc(inv.id)}')">Hapus</button>` : '-'}</td>
           </tr>
         `;
       }).join('') : '<tr><td colspan="7" style="color:var(--muted);">Belum ada invoice.</td></tr>';
@@ -1232,7 +1467,6 @@
       renderInvoicesTab(getClient(), ev);
     }
 
-    // --- 7. EVENT & BRIEF ---
     function renderEventBriefTab(c, ev) {
       if (!ev) return;
       const br = ev.formBrief || {};
@@ -1249,7 +1483,6 @@
       document.getElementById('fb_additionalNotes').value = br.additionalNotes || '';
     }
 
-    // --- 8. INTERNAL OPS ---
     function renderInternalOpsTab() {
       const totalClients = state.clients.length;
       const totalVendors = state.clients.reduce((s, c) =>
@@ -1258,7 +1491,7 @@
         s + (c.events || []).reduce((es, e) => es + (e.invoices || []).length, 0), 0);
 
       document.getElementById('opsKpiGrid').innerHTML = `
-        <div class="kpi"><div class="k-label">Total Klien</div><div class="k-val">${totalClients}</div></div>
+        <div class="kpi"><div class="k-label">Total Pasangan</div><div class="k-val">${totalClients}</div></div>
         <div class="kpi"><div class="k-label">Total Vendor</div><div class="k-val">${totalVendors}</div></div>
         <div class="kpi"><div class="k-label">Total Invoice</div><div class="k-val">${totalInvoices}</div></div>
       `;
@@ -1279,7 +1512,6 @@
       }).join('');
     }
 
-    // --- 9. SUPERADMIN USERS ---
     function renderUsersTab() {
       document.getElementById('staffTbody').innerHTML = (state.staffUsers || []).map(u => {
         const isPrimarySuper = String(u.role).toLowerCase() === 'superadmin' && u.isPrimary;
@@ -1329,10 +1561,9 @@
       setMsg('staffMsg', 'User dihapus.', 'ok');
     }
 
-    // --- SESSION & EVENTS ---
     function applySession() {
       const loggedIn = Boolean(session);
-      document.getElementById('loginCard').classList.toggle('hidden', loggedIn);
+      document.getElementById('loginSection').classList.toggle('hidden', loggedIn);
       document.getElementById('sessionBar').classList.toggle('hidden', !loggedIn);
       document.getElementById('woSuite').classList.toggle('hidden', !loggedIn);
       if (!loggedIn) return;
@@ -1343,6 +1574,7 @@
       renderClientSelector();
       renderTabs();
       renderActivePanel();
+      observeReveals();
     }
 
     document.getElementById('loginForm').addEventListener('submit', async e => {
@@ -1430,7 +1662,6 @@
     document.getElementById('btnSync').addEventListener('click', async () => {
       await loadState();
       applySession();
-      setMsg('clientStatus', 'Tersinkronisasi dengan database.', 'ok');
     });
 
     document.getElementById('activeClientSelector').addEventListener('change', e => {
@@ -1438,15 +1669,14 @@
       renderActivePanel();
     });
 
-    document.getElementById('clientSearch').addEventListener('input', () => renderProjectsTab(getClient(), getPrimaryEvent(getClient())));
+    document.getElementById('clientSearch').addEventListener('input', () => renderProjectsTab(getClient()));
 
     document.getElementById('btnNewClient').addEventListener('click', () => {
       document.getElementById('clientForm').reset();
       document.getElementById('c_id').value = '';
-      setMsg('clientStatus', 'Isi form di atas untuk menambah klien baru.');
     });
 
-    document.getElementById('btnResetClient').addEventListener('click', () => renderProjectsTab(getClient(), getPrimaryEvent(getClient())));
+    document.getElementById('btnResetClient').addEventListener('click', () => renderProjectsTab(getClient()));
 
     document.getElementById('clientForm').addEventListener('submit', async e => {
       e.preventDefault();
@@ -1491,14 +1721,10 @@
       c.password = document.getElementById('c_password').value.trim();
       c.historyNotes = document.getElementById('c_historyNotes').value.trim();
 
-      try {
-        await saveState();
-        renderClientSelector();
-        renderActivePanel();
-        setMsg('clientStatus', `Klien "${c.coupleShort}" tersimpan.`, 'ok');
-      } catch (err) {
-        setMsg('clientStatus', err.message, 'err');
-      }
+      await saveState();
+      renderClientSelector();
+      renderActivePanel();
+      setMsg('clientStatus', `Data "${c.coupleShort}" tersimpan.`, 'ok');
     });
 
     document.getElementById('btnSaveWoStatus').addEventListener('click', async () => {
@@ -1506,7 +1732,7 @@
       if (!ev) return;
       ev.woProgress = { ...(ev.woProgress || {}), status: document.getElementById('woStatusSelect').value };
       await saveState();
-      renderRundownTab(getClient(), ev);
+      renderActivePanel();
       setMsg('woStatusMsg', 'Status rundown tersimpan.', 'ok');
     });
 
@@ -1522,7 +1748,6 @@
       document.getElementById('newChkTitle').value = '';
       await saveState();
       renderRundownTab(getClient(), ev);
-      setMsg('woStatusMsg', 'Checklist ditambahkan.', 'ok');
     });
 
     document.getElementById('vendorForm').addEventListener('submit', async e => {
@@ -1545,9 +1770,8 @@
       };
 
       const idx = ev.vendors.findIndex(x => x.id === payload.id);
-      if (idx >= 0) {
-        ev.vendors[idx] = { ...ev.vendors[idx], ...payload };
-      } else {
+      if (idx >= 0) ev.vendors[idx] = { ...ev.vendors[idx], ...payload };
+      else {
         ev.vendors.push({
           ...payload,
           paidAmount: 0,
@@ -1586,7 +1810,6 @@
       });
       await saveState();
       renderVendorsTab(getClient(), ev);
-      setMsg('vendorMsg', 'Confirmed vendor ditambahkan.', 'ok');
     });
 
     document.getElementById('biodataForm').addEventListener('submit', async e => {
@@ -1694,6 +1917,7 @@
         additionalNotes: document.getElementById('fb_additionalNotes').value.trim()
       };
       await saveState();
+      renderActivePanel();
       setMsg('briefMsg', 'Event & brief tersimpan.', 'ok');
     });
 
