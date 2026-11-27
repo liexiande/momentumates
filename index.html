@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MOMENTUMATES WO — Client & Team Portal</title>
+  <title>MOMENTUMATES WO APPS — Wedding Organizer Suite</title>
   <style>
     :root {
       --bg: #0b0d11;
       --panel: #131720;
-      --panel-alt: #1a202c;
+      --panel-2: #1a202c;
       --border: #283040;
       --text: #f3f4f6;
       --muted: #9ca3af;
@@ -16,20 +16,21 @@
       --gold-ink: #111317;
       --green: #22c55e;
       --red: #ef4444;
+      --blue: #60a5fa;
     }
 
     * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      padding: 20px 16px 40px;
+      padding: 18px 16px 48px;
       background: var(--bg);
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      line-height: 1.5;
+      line-height: 1.45;
     }
 
-    .container { max-width: 1180px; margin: 0 auto; }
+    .container { max-width: 1240px; margin: 0 auto; }
 
     .topbar {
       display: flex;
@@ -38,7 +39,7 @@
       align-items: center;
       gap: 12px;
       padding-bottom: 14px;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
       border-bottom: 1px solid var(--border);
     }
 
@@ -49,7 +50,7 @@
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       font-size: 13px;
       color: var(--muted);
     }
@@ -57,7 +58,7 @@
     .badge {
       padding: 2px 9px;
       border-radius: 999px;
-      background: var(--panel-alt);
+      background: var(--panel-2);
       border: 1px solid var(--border);
       color: var(--gold);
       font-size: 11px;
@@ -69,14 +70,14 @@
       background: var(--panel);
       border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 20px;
-      margin-bottom: 18px;
+      padding: 18px;
+      margin-bottom: 16px;
     }
 
     .tabs {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 6px;
       margin-bottom: 16px;
     }
 
@@ -86,26 +87,27 @@
       border-color: var(--gold);
     }
 
-    h1, h2, h3 { margin: 0 0 12px; }
-    h1, h2 { font-size: 18px; }
+    h1, h2, h3, h4 { margin: 0 0 10px; }
+    h1, h2 { font-size: 17px; }
     h3 {
       font-size: 12px;
       text-transform: uppercase;
       letter-spacing: 0.06em;
       color: var(--gold);
-      margin-top: 20px;
-      padding-bottom: 6px;
+      margin-top: 18px;
+      padding-bottom: 5px;
       border-bottom: 1px solid var(--border);
     }
+    h4 { font-size: 14px; color: var(--text); }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
-      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+      gap: 10px;
       align-items: end;
     }
 
-    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field { display: flex; flex-direction: column; gap: 5px; }
     .field.span-2 { grid-column: span 2; }
     @media (max-width: 640px) { .field.span-2 { grid-column: span 1; } }
 
@@ -113,10 +115,10 @@
 
     input, select, textarea {
       width: 100%;
-      padding: 9px 11px;
+      padding: 8px 10px;
       border-radius: 7px;
       border: 1px solid var(--border);
-      background: var(--panel-alt);
+      background: var(--panel-2);
       color: var(--text);
       font-size: 13px;
       font-family: inherit;
@@ -127,36 +129,29 @@
       border-color: var(--gold);
     }
 
-    input[readonly] { opacity: 0.65; cursor: not-allowed; }
-    textarea { min-height: 68px; resize: vertical; }
-
-    .perm-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 10px;
-      margin-top: 10px;
-    }
+    textarea { min-height: 64px; resize: vertical; }
 
     .btn-row {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-top: 14px;
+      margin-top: 12px;
+      align-items: center;
     }
 
     button {
-      padding: 8px 14px;
+      padding: 7px 13px;
       border-radius: 7px;
       border: 1px solid var(--border);
-      background: var(--panel-alt);
+      background: var(--panel-2);
       color: var(--text);
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 600;
       cursor: pointer;
     }
 
     button:hover:not(:disabled) { border-color: var(--gold); }
-    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    button:disabled { opacity: 0.45; cursor: not-allowed; }
     button.primary { background: var(--gold); color: var(--gold-ink); border-color: var(--gold); }
     button.danger { color: #fca5a5; border-color: rgba(239, 68, 68, 0.45); }
 
@@ -164,15 +159,67 @@
     .status.ok { color: var(--green); }
     .status.err { color: var(--red); }
 
-    .table-wrap { overflow-x: auto; margin-top: 14px; }
-    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+      gap: 10px;
+      margin: 12px 0 16px;
+    }
+
+    .kpi {
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+    }
+    .kpi .k-label { font-size: 11px; color: var(--muted); text-transform: uppercase; }
+    .kpi .k-val { font-size: 16px; font-weight: 700; margin-top: 4px; color: var(--gold); }
+
+    .sub-card {
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 10px;
+    }
+
+    .chk-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 6px 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 13px;
+    }
+    .chk-item label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text);
+      margin: 0;
+      cursor: pointer;
+      flex: 1;
+    }
+    .chk-item input[type="checkbox"] { width: auto; }
+    .done-text { text-decoration: line-through; color: var(--muted); }
+
+    .table-wrap { overflow-x: auto; margin-top: 12px; }
+    table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
     th, td {
-      padding: 9px 11px;
+      padding: 8px 10px;
       border-bottom: 1px solid var(--border);
       text-align: left;
       white-space: nowrap;
     }
-    th { background: var(--panel-alt); color: var(--muted); font-weight: 600; }
+    th { background: var(--panel-2); color: var(--muted); font-weight: 600; }
+
+    .perm-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+      gap: 10px;
+      margin-top: 8px;
+    }
 
     .hidden { display: none !important; }
   </style>
@@ -182,17 +229,18 @@
     <header class="topbar">
       <div class="brand">MOMENTUMATES <span>WO APPS</span></div>
       <div id="sessionBar" class="session-bar hidden">
-        <span>Login: <strong id="lblUser"></strong></span>
+        <span>User: <strong id="lblUser"></strong></span>
         <span id="lblRole" class="badge"></span>
-        <button type="button" id="btnSyncNow">Sync DB</button>
+        <select id="activeClientSelector" title="Pilih Klien Aktif" style="width:auto; min-width:190px;"></select>
+        <button type="button" id="btnSync">Sync DB</button>
         <button type="button" id="btnLogout">Logout</button>
       </div>
     </header>
 
     <!-- LOGIN -->
     <section id="loginCard" class="card">
-      <h1>Login Portal</h1>
-      <p style="margin:0 0 14px; font-size:13px; color:var(--muted);">
+      <h1>Login MOMENTUMATES WO</h1>
+      <p style="margin:0 0 12px; font-size:13px; color:var(--muted);">
         Masuk menggunakan akun <strong>Superadmin / Staff WO</strong> atau akun <strong>Klien</strong>.
       </p>
       <form id="loginForm" class="grid">
@@ -211,35 +259,30 @@
       <div id="loginStatus" class="status"></div>
     </section>
 
-    <!-- WORKSPACE -->
-    <main id="workspace" class="hidden">
-      <nav class="tabs" id="navTabs">
-        <button type="button" class="tab-btn active" data-tab="projects">Projects &amp; Klien</button>
-        <button type="button" class="tab-btn" data-tab="biodata">Biodata Pasangan</button>
-        <button type="button" class="tab-btn" data-tab="client-form">Event &amp; Brief Acara</button>
-        <button type="button" class="tab-btn hidden" id="tabUsersBtn" data-tab="users">Manage Users (Superadmin)</button>
-      </nav>
+    <!-- MAIN WO SUITE -->
+    <main id="woSuite" class="hidden">
+      <nav class="tabs" id="mainTabs"></nav>
 
-      <!-- TAB 1: PROJECTS & KLIEN -->
-      <section id="panel-projects" class="card">
+      <!-- 1. PROJECTS & KLIEN -->
+      <section id="tab-projects" class="card">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-          <h2 style="margin:0;">Kelola Klien &amp; Project</h2>
+          <h2 style="margin:0;">Projects &amp; Klien</h2>
           <div class="btn-row" style="margin-top:0;">
-            <input type="search" id="searchClient" placeholder="Cari pasangan / venue..." style="width:230px;" />
+            <input type="search" id="clientSearch" placeholder="Cari pasangan / venue..." style="width:220px;" />
             <button type="button" id="btnNewClient">+ Klien Baru</button>
           </div>
         </div>
 
-        <form id="clientMainForm" style="margin-top:14px;">
+        <form id="clientForm" style="margin-top:12px;">
           <input type="hidden" id="c_id" />
-          <h3>Data Utama &amp; Akses Portal Klien</h3>
+          <h3>Data Utama &amp; Portal Klien</h3>
           <div class="grid">
             <div class="field">
-              <label for="c_coupleShort">Nama Pasangan (Couple Short) *</label>
-              <input type="text" id="c_coupleShort" placeholder="contoh: ALDY ERZA" required />
+              <label for="c_coupleShort">Nama Pasangan *</label>
+              <input type="text" id="c_coupleShort" placeholder="ALDY ERZA" required />
             </div>
             <div class="field">
-              <label for="c_packageTier">Paket WO *</label>
+              <label for="c_packageTier">Paket WO</label>
               <input type="text" id="c_packageTier" placeholder="WEDDING DAY ORGANIZER" />
             </div>
             <div class="field">
@@ -252,30 +295,30 @@
               </select>
             </div>
             <div class="field">
-              <label for="c_phone">No. WhatsApp Utama</label>
-              <input type="text" id="c_phone" placeholder="628..." />
+              <label for="c_phone">No. WhatsApp</label>
+              <input type="text" id="c_phone" />
             </div>
             <div class="field">
               <label for="c_username">Username Login Klien</label>
-              <input type="text" id="c_username" placeholder="aldyerza" />
+              <input type="text" id="c_username" />
             </div>
             <div class="field">
               <label for="c_password">Password Login Klien</label>
-              <input type="text" id="c_password" placeholder="15mei2027" />
+              <input type="text" id="c_password" />
             </div>
             <div class="field span-2">
-              <label for="c_historyNotes">Catatan History Klien</label>
+              <label for="c_historyNotes">History / Catatan Klien</label>
               <textarea id="c_historyNotes"></textarea>
             </div>
           </div>
 
-          <div class="btn-row" id="clientMainActions">
-            <button type="submit" class="primary">Simpan Data Klien</button>
-            <button type="button" id="btnResetClientForm">Reset</button>
+          <div class="btn-row" id="clientFormActions">
+            <button type="submit" class="primary">Simpan Klien</button>
+            <button type="button" id="btnResetClient">Reset</button>
           </div>
         </form>
 
-        <div id="clientMsg" class="status"></div>
+        <div id="clientStatus" class="status"></div>
 
         <div class="table-wrap" id="clientsTableWrap">
           <table>
@@ -285,7 +328,7 @@
                 <th>Paket WO</th>
                 <th>Event &amp; Tanggal</th>
                 <th>Venue</th>
-                <th>Login Klien</th>
+                <th>Username</th>
                 <th>Status</th>
                 <th>Aksi</th>
               </tr>
@@ -295,9 +338,124 @@
         </div>
       </section>
 
-      <!-- TAB 2: BIODATA -->
-      <section id="panel-biodata" class="card hidden">
-        <h2>Biodata Mempelai (<span id="bioClientTitle">-</span>)</h2>
+      <!-- 2. WO RUNDOWN & CHECKLIST -->
+      <section id="tab-wo-rundown" class="card hidden">
+        <h2>WO Rundown &amp; Checklist (<span class="active-couple-lbl">-</span>)</h2>
+        <div class="kpi-grid">
+          <div class="kpi"><div class="k-label">Status Rundown</div><div class="k-val" id="kpiWoStatus">-</div></div>
+          <div class="kpi"><div class="k-label">Tanggal &amp; Venue</div><div class="k-val" id="kpiEventVenue" style="font-size:13px;">-</div></div>
+          <div class="kpi"><div class="k-label">Checklist Selesai</div><div class="k-val" id="kpiChecklist">0 / 0</div></div>
+          <div class="kpi"><div class="k-label">Rata-rata Progres</div><div class="k-val" id="kpiProgress">0%</div></div>
+        </div>
+
+        <div class="grid">
+          <div class="field">
+            <label for="woStatusSelect">Status Rundown WO</label>
+            <select id="woStatusSelect">
+              <option value="Draft">Draft</option>
+              <option value="In Review">In Review</option>
+              <option value="Approved">Approved</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="chkVendorSelect">Pilih Vendor / Divisi Checklist</label>
+            <select id="chkVendorSelect"></select>
+          </div>
+          <div class="field span-2">
+            <label for="newChkTitle">Tambah Item Checklist Baru</label>
+            <input type="text" id="newChkTitle" placeholder="Contoh: Technical meeting & floorplan final" />
+          </div>
+          <div class="btn-row" style="margin-top:0;">
+            <button type="button" class="primary" id="btnAddChk">+ Tambah Checklist</button>
+            <button type="button" id="btnSaveWoStatus">Simpan Status</button>
+          </div>
+        </div>
+
+        <div id="checklistContainer" style="margin-top:14px;"></div>
+        <div id="woStatusMsg" class="status"></div>
+      </section>
+
+      <!-- 3. VENDORS & VENDOR INFO -->
+      <section id="tab-vendors" class="card hidden">
+        <h2>Vendors &amp; Confirmed Vendor List (<span class="active-couple-lbl">-</span>)</h2>
+
+        <form id="vendorForm">
+          <h3>Tambah / Edit Vendor Event</h3>
+          <input type="hidden" id="v_id" />
+          <div class="grid">
+            <div class="field"><label>Nama Vendor *</label><input type="text" id="v_name" required /></div>
+            <div class="field"><label>Kategori</label><input type="text" id="v_category" placeholder="WEDDING ORGANIZER / PHOTO VIDEO / VENUE" /></div>
+            <div class="field"><label>PIC Name</label><input type="text" id="v_picName" /></div>
+            <div class="field"><label>PIC Phone</label><input type="text" id="v_picPhone" /></div>
+            <div class="field"><label>Package Name</label><input type="text" id="v_packageName" /></div>
+            <div class="field"><label>Package Price (Rp)</label><input type="number" id="v_packagePrice" min="0" value="0" /></div>
+            <div class="field"><label>Progress (%)</label><input type="number" id="v_progress" min="0" max="100" value="0" /></div>
+            <div class="field">
+              <label>Status</label>
+              <select id="v_status">
+                <option value="On Progress">On Progress</option>
+                <option value="Confirmed">Confirmed</option>
+                <option value="Done">Done</option>
+              </select>
+            </div>
+            <div class="field span-2"><label>Package Items / Notes</label><input type="text" id="v_packageItems" /></div>
+          </div>
+          <div class="btn-row" id="vendorFormActions">
+            <button type="submit" class="primary">Simpan Vendor</button>
+            <button type="button" id="btnResetVendor">Reset</button>
+          </div>
+        </form>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Vendor</th>
+                <th>Kategori</th>
+                <th>PIC</th>
+                <th>Paket (Rp)</th>
+                <th>Terbayar (Rp)</th>
+                <th>Progress</th>
+                <th>Status</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="vendorsTbody"></tbody>
+          </table>
+        </div>
+
+        <h3>Confirmed Vendor List (Direct / Venue / PIC)</h3>
+        <div class="grid">
+          <div class="field"><label>Kategori</label><input type="text" id="cv_category" placeholder="VENUE / PHOTO VIDEO" /></div>
+          <div class="field"><label>Nama Vendor</label><input type="text" id="cv_name" /></div>
+          <div class="field"><label>PIC Name</label><input type="text" id="cv_picName" /></div>
+          <div class="field"><label>PIC Phone</label><input type="text" id="cv_picPhone" /></div>
+          <div class="field"><label>Catatan</label><input type="text" id="cv_notes" placeholder="Direct Dealing Klien" /></div>
+          <div class="btn-row" style="margin-top:0;">
+            <button type="button" class="primary" id="btnAddConfirmedVendor">+ Tambah</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Kategori</th>
+                <th>Vendor</th>
+                <th>PIC</th>
+                <th>Telepon</th>
+                <th>Catatan</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="confirmedVendorsTbody"></tbody>
+          </table>
+        </div>
+        <div id="vendorMsg" class="status"></div>
+      </section>
+
+      <!-- 4. BIODATA PASANGAN -->
+      <section id="tab-biodata" class="card hidden">
+        <h2>Biodata Pasangan (<span class="active-couple-lbl">-</span>)</h2>
         <form id="biodataForm">
           <h3>Mempelai Pria (Groom)</h3>
           <div class="grid">
@@ -307,10 +465,10 @@
             <div class="field"><label>No. HP</label><input type="text" id="g_phone" /></div>
             <div class="field"><label>Instagram</label><input type="text" id="g_instagram" /></div>
             <div class="field"><label>Alamat</label><input type="text" id="g_address" /></div>
-            <div class="field"><label>Nama Ayah Groom</label><input type="text" id="g_fatherName" /></div>
-            <div class="field"><label>HP Ayah Groom</label><input type="text" id="g_fatherPhone" /></div>
-            <div class="field"><label>Nama Ibu Groom</label><input type="text" id="g_motherName" /></div>
-            <div class="field"><label>HP Ibu Groom</label><input type="text" id="g_motherPhone" /></div>
+            <div class="field"><label>Nama Ayah</label><input type="text" id="g_fatherName" /></div>
+            <div class="field"><label>HP Ayah</label><input type="text" id="g_fatherPhone" /></div>
+            <div class="field"><label>Nama Ibu</label><input type="text" id="g_motherName" /></div>
+            <div class="field"><label>HP Ibu</label><input type="text" id="g_motherPhone" /></div>
           </div>
 
           <h3>Mempelai Wanita (Bride)</h3>
@@ -321,10 +479,10 @@
             <div class="field"><label>No. HP</label><input type="text" id="b_phone" /></div>
             <div class="field"><label>Instagram</label><input type="text" id="b_instagram" /></div>
             <div class="field"><label>Alamat</label><input type="text" id="b_address" /></div>
-            <div class="field"><label>Nama Ayah Bride</label><input type="text" id="b_fatherName" /></div>
-            <div class="field"><label>HP Ayah Bride</label><input type="text" id="b_fatherPhone" /></div>
-            <div class="field"><label>Nama Ibu Bride</label><input type="text" id="b_motherName" /></div>
-            <div class="field"><label>HP Ibu Bride</label><input type="text" id="b_motherPhone" /></div>
+            <div class="field"><label>Nama Ayah</label><input type="text" id="b_fatherName" /></div>
+            <div class="field"><label>HP Ayah</label><input type="text" id="b_fatherPhone" /></div>
+            <div class="field"><label>Nama Ibu</label><input type="text" id="b_motherName" /></div>
+            <div class="field"><label>HP Ibu</label><input type="text" id="b_motherPhone" /></div>
           </div>
 
           <div class="btn-row" id="biodataActions">
@@ -334,105 +492,222 @@
         <div id="bioMsg" class="status"></div>
       </section>
 
-      <!-- TAB 3: EVENT & BRIEF -->
-      <section id="panel-client-form" class="card hidden">
-        <h2>Detail Event &amp; Brief Acara (<span id="evClientTitle">-</span>)</h2>
-        <form id="eventDetailForm">
-          <h3>Informasi Event</h3>
+      <!-- 5. PAYMENTS / CICILAN VENDOR -->
+      <section id="tab-payments" class="card hidden">
+        <h2>Payments &amp; Cicilan Vendor (<span class="active-couple-lbl">-</span>)</h2>
+        <form id="paymentForm">
           <div class="grid">
-            <div class="field"><label>Nama Event</label><input type="text" id="ev_eventName" placeholder="Wedding Day" /></div>
-            <div class="field"><label>Jenis Event</label><input type="text" id="ev_eventType" placeholder="Wedding Day / Sangjit" /></div>
-            <div class="field"><label>Tanggal Event</label><input type="date" id="ev_eventDate" /></div>
-            <div class="field"><label>Venue / Lokasi</label><input type="text" id="ev_venue" /></div>
             <div class="field">
-              <label>Status Rundown WO</label>
-              <select id="ev_woStatus">
-                <option value="Draft">Draft</option>
-                <option value="In Review">In Review</option>
-                <option value="Approved">Approved</option>
+              <label for="pay_vendorId">Vendor *</label>
+              <select id="pay_vendorId"></select>
+            </div>
+            <div class="field">
+              <label for="pay_label">Keterangan Pembayaran *</label>
+              <input type="text" id="pay_label" placeholder="DOWN PAYMENT / TERMIN 2" required />
+            </div>
+            <div class="field">
+              <label for="pay_method">Metode / Rekening</label>
+              <input type="text" id="pay_method" placeholder="Transfer BCA a/n ..." />
+            </div>
+            <div class="field">
+              <label for="pay_amount">Nominal (Rp) *</label>
+              <input type="number" id="pay_amount" min="1" required />
+            </div>
+            <div class="field">
+              <label for="pay_date">Tanggal</label>
+              <input type="date" id="pay_date" />
+            </div>
+            <div class="field">
+              <label for="pay_status">Status</label>
+              <select id="pay_status">
+                <option value="Verified">Verified</option>
+                <option value="Pending">Pending</option>
               </select>
             </div>
           </div>
-
-          <h3>Brief &amp; Konsep Acara</h3>
-          <div class="grid">
-            <div class="field"><label>Waktu Pemberkatan / Akad</label><input type="text" id="br_ceremonyTime" /></div>
-            <div class="field"><label>Waktu Resepsi</label><input type="text" id="br_receptionTime" /></div>
-            <div class="field"><label>Jumlah Tamu</label><input type="text" id="br_guestCount" /></div>
-            <div class="field"><label>Tema / Konsep</label><input type="text" id="br_themeConcept" /></div>
-            <div class="field"><label>Color Palette</label><input type="text" id="br_colorPalette" /></div>
-            <div class="field"><label>Catatan Diet / F&amp;B</label><input type="text" id="br_dietaryNotes" /></div>
-            <div class="field span-2"><label>Catatan Tambahan / Akses VIP</label><textarea id="br_additionalNotes"></textarea></div>
-          </div>
-
-          <div class="btn-row" id="eventActions">
-            <button type="submit" class="primary">Simpan Detail Event</button>
+          <div class="btn-row" id="paymentActions">
+            <button type="submit" class="primary">+ Catat Pembayaran</button>
           </div>
         </form>
-        <div id="evMsg" class="status"></div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Tanggal</th>
+                <th>Vendor</th>
+                <th>Keterangan</th>
+                <th>Metode</th>
+                <th>Nominal (Rp)</th>
+                <th>Status</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="paymentsTbody"></tbody>
+          </table>
+        </div>
+        <div id="paymentMsg" class="status"></div>
       </section>
 
-      <!-- TAB 4: SUPERADMIN MANAGE USERS -->
-      <section id="panel-users" class="card hidden">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-          <h2 style="margin:0;">Manage Users &amp; Staff WO (Superadmin)</h2>
-          <button type="button" id="btnNewUser">+ User Baru</button>
-        </div>
-
-        <form id="userForm" style="margin-top:12px;">
-          <input type="hidden" id="u_id" />
-          <h3>Data Akun &amp; Role</h3>
+      <!-- 6. INVOICES -->
+      <section id="tab-invoices" class="card hidden">
+        <h2>Invoices (<span class="active-couple-lbl">-</span>)</h2>
+        <form id="invoiceForm">
           <div class="grid">
             <div class="field">
-              <label for="u_username">Username *</label>
-              <input type="text" id="u_username" required />
+              <label for="inv_number">No. Invoice *</label>
+              <input type="text" id="inv_number" placeholder="INV/MMW/2026/..." required />
             </div>
             <div class="field">
-              <label for="u_fullName">Nama Lengkap *</label>
-              <input type="text" id="u_fullName" required />
+              <label for="inv_terms">Keterangan Termin *</label>
+              <input type="text" id="inv_terms" placeholder="DP WO MOMENTUMATES" required />
             </div>
             <div class="field">
-              <label for="u_position">Jabatan / Position</label>
-              <input type="text" id="u_position" placeholder="OWNER / ADMIN / LEADER WO" />
+              <label for="inv_amount">Total Tagihan (Rp) *</label>
+              <input type="number" id="inv_amount" min="0" required />
             </div>
             <div class="field">
-              <label for="u_role">Role *</label>
-              <select id="u_role">
+              <label for="inv_issueDate">Tanggal Terbit</label>
+              <input type="date" id="inv_issueDate" />
+            </div>
+            <div class="field">
+              <label for="inv_dueDate">Jatuh Tempo</label>
+              <input type="date" id="inv_dueDate" />
+            </div>
+            <div class="field">
+              <label for="inv_status">Status</label>
+              <select id="inv_status">
+                <option value="Partial">Partial</option>
+                <option value="Paid">Paid</option>
+                <option value="Unpaid">Unpaid</option>
+              </select>
+            </div>
+          </div>
+          <div class="btn-row" id="invoiceActions">
+            <button type="submit" class="primary">+ Tambah Invoice</button>
+          </div>
+        </form>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>No. Invoice</th>
+                <th>Termin</th>
+                <th>Terbit</th>
+                <th>Jatuh Tempo</th>
+                <th>Total (Rp)</th>
+                <th>Status</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="invoicesTbody"></tbody>
+          </table>
+        </div>
+        <div id="invoiceMsg" class="status"></div>
+      </section>
+
+      <!-- 7. EVENT & BRIEF ACARA (CLIENT FORM) -->
+      <section id="tab-client-form" class="card hidden">
+        <h2>Event &amp; Brief Acara (<span class="active-couple-lbl">-</span>)</h2>
+        <form id="eventBriefForm">
+          <h3>Detail Event</h3>
+          <div class="grid">
+            <div class="field"><label>Nama Event</label><input type="text" id="fb_eventName" /></div>
+            <div class="field"><label>Jenis Event</label><input type="text" id="fb_eventType" /></div>
+            <div class="field"><label>Tanggal Event</label><input type="date" id="fb_eventDate" /></div>
+            <div class="field"><label>Venue</label><input type="text" id="fb_venue" /></div>
+          </div>
+
+          <h3>Form Brief &amp; Konsep</h3>
+          <div class="grid">
+            <div class="field"><label>Ceremony Time</label><input type="text" id="fb_ceremonyTime" /></div>
+            <div class="field"><label>Reception Time</label><input type="text" id="fb_receptionTime" /></div>
+            <div class="field"><label>Guest Count</label><input type="text" id="fb_guestCount" /></div>
+            <div class="field"><label>Theme Concept</label><input type="text" id="fb_themeConcept" /></div>
+            <div class="field"><label>Color Palette</label><input type="text" id="fb_colorPalette" /></div>
+            <div class="field"><label>Dietary Notes</label><input type="text" id="fb_dietaryNotes" /></div>
+            <div class="field span-2"><label>Additional Notes</label><textarea id="fb_additionalNotes"></textarea></div>
+          </div>
+
+          <div class="btn-row" id="eventBriefActions">
+            <button type="submit" class="primary">Simpan Event &amp; Brief</button>
+          </div>
+        </form>
+        <div id="briefMsg" class="status"></div>
+      </section>
+
+      <!-- 8. INTERNAL OPS -->
+      <section id="tab-internal-ops" class="card hidden">
+        <h2>Internal Ops &amp; Ringkasan Operasional</h2>
+        <div class="kpi-grid" id="opsKpiGrid"></div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Pasangan</th>
+                <th>Event &amp; Tanggal</th>
+                <th>Venue</th>
+                <th>Rundown</th>
+                <th>Vendor</th>
+                <th>Invoice</th>
+                <th>Project</th>
+              </tr>
+            </thead>
+            <tbody id="opsTbody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 9. SUPERADMIN MANAGE USERS -->
+      <section id="tab-users" class="card hidden">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <h2 style="margin:0;">Manage Users &amp; Hak Akses (Superadmin)</h2>
+          <button type="button" id="btnNewStaff">+ User Baru</button>
+        </div>
+
+        <form id="staffForm" style="margin-top:12px;">
+          <input type="hidden" id="s_id" />
+          <h3>Akun &amp; Role</h3>
+          <div class="grid">
+            <div class="field"><label for="s_username">Username *</label><input type="text" id="s_username" required /></div>
+            <div class="field"><label for="s_fullName">Nama Lengkap *</label><input type="text" id="s_fullName" required /></div>
+            <div class="field"><label for="s_position">Position</label><input type="text" id="s_position" placeholder="OWNER / ADMIN / LEADER WO" /></div>
+            <div class="field">
+              <label for="s_role">Role *</label>
+              <select id="s_role">
                 <option value="superadmin">superadmin</option>
                 <option value="admin">admin</option>
                 <option value="editor">editor</option>
               </select>
             </div>
-            <div class="field">
-              <label for="u_password">Password *</label>
-              <input type="text" id="u_password" required />
-            </div>
+            <div class="field"><label for="s_password">Password *</label><input type="text" id="s_password" required /></div>
           </div>
 
-          <h3>Hak Akses Tab (Tab Permissions)</h3>
-          <div class="perm-grid" id="permGrid"></div>
+          <h3>Tab Permissions</h3>
+          <div class="perm-grid" id="staffPermGrid"></div>
 
           <div class="btn-row">
-            <button type="submit" class="primary" id="btnSaveUser">Simpan User</button>
-            <button type="button" id="btnResetUser">Reset</button>
+            <button type="submit" class="primary" id="btnSaveStaff">Simpan User</button>
+            <button type="button" id="btnResetStaff">Reset</button>
           </div>
         </form>
 
-        <div id="userMsg" class="status"></div>
+        <div id="staffMsg" class="status"></div>
 
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
                 <th>Username</th>
-                <th>Nama Lengkap</th>
+                <th>Nama</th>
                 <th>Position</th>
                 <th>Role</th>
                 <th>Password</th>
                 <th>Aksi</th>
               </tr>
             </thead>
-            <tbody id="usersTbody"></tbody>
+            <tbody id="staffTbody"></tbody>
           </table>
         </div>
       </section>
@@ -440,31 +715,36 @@
   </div>
 
   <script>
-    // URL Web App Apps Script (momentumates WO)
     const GAS_EXEC_URL = 'https://script.google.com/macros/s/AKfycbyZbPdZphb-GK6d9_0rAUuOEGUgb0oCvGQifGAwd6SNDRwcyyNfAiIUjB1FgJ2kx7PS0Q/exec';
-    const STORAGE_KEY = 'momentumates_main_state_cache_v1';
-    const SESSION_KEY = 'momentumates_session_v1';
+    const STORAGE_KEY = 'momentumates_wo_suite_cache_v1';
+    const SESSION_KEY = 'momentumates_wo_suite_session_v1';
 
-    const PERMISSION_KEYS = [
-      'projects', 'biodata', 'client-form', 'wo-rundown',
-      'vendors', 'vendor-info', 'payments', 'invoices',
-      'internal-ops', 'users'
+    const ALL_TABS = [
+      { id: 'wo-rundown', label: 'WO Rundown' },
+      { id: 'vendors', label: 'Vendors' },
+      { id: 'biodata', label: 'Biodata' },
+      { id: 'payments', label: 'Payments' },
+      { id: 'invoices', label: 'Invoices' },
+      { id: 'client-form', label: 'Event & Brief' },
+      { id: 'internal-ops', label: 'Internal Ops' },
+      { id: 'projects', label: 'Projects & Klien' },
+      { id: 'users', label: 'Manage Users' }
     ];
 
-    let appState = {
-      adminTabOrder: ['wo-rundown','vendors','biodata','payments','invoices','client-form','internal-ops','projects','users'],
+    let state = {
+      adminTabOrder: ALL_TABS.map(t => t.id),
       clients: [],
       staffUsers: []
     };
 
-    let currentSession = null;
-    let selectedClientId = null;
+    let session = null;
+    let currentClientId = null;
+    let currentTab = 'wo-rundown';
 
-    function esc(val) {
-      return String(val ?? '').replace(/[&<>"']/g, m => ({
-        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-      }[m]));
-    }
+    const fmtRp = n => 'Rp ' + Number(n || 0).toLocaleString('id-ID');
+    const esc = v => String(v ?? '').replace(/[&<>"']/g, m => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[m]));
 
     function setMsg(id, msg, type = '') {
       const el = document.getElementById(id);
@@ -473,12 +753,12 @@
       el.className = 'status' + (type ? ' ' + type : '');
     }
 
-    function buildPermissionInputs() {
-      const grid = document.getElementById('permGrid');
-      grid.innerHTML = PERMISSION_KEYS.map(key => `
+    function buildPermGrid() {
+      const grid = document.getElementById('staffPermGrid');
+      grid.innerHTML = ALL_TABS.map(t => `
         <div class="field">
-          <label for="perm_${key}">${key}</label>
-          <select id="perm_${key}" data-perm-key="${key}">
+          <label for="perm_${t.id}">${t.id}</label>
+          <select id="perm_${t.id}">
             <option value="edit">edit</option>
             <option value="view">view</option>
             <option value="none">none</option>
@@ -487,430 +767,697 @@
       `).join('');
     }
 
-    function setFormPermissions(perms = {}, role = 'editor') {
-      PERMISSION_KEYS.forEach(k => {
-        const sel = document.getElementById('perm_' + k);
+    function setPermGrid(perms = {}, role = 'editor') {
+      ALL_TABS.forEach(t => {
+        const sel = document.getElementById('perm_' + t.id);
         if (!sel) return;
-        if (role === 'superadmin') {
-          sel.value = 'edit';
-        } else if (perms && perms[k]) {
-          sel.value = perms[k];
-        } else {
-          sel.value = k === 'users' ? 'none' : (role === 'admin' ? 'edit' : 'view');
-        }
+        if (role === 'superadmin') sel.value = 'edit';
+        else if (perms && perms[t.id]) sel.value = perms[t.id];
+        else sel.value = t.id === 'users' ? 'none' : (role === 'admin' ? 'edit' : 'view');
       });
     }
 
-    function readFormPermissions(role) {
-      const out = {};
-      PERMISSION_KEYS.forEach(k => {
-        if (role === 'superadmin') {
-          out[k] = 'edit';
-        } else {
-          const sel = document.getElementById('perm_' + k);
-          out[k] = sel ? sel.value : 'none';
+    function readPermGrid(role) {
+      const obj = {};
+      ALL_TABS.forEach(t => {
+        if (role === 'superadmin') obj[t.id] = 'edit';
+        else {
+          const sel = document.getElementById('perm_' + t.id);
+          obj[t.id] = sel ? sel.value : 'none';
         }
       });
-      return out;
+      return obj;
     }
 
-    // Load MAIN_STATE dari GAS (GET) dengan fallback localStorage
-    async function fetchMainState() {
+    async function loadState() {
       try {
-        const res = await fetch(GAS_EXEC_URL + '?action=getState&t=' + Date.now(), { method: 'GET' });
-        const data = await res.json();
-        const candidate = data?.state || data?.MAIN_STATE || (Array.isArray(data?.clients) ? data : null);
-        if (candidate && Array.isArray(candidate.clients)) {
-          appState = {
-            adminTabOrder: candidate.adminTabOrder || appState.adminTabOrder,
-            clients: candidate.clients || [],
-            staffUsers: candidate.staffUsers || []
+        const r = await fetch(GAS_EXEC_URL + '?action=getState&t=' + Date.now());
+        const d = await r.json();
+        const s = d?.state || d?.MAIN_STATE || (Array.isArray(d?.clients) ? d : null);
+        if (s && Array.isArray(s.clients)) {
+          state = {
+            adminTabOrder: s.adminTabOrder || state.adminTabOrder,
+            clients: s.clients || [],
+            staffUsers: s.staffUsers || []
           };
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
           return;
         }
-      } catch (_) {
-        // fallback ke cache lokal bila offline / endpoint belum mengembalikan getState
-      }
+      } catch (_) {}
 
       try {
         const cached = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
-        if (cached && Array.isArray(cached.clients)) {
-          appState = cached;
-        }
+        if (cached && Array.isArray(cached.clients)) state = cached;
       } catch (_) {}
     }
 
-    // Simpan MAIN_STATE ke GAS (POST text/plain agar bebas CORS preflight) + localStorage
-    async function persistMainState() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
-      const res = await fetch(GAS_EXEC_URL, {
+    async function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      const r = await fetch(GAS_EXEC_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({
-          action: 'saveState',
-          key: 'MAIN_STATE',
-          state: appState
-        })
+        body: JSON.stringify({ action: 'saveState', key: 'MAIN_STATE', state })
       });
-      if (!res.ok) {
-        throw new Error('Gagal menyinkronkan ke Google Sheets (' + res.status + ').');
+      if (!r.ok) throw new Error('Gagal menyimpan ke server (' + r.status + ').');
+    }
+
+    function getClient() {
+      return state.clients.find(c => c.id === currentClientId) || state.clients[0] || null;
+    }
+
+    function getPrimaryEvent(client) {
+      if (!client) return null;
+      if (!Array.isArray(client.events) || !client.events.length) {
+        client.events = [{
+          id: 'ev-' + Date.now(),
+          eventName: 'Wedding Day',
+          eventType: 'Wedding Day',
+          eventDate: '',
+          venue: '',
+          woProgress: { status: 'Draft' },
+          formBrief: {},
+          vendors: [],
+          confirmedVendorList: [],
+          invoices: []
+        }];
       }
+      return client.events[0];
     }
 
-    function openTab(tabName) {
-      document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.tab === tabName);
+    function getTabAccess(tabId) {
+      if (!session) return 'none';
+      if (session.type === 'client') {
+        return ['wo-rundown', 'biodata', 'client-form', 'invoices', 'vendors'].includes(tabId) ? 'view' : 'none';
+      }
+      const role = String(session.role || '').toLowerCase();
+      if (role === 'superadmin') return 'edit';
+      if (tabId === 'users') return 'none';
+      const staff = state.staffUsers.find(u => u.id === session.id);
+      const perm = staff?.tabPermissions?.[tabId];
+      if (perm) return perm;
+      return role === 'admin' ? 'edit' : 'view';
+    }
+
+    function renderTabs() {
+      const nav = document.getElementById('mainTabs');
+      const orderedIds = Array.from(new Set([...(state.adminTabOrder || []), ...ALL_TABS.map(t => t.id)]));
+      const visibleTabs = orderedIds
+        .map(id => ALL_TABS.find(t => t.id === id))
+        .filter(t => t && getTabAccess(t.id) !== 'none');
+
+      if (!visibleTabs.length) return;
+      if (!visibleTabs.some(t => t.id === currentTab)) {
+        currentTab = visibleTabs[0].id;
+      }
+
+      nav.innerHTML = visibleTabs.map(t => `
+        <button type="button" class="tab-btn ${t.id === currentTab ? 'active' : ''}" data-tab="${t.id}">
+          ${esc(t.label)}
+        </button>
+      `).join('');
+
+      nav.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          currentTab = btn.dataset.tab;
+          renderTabs();
+          renderActivePanel();
+        });
       });
-      ['projects', 'biodata', 'client-form', 'users'].forEach(id => {
-        const panel = document.getElementById('panel-' + id);
-        if (panel) panel.classList.toggle('hidden', id !== tabName);
+
+      ALL_TABS.forEach(t => {
+        const sec = document.getElementById('tab-' + t.id);
+        if (sec) sec.classList.toggle('hidden', t.id !== currentTab);
       });
     }
 
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-      btn.addEventListener('click', () => openTab(btn.dataset.tab));
-    });
-
-    function getSelectedClient() {
-      return appState.clients.find(c => c.id === selectedClientId) || appState.clients[0] || null;
+    function applyReadOnlyPermissions() {
+      const canEdit = getTabAccess(currentTab) === 'edit';
+      const actionGroups = [
+        'clientFormActions', 'vendorFormActions', 'biodataActions',
+        'paymentActions', 'invoiceActions', 'eventBriefActions'
+      ];
+      actionGroups.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.toggle('hidden', !canEdit);
+      });
     }
 
-    function selectClient(clientId) {
-      selectedClientId = clientId;
-      const c = getSelectedClient();
-      if (!c) return;
+    function renderClientSelector() {
+      const sel = document.getElementById('activeClientSelector');
+      const list = session?.type === 'client'
+        ? state.clients.filter(c => c.id === session.clientId)
+        : state.clients;
 
-      document.getElementById('c_id').value = c.id || '';
-      document.getElementById('c_coupleShort').value = c.coupleShort || '';
-      document.getElementById('c_packageTier').value = c.packageTier || '';
-      document.getElementById('c_projectStatus').value = c.projectStatus || 'Active';
-      document.getElementById('c_phone').value = c.phone || '';
-      document.getElementById('c_username').value = c.username || '';
-      document.getElementById('c_password').value = c.password || '';
-      document.getElementById('c_historyNotes').value = c.historyNotes || '';
-
-      document.getElementById('bioClientTitle').textContent = c.coupleShort || '-';
-      const bio = c.biodata || {};
-      const g = bio.groom || {};
-      const gp = bio.groomParents || {};
-      const b = bio.bride || {};
-      const bp = bio.brideParents || {};
-
-      document.getElementById('g_fullName').value = g.fullName || c.groomFullName || '';
-      document.getElementById('g_nickname').value = g.nickname || '';
-      document.getElementById('g_birthOrder').value = g.birthOrder || '';
-      document.getElementById('g_phone').value = g.phone || '';
-      document.getElementById('g_instagram').value = g.instagram || '';
-      document.getElementById('g_address').value = g.address || '';
-      document.getElementById('g_fatherName').value = gp.fatherName || '';
-      document.getElementById('g_fatherPhone').value = gp.fatherPhone || '';
-      document.getElementById('g_motherName').value = gp.motherName || '';
-      document.getElementById('g_motherPhone').value = gp.motherPhone || '';
-
-      document.getElementById('b_fullName').value = b.fullName || c.brideFullName || '';
-      document.getElementById('b_nickname').value = b.nickname || '';
-      document.getElementById('b_birthOrder').value = b.birthOrder || '';
-      document.getElementById('b_phone').value = b.phone || '';
-      document.getElementById('b_instagram').value = b.instagram || '';
-      document.getElementById('b_address').value = b.address || '';
-      document.getElementById('b_fatherName').value = bp.fatherName || '';
-      document.getElementById('b_fatherPhone').value = bp.fatherPhone || '';
-      document.getElementById('b_motherName').value = bp.motherName || '';
-      document.getElementById('b_motherPhone').value = bp.motherPhone || '';
-
-      document.getElementById('evClientTitle').textContent = c.coupleShort || '-';
-      const ev = (c.events && c.events[0]) || {};
-      const br = ev.formBrief || {};
-      document.getElementById('ev_eventName').value = ev.eventName || 'Wedding Day';
-      document.getElementById('ev_eventType').value = ev.eventType || 'Wedding Day';
-      document.getElementById('ev_eventDate').value = ev.eventDate || '';
-      document.getElementById('ev_venue').value = ev.venue || '';
-      document.getElementById('ev_woStatus').value = ev.woProgress?.status || 'Draft';
-      document.getElementById('br_ceremonyTime').value = br.ceremonyTime || '';
-      document.getElementById('br_receptionTime').value = br.receptionTime || '';
-      document.getElementById('br_guestCount').value = br.guestCount || '';
-      document.getElementById('br_themeConcept').value = br.themeConcept || '';
-      document.getElementById('br_colorPalette').value = br.colorPalette || '';
-      document.getElementById('br_dietaryNotes').value = br.dietaryNotes || '';
-      document.getElementById('br_additionalNotes').value = br.additionalNotes || '';
-    }
-
-    function renderClientsTable() {
-      const q = document.getElementById('searchClient').value.trim().toLowerCase();
-      const visibleClients = currentSession?.type === 'client'
-        ? appState.clients.filter(c => c.id === currentSession.clientId)
-        : appState.clients.filter(c => {
-            if (!q) return true;
-            const ev = (c.events && c.events[0]) || {};
-            return [c.coupleShort, c.packageTier, ev.venue, ev.eventDate, c.username]
-              .join(' ').toLowerCase().includes(q);
-          });
-
-      const tbody = document.getElementById('clientsTbody');
-      tbody.innerHTML = '';
-
-      if (!visibleClients.length) {
-        tbody.innerHTML = '<tr><td colspan="7" style="color:var(--muted);">Belum ada data klien.</td></tr>';
+      if (!list.length) {
+        sel.innerHTML = '<option value="">-- Belum ada klien --</option>';
+        currentClientId = null;
         return;
       }
 
-      const canDelete = currentSession?.type === 'staff' &&
-        ['superadmin', 'admin'].includes(String(currentSession.role).toLowerCase());
+      if (!list.some(c => c.id === currentClientId)) {
+        currentClientId = list[0].id;
+      }
 
-      visibleClients.forEach(c => {
-        const ev = (c.events && c.events[0]) || {};
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td><strong>${esc(c.coupleShort)}</strong></td>
-          <td>${esc(c.packageTier || '-')}</td>
-          <td>${esc(ev.eventName || '-')} (${esc(ev.eventDate || '-')})</td>
-          <td>${esc(ev.venue || '-')}</td>
-          <td>${esc(c.username || '-')}</td>
-          <td>${esc(c.projectStatus || 'Active')}</td>
-          <td class="btn-row" style="margin-top:0;">
-            <button type="button" onclick="handlePickClient('${esc(c.id)}')">Pilih / Edit</button>
-            ${canDelete ? `<button type="button" class="danger" onclick="handleDeleteClient('${esc(c.id)}')">Hapus</button>` : ''}
-          </td>
-        `;
-        tbody.appendChild(tr);
+      sel.innerHTML = list.map(c => `
+        <option value="${esc(c.id)}" ${c.id === currentClientId ? 'selected' : ''}>
+          ${esc(c.coupleShort)}
+        </option>
+      `).join('');
+    }
+
+    function renderActivePanel() {
+      const c = getClient();
+      const ev = getPrimaryEvent(c);
+      document.querySelectorAll('.active-couple-lbl').forEach(el => {
+        el.textContent = c ? c.coupleShort : '-';
       });
+
+      applyReadOnlyPermissions();
+
+      if (currentTab === 'projects') renderProjectsTab(c, ev);
+      else if (currentTab === 'wo-rundown') renderRundownTab(c, ev);
+      else if (currentTab === 'vendors') renderVendorsTab(c, ev);
+      else if (currentTab === 'biodata') renderBiodataTab(c);
+      else if (currentTab === 'payments') renderPaymentsTab(c, ev);
+      else if (currentTab === 'invoices') renderInvoicesTab(c, ev);
+      else if (currentTab === 'client-form') renderEventBriefTab(c, ev);
+      else if (currentTab === 'internal-ops') renderInternalOpsTab();
+      else if (currentTab === 'users') renderUsersTab();
     }
 
-    function handlePickClient(id) {
-      selectClient(id);
-      setMsg('clientMsg', 'Klien dipilih. Edit tab Biodata atau Event & Brief di atas.');
-    }
-
-    async function handleDeleteClient(id) {
-      if (!confirm('Hapus data klien ini secara permanen?')) return;
-      appState.clients = appState.clients.filter(c => c.id !== id);
-      if (selectedClientId === id) selectedClientId = appState.clients[0]?.id || null;
-      try {
-        await persistMainState();
-        renderClientsTable();
-        if (selectedClientId) selectClient(selectedClientId);
-        setMsg('clientMsg', 'Klien berhasil dihapus.', 'ok');
-      } catch (err) {
-        setMsg('clientMsg', err.message, 'err');
-      }
-    }
-
-    // --- SUPERADMIN MANAGE USERS ---
-    function renderUsersTable() {
-      const tbody = document.getElementById('usersTbody');
-      tbody.innerHTML = '';
-
-      if (!appState.staffUsers.length) {
-        tbody.innerHTML = '<tr><td colspan="6" style="color:var(--muted);">Belum ada staff user.</td></tr>';
-        return;
-      }
-
-      appState.staffUsers.forEach(u => {
-        const isPrimarySuper = String(u.role).toLowerCase() === 'superadmin' && u.isPrimary;
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td><strong>${esc(u.username)}</strong></td>
-          <td>${esc(u.fullName || u.name || '-')}</td>
-          <td>${esc(u.position || '-')}</td>
-          <td>${esc(u.role)}</td>
-          <td>${esc(u.password || '')}</td>
-          <td class="btn-row" style="margin-top:0;">
-            <button type="button" onclick="editStaffUser('${esc(u.id)}')">Edit</button>
-            ${isPrimarySuper ? '' : `<button type="button" class="danger" onclick="deleteStaffUser('${esc(u.id)}')">Hapus</button>`}
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    function editStaffUser(id) {
-      const u = appState.staffUsers.find(item => item.id === id);
-      if (!u) return;
-      document.getElementById('u_id').value = u.id;
-      document.getElementById('u_username').value = u.username || '';
-      document.getElementById('u_fullName').value = u.fullName || u.name || '';
-      document.getElementById('u_position').value = u.position || '';
-      document.getElementById('u_role').value = u.role || 'editor';
-      document.getElementById('u_password').value = u.password || '';
-      setFormPermissions(u.tabPermissions, u.role);
-      document.getElementById('btnSaveUser').textContent = 'Update User';
-      setMsg('userMsg', `Mode edit user: ${u.username}`);
-    }
-
-    function resetStaffUserForm() {
-      document.getElementById('userForm').reset();
-      document.getElementById('u_id').value = '';
-      document.getElementById('u_role').value = 'editor';
-      setFormPermissions({}, 'editor');
-      document.getElementById('btnSaveUser').textContent = 'Simpan User';
-    }
-
-    async function deleteStaffUser(id) {
-      const target = appState.staffUsers.find(u => u.id === id);
-      if (!target || !confirm(`Hapus user "${target.username}"?`)) return;
-      appState.staffUsers = appState.staffUsers.filter(u => u.id !== id);
-      try {
-        await persistMainState();
-        renderUsersTable();
-        setMsg('userMsg', `User "${target.username}" dihapus.`, 'ok');
-      } catch (err) {
-        setMsg('userMsg', err.message, 'err');
-      }
-    }
-
-    function applySessionUI() {
-      const loggedIn = Boolean(currentSession);
-      document.getElementById('loginCard').classList.toggle('hidden', loggedIn);
-      document.getElementById('sessionBar').classList.toggle('hidden', !loggedIn);
-      document.getElementById('workspace').classList.toggle('hidden', !loggedIn);
-
-      if (!loggedIn) return;
-
-      document.getElementById('lblUser').textContent = currentSession.displayName;
-      document.getElementById('lblRole').textContent = currentSession.role;
-
-      const isSuperadmin = currentSession.type === 'staff' &&
-        String(currentSession.role).toLowerCase() === 'superadmin';
-      const isClient = currentSession.type === 'client';
-
-      document.getElementById('tabUsersBtn').classList.toggle('hidden', !isSuperadmin);
+    // --- 1. PROJECTS & KLIEN ---
+    function renderProjectsTab(c, ev) {
+      const isClient = session?.type === 'client';
       document.getElementById('btnNewClient').classList.toggle('hidden', isClient);
       document.getElementById('clientsTableWrap').classList.toggle('hidden', isClient);
+      document.getElementById('clientSearch').classList.toggle('hidden', isClient);
 
-      if (!isSuperadmin && document.querySelector('.tab-btn[data-tab="users"]').classList.contains('active')) {
-        openTab('projects');
+      if (c) {
+        document.getElementById('c_id').value = c.id || '';
+        document.getElementById('c_coupleShort').value = c.coupleShort || '';
+        document.getElementById('c_packageTier').value = c.packageTier || '';
+        document.getElementById('c_projectStatus').value = c.projectStatus || 'Active';
+        document.getElementById('c_phone').value = c.phone || '';
+        document.getElementById('c_username').value = c.username || '';
+        document.getElementById('c_password').value = c.password || '';
+        document.getElementById('c_historyNotes').value = c.historyNotes || '';
       }
 
-      if (isClient) {
-        selectClient(currentSession.clientId);
-      } else if (!selectedClientId && appState.clients.length) {
-        selectClient(appState.clients[0].id);
-      }
+      const q = document.getElementById('clientSearch').value.trim().toLowerCase();
+      const rows = state.clients.filter(item => {
+        if (!q) return true;
+        const e0 = (item.events && item.events[0]) || {};
+        return [item.coupleShort, item.packageTier, e0.venue, e0.eventDate, item.username]
+          .join(' ').toLowerCase().includes(q);
+      });
 
-      renderClientsTable();
-      if (isSuperadmin) renderUsersTable();
+      const tbody = document.getElementById('clientsTbody');
+      tbody.innerHTML = rows.length ? rows.map(item => {
+        const e0 = (item.events && item.events[0]) || {};
+        const canDel = session?.type === 'staff' && ['superadmin', 'admin'].includes(String(session.role).toLowerCase());
+        return `
+          <tr>
+            <td><strong>${esc(item.coupleShort)}</strong></td>
+            <td>${esc(item.packageTier || '-')}</td>
+            <td>${esc(e0.eventName || '-')} (${esc(e0.eventDate || '-')})</td>
+            <td>${esc(e0.venue || '-')}</td>
+            <td>${esc(item.username || '-')}</td>
+            <td>${esc(item.projectStatus || 'Active')}</td>
+            <td class="btn-row" style="margin-top:0;">
+              <button type="button" onclick="pickClient('${esc(item.id)}')">Pilih</button>
+              ${canDel ? `<button type="button" class="danger" onclick="delClient('${esc(item.id)}')">Hapus</button>` : ''}
+            </td>
+          </tr>
+        `;
+      }).join('') : '<tr><td colspan="7" style="color:var(--muted);">Belum ada data klien.</td></tr>';
     }
 
-    // --- EVENT LISTENERS ---
+    function pickClient(id) {
+      currentClientId = id;
+      renderClientSelector();
+      renderActivePanel();
+      setMsg('clientStatus', 'Klien aktif diperbarui.', 'ok');
+    }
+
+    async function delClient(id) {
+      if (!confirm('Hapus klien ini?')) return;
+      state.clients = state.clients.filter(c => c.id !== id);
+      if (currentClientId === id) currentClientId = state.clients[0]?.id || null;
+      await saveState();
+      renderClientSelector();
+      renderActivePanel();
+      setMsg('clientStatus', 'Klien dihapus.', 'ok');
+    }
+
+    // --- 2. WO RUNDOWN ---
+    function renderRundownTab(c, ev) {
+      if (!ev) return;
+      const vendors = ev.vendors || [];
+      document.getElementById('woStatusSelect').value = ev.woProgress?.status || 'Draft';
+      document.getElementById('kpiWoStatus').textContent = ev.woProgress?.status || 'Draft';
+      document.getElementById('kpiEventVenue').textContent = `${ev.eventDate || '-'} • ${ev.venue || '-'}`;
+
+      let totalChk = 0, doneChk = 0, progSum = 0;
+      vendors.forEach(v => {
+        progSum += Number(v.progress || 0);
+        (v.checklist || []).forEach(ch => {
+          totalChk++;
+          if (ch.done) doneChk++;
+        });
+      });
+
+      document.getElementById('kpiChecklist').textContent = `${doneChk} / ${totalChk}`;
+      document.getElementById('kpiProgress').textContent = vendors.length
+        ? Math.round(progSum / vendors.length) + '%'
+        : '0%';
+
+      const vSel = document.getElementById('chkVendorSelect');
+      vSel.innerHTML = vendors.length
+        ? vendors.map(v => `<option value="${esc(v.id)}">${esc(v.name)} (${esc(v.category)})</option>`).join('')
+        : '<option value="">-- Tambah vendor terlebih dahulu --</option>';
+
+      const container = document.getElementById('checklistContainer');
+      const canEdit = getTabAccess('wo-rundown') === 'edit';
+      container.innerHTML = vendors.length ? vendors.map(v => {
+        const chks = v.checklist || [];
+        return `
+          <div class="sub-card">
+            <h4>${esc(v.name)} <span style="color:var(--muted); font-size:12px;">(${esc(v.category || 'Vendor')})</span></h4>
+            ${chks.length ? chks.map(ch => `
+              <div class="chk-item">
+                <label>
+                  <input type="checkbox" ${ch.done ? 'checked' : ''} ${canEdit ? '' : 'disabled'}
+                    onchange="toggleChecklist('${esc(v.id)}', '${esc(ch.id)}', this.checked)" />
+                  <span class="${ch.done ? 'done-text' : ''}">${esc(ch.title)}</span>
+                </label>
+                ${canEdit ? `<button type="button" class="danger" onclick="delChecklist('${esc(v.id)}', '${esc(ch.id)}')">x</button>` : ''}
+              </div>
+            `).join('') : '<div style="font-size:12px; color:var(--muted);">Belum ada item checklist.</div>'}
+          </div>
+        `;
+      }).join('') : '<div style="color:var(--muted); font-size:13px;">Belum ada vendor pada event ini.</div>';
+    }
+
+    async function toggleChecklist(vendorId, chkId, checked) {
+      const ev = getPrimaryEvent(getClient());
+      const v = (ev?.vendors || []).find(x => x.id === vendorId);
+      const ch = (v?.checklist || []).find(x => x.id === chkId);
+      if (!ch) return;
+      ch.done = checked;
+      await saveState();
+      renderRundownTab(getClient(), ev);
+    }
+
+    async function delChecklist(vendorId, chkId) {
+      const ev = getPrimaryEvent(getClient());
+      const v = (ev?.vendors || []).find(x => x.id === vendorId);
+      if (!v) return;
+      v.checklist = (v.checklist || []).filter(x => x.id !== chkId);
+      await saveState();
+      renderRundownTab(getClient(), ev);
+    }
+
+    // --- 3. VENDORS ---
+    function renderVendorsTab(c, ev) {
+      if (!ev) return;
+      const vendors = ev.vendors || [];
+      document.getElementById('vendorsTbody').innerHTML = vendors.length ? vendors.map(v => {
+        const paid = (v.paymentLogs || []).reduce((acc, p) => acc + Number(p.amount || 0), 0);
+        return `
+          <tr>
+            <td><strong>${esc(v.name)}</strong></td>
+            <td>${esc(v.category || '-')}</td>
+            <td>${esc(v.picName || '-')} (${esc(v.picPhone || '-')})</td>
+            <td>${fmtRp(v.packagePrice)}</td>
+            <td>${fmtRp(paid || v.paidAmount || 0)}</td>
+            <td>${Number(v.progress || 0)}%</td>
+            <td>${esc(v.status || 'On Progress')}</td>
+            <td class="btn-row" style="margin-top:0;">
+              <button type="button" onclick="editVendor('${esc(v.id)}')">Edit</button>
+              <button type="button" class="danger" onclick="delVendor('${esc(v.id)}')">Hapus</button>
+            </td>
+          </tr>
+        `;
+      }).join('') : '<tr><td colspan="8" style="color:var(--muted);">Belum ada vendor.</td></tr>';
+
+      const cvList = ev.confirmedVendorList || [];
+      document.getElementById('confirmedVendorsTbody').innerHTML = cvList.length ? cvList.map(cv => `
+        <tr>
+          <td>${esc(cv.category || '-')}</td>
+          <td>${esc(cv.name || '-')}</td>
+          <td>${esc(cv.picName || '-')}</td>
+          <td>${esc(cv.picPhone || '-')}</td>
+          <td>${esc(cv.notes || '-')}</td>
+          <td><button type="button" class="danger" onclick="delConfirmedVendor('${esc(cv.id)}')">Hapus</button></td>
+        </tr>
+      `).join('') : '<tr><td colspan="6" style="color:var(--muted);">Belum ada confirmed vendor.</td></tr>';
+    }
+
+    function editVendor(id) {
+      const ev = getPrimaryEvent(getClient());
+      const v = (ev?.vendors || []).find(x => x.id === id);
+      if (!v) return;
+      document.getElementById('v_id').value = v.id;
+      document.getElementById('v_name').value = v.name || '';
+      document.getElementById('v_category').value = v.category || '';
+      document.getElementById('v_picName').value = v.picName || '';
+      document.getElementById('v_picPhone').value = v.picPhone || '';
+      document.getElementById('v_packageName').value = v.packageName || '';
+      document.getElementById('v_packagePrice').value = v.packagePrice || 0;
+      document.getElementById('v_progress').value = v.progress || 0;
+      document.getElementById('v_status').value = v.status || 'On Progress';
+      document.getElementById('v_packageItems').value = v.packageItems || '';
+    }
+
+    async function delVendor(id) {
+      const ev = getPrimaryEvent(getClient());
+      if (!ev || !confirm('Hapus vendor ini?')) return;
+      ev.vendors = (ev.vendors || []).filter(x => x.id !== id);
+      await saveState();
+      renderVendorsTab(getClient(), ev);
+    }
+
+    async function delConfirmedVendor(id) {
+      const ev = getPrimaryEvent(getClient());
+      if (!ev) return;
+      ev.confirmedVendorList = (ev.confirmedVendorList || []).filter(x => x.id !== id);
+      await saveState();
+      renderVendorsTab(getClient(), ev);
+    }
+
+    // --- 4. BIODATA ---
+    function renderBiodataTab(c) {
+      if (!c) return;
+      const b = c.biodata || {};
+      const g = b.groom || {}, gp = b.groomParents || {};
+      const w = b.bride || {}, wp = b.brideParents || {};
+      const mapVal = (id, val) => { document.getElementById(id).value = val || ''; };
+
+      mapVal('g_fullName', g.fullName || c.groomFullName);
+      mapVal('g_nickname', g.nickname); mapVal('g_birthOrder', g.birthOrder);
+      mapVal('g_phone', g.phone); mapVal('g_instagram', g.instagram); mapVal('g_address', g.address);
+      mapVal('g_fatherName', gp.fatherName); mapVal('g_fatherPhone', gp.fatherPhone);
+      mapVal('g_motherName', gp.motherName); mapVal('g_motherPhone', gp.motherPhone);
+
+      mapVal('b_fullName', w.fullName || c.brideFullName);
+      mapVal('b_nickname', w.nickname); mapVal('b_birthOrder', w.birthOrder);
+      mapVal('b_phone', w.phone); mapVal('b_instagram', w.instagram); mapVal('b_address', w.address);
+      mapVal('b_fatherName', wp.fatherName); mapVal('b_fatherPhone', wp.fatherPhone);
+      mapVal('b_motherName', wp.motherName); mapVal('b_motherPhone', wp.motherPhone);
+    }
+
+    // --- 5. PAYMENTS ---
+    function renderPaymentsTab(c, ev) {
+      if (!ev) return;
+      const vendors = ev.vendors || [];
+      document.getElementById('pay_vendorId').innerHTML = vendors.length
+        ? vendors.map(v => `<option value="${esc(v.id)}">${esc(v.name)} (${esc(v.category)})</option>`).join('')
+        : '<option value="">-- Tambah vendor dulu --</option>';
+
+      const logs = [];
+      vendors.forEach(v => {
+        (v.paymentLogs || []).forEach(p => {
+          logs.push({ ...p, vendorId: v.id, vendorName: v.name });
+        });
+      });
+
+      document.getElementById('paymentsTbody').innerHTML = logs.length ? logs.map(p => `
+        <tr>
+          <td>${esc(p.date || '-')}</td>
+          <td>${esc(p.vendorName)}</td>
+          <td>${esc(p.label || '-')}</td>
+          <td>${esc(p.method || '-')}</td>
+          <td>${fmtRp(p.amount)}</td>
+          <td>${esc(p.status || 'Verified')}</td>
+          <td><button type="button" class="danger" onclick="delPayment('${esc(p.vendorId)}', '${esc(p.id)}')">Hapus</button></td>
+        </tr>
+      `).join('') : '<tr><td colspan="7" style="color:var(--muted);">Belum ada catatan pembayaran.</td></tr>';
+    }
+
+    async function delPayment(vendorId, payId) {
+      const ev = getPrimaryEvent(getClient());
+      const v = (ev?.vendors || []).find(x => x.id === vendorId);
+      if (!v) return;
+      v.paymentLogs = (v.paymentLogs || []).filter(p => p.id !== payId);
+      v.paidAmount = (v.paymentLogs || []).reduce((s, p) => s + Number(p.amount || 0), 0);
+      await saveState();
+      renderPaymentsTab(getClient(), ev);
+    }
+
+    // --- 6. INVOICES ---
+    function renderInvoicesTab(c, ev) {
+      if (!ev) return;
+      const invs = ev.invoices || [];
+      document.getElementById('invoicesTbody').innerHTML = invs.length ? invs.map(inv => {
+        const total = inv.totalAmount ?? (inv.items || []).reduce((s, it) => s + Number(it.unitPrice || 0) * Number(it.qty || 1), 0);
+        return `
+          <tr>
+            <td><strong>${esc(inv.invoiceNumber)}</strong></td>
+            <td>${esc(inv.paymentTerms || '-')}</td>
+            <td>${esc(inv.issueDate || '-')}</td>
+            <td>${esc(inv.dueDate || '-')}</td>
+            <td>${fmtRp(total)}</td>
+            <td>${esc(inv.status || 'Partial')}</td>
+            <td><button type="button" class="danger" onclick="delInvoice('${esc(inv.id)}')">Hapus</button></td>
+          </tr>
+        `;
+      }).join('') : '<tr><td colspan="7" style="color:var(--muted);">Belum ada invoice.</td></tr>';
+    }
+
+    async function delInvoice(invId) {
+      const ev = getPrimaryEvent(getClient());
+      if (!ev) return;
+      ev.invoices = (ev.invoices || []).filter(i => i.id !== invId);
+      await saveState();
+      renderInvoicesTab(getClient(), ev);
+    }
+
+    // --- 7. EVENT & BRIEF ---
+    function renderEventBriefTab(c, ev) {
+      if (!ev) return;
+      const br = ev.formBrief || {};
+      document.getElementById('fb_eventName').value = ev.eventName || '';
+      document.getElementById('fb_eventType').value = ev.eventType || '';
+      document.getElementById('fb_eventDate').value = ev.eventDate || '';
+      document.getElementById('fb_venue').value = ev.venue || '';
+      document.getElementById('fb_ceremonyTime').value = br.ceremonyTime || '';
+      document.getElementById('fb_receptionTime').value = br.receptionTime || '';
+      document.getElementById('fb_guestCount').value = br.guestCount || '';
+      document.getElementById('fb_themeConcept').value = br.themeConcept || '';
+      document.getElementById('fb_colorPalette').value = br.colorPalette || '';
+      document.getElementById('fb_dietaryNotes').value = br.dietaryNotes || '';
+      document.getElementById('fb_additionalNotes').value = br.additionalNotes || '';
+    }
+
+    // --- 8. INTERNAL OPS ---
+    function renderInternalOpsTab() {
+      const totalClients = state.clients.length;
+      const totalVendors = state.clients.reduce((s, c) =>
+        s + (c.events || []).reduce((es, e) => es + (e.vendors || []).length, 0), 0);
+      const totalInvoices = state.clients.reduce((s, c) =>
+        s + (c.events || []).reduce((es, e) => es + (e.invoices || []).length, 0), 0);
+
+      document.getElementById('opsKpiGrid').innerHTML = `
+        <div class="kpi"><div class="k-label">Total Klien</div><div class="k-val">${totalClients}</div></div>
+        <div class="kpi"><div class="k-label">Total Vendor</div><div class="k-val">${totalVendors}</div></div>
+        <div class="kpi"><div class="k-label">Total Invoice</div><div class="k-val">${totalInvoices}</div></div>
+      `;
+
+      document.getElementById('opsTbody').innerHTML = state.clients.map(c => {
+        const e0 = (c.events && c.events[0]) || {};
+        return `
+          <tr>
+            <td><strong>${esc(c.coupleShort)}</strong></td>
+            <td>${esc(e0.eventName || '-')} (${esc(e0.eventDate || '-')})</td>
+            <td>${esc(e0.venue || '-')}</td>
+            <td>${esc(e0.woProgress?.status || 'Draft')}</td>
+            <td>${(e0.vendors || []).length}</td>
+            <td>${(e0.invoices || []).length}</td>
+            <td>${esc(c.projectStatus || 'Active')}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // --- 9. SUPERADMIN USERS ---
+    function renderUsersTab() {
+      document.getElementById('staffTbody').innerHTML = (state.staffUsers || []).map(u => {
+        const isPrimarySuper = String(u.role).toLowerCase() === 'superadmin' && u.isPrimary;
+        return `
+          <tr>
+            <td><strong>${esc(u.username)}</strong></td>
+            <td>${esc(u.fullName || u.name || '-')}</td>
+            <td>${esc(u.position || '-')}</td>
+            <td>${esc(u.role)}</td>
+            <td>${esc(u.password || '')}</td>
+            <td class="btn-row" style="margin-top:0;">
+              <button type="button" onclick="editStaff('${esc(u.id)}')">Edit</button>
+              ${isPrimarySuper ? '' : `<button type="button" class="danger" onclick="delStaff('${esc(u.id)}')">Hapus</button>`}
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function editStaff(id) {
+      const u = state.staffUsers.find(x => x.id === id);
+      if (!u) return;
+      document.getElementById('s_id').value = u.id;
+      document.getElementById('s_username').value = u.username || '';
+      document.getElementById('s_fullName').value = u.fullName || u.name || '';
+      document.getElementById('s_position').value = u.position || '';
+      document.getElementById('s_role').value = u.role || 'editor';
+      document.getElementById('s_password').value = u.password || '';
+      setPermGrid(u.tabPermissions, u.role);
+      document.getElementById('btnSaveStaff').textContent = 'Update User';
+    }
+
+    function resetStaffForm() {
+      document.getElementById('staffForm').reset();
+      document.getElementById('s_id').value = '';
+      document.getElementById('s_role').value = 'editor';
+      setPermGrid({}, 'editor');
+      document.getElementById('btnSaveStaff').textContent = 'Simpan User';
+    }
+
+    async function delStaff(id) {
+      const u = state.staffUsers.find(x => x.id === id);
+      if (!u || !confirm(`Hapus user "${u.username}"?`)) return;
+      state.staffUsers = state.staffUsers.filter(x => x.id !== id);
+      await saveState();
+      renderUsersTab();
+      setMsg('staffMsg', 'User dihapus.', 'ok');
+    }
+
+    // --- SESSION & EVENTS ---
+    function applySession() {
+      const loggedIn = Boolean(session);
+      document.getElementById('loginCard').classList.toggle('hidden', loggedIn);
+      document.getElementById('sessionBar').classList.toggle('hidden', !loggedIn);
+      document.getElementById('woSuite').classList.toggle('hidden', !loggedIn);
+      if (!loggedIn) return;
+
+      document.getElementById('lblUser').textContent = session.displayName;
+      document.getElementById('lblRole').textContent = session.role;
+
+      renderClientSelector();
+      renderTabs();
+      renderActivePanel();
+    }
+
     document.getElementById('loginForm').addEventListener('submit', async e => {
       e.preventDefault();
-      const uInput = document.getElementById('loginUsername').value.trim();
-      const pInput = document.getElementById('loginPassword').value;
+      const u = document.getElementById('loginUsername').value.trim();
+      const p = document.getElementById('loginPassword').value;
+      setMsg('loginStatus', 'Memuat database...');
+      await loadState();
 
-      setMsg('loginStatus', 'Memuat database & memverifikasi akun...');
-      await fetchMainState();
-
-      // 1. Cek superadmin bawaan atau staffUsers di MAIN_STATE
-      const staff = appState.staffUsers.find(
-        s => String(s.username || '').trim().toLowerCase() === uInput.toLowerCase() &&
-             String(s.password || '') === pInput
+      const staff = (state.staffUsers || []).find(
+        s => String(s.username || '').trim().toLowerCase() === u.toLowerCase() &&
+             String(s.password || '') === p
       );
-
       if (staff) {
-        currentSession = {
+        session = {
           type: 'staff',
           id: staff.id,
           username: staff.username,
           displayName: staff.fullName || staff.username,
           role: staff.role || 'editor'
         };
-        sessionStorage.setItem(SESSION_KEY, JSON.stringify(currentSession));
+        sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
         document.getElementById('loginForm').reset();
         setMsg('loginStatus', '');
-        applySessionUI();
+        applySession();
         return;
       }
 
-      // Bootstrap superadmin default jika belum ada superadmin di staffUsers
-      const hasSuper = appState.staffUsers.some(s => String(s.role).toLowerCase() === 'superadmin');
-      if (!hasSuper && uInput.toLowerCase() === 'superadmin' && pInput === 'lxdsuperadmin') {
-        const superObj = {
+      const hasSuper = (state.staffUsers || []).some(s => String(s.role).toLowerCase() === 'superadmin');
+      if (!hasSuper && u.toLowerCase() === 'superadmin' && p === 'lxdsuperadmin') {
+        const superUser = {
           id: 'staff-superadmin-primary',
           username: 'superadmin',
           fullName: 'SUPERADMIN',
           position: 'OWNER',
           role: 'superadmin',
-          password: pInput,
+          password: p,
           isPrimary: true,
-          tabPermissions: readFormPermissions('superadmin')
+          tabPermissions: readPermGrid('superadmin')
         };
-        appState.staffUsers.unshift(superObj);
-        try { await persistMainState(); } catch (_) {}
-        currentSession = {
+        state.staffUsers.unshift(superUser);
+        try { await saveState(); } catch (_) {}
+        session = {
           type: 'staff',
-          id: superObj.id,
-          username: superObj.username,
-          displayName: superObj.fullName,
+          id: superUser.id,
+          username: superUser.username,
+          displayName: superUser.fullName,
           role: 'superadmin'
         };
-        sessionStorage.setItem(SESSION_KEY, JSON.stringify(currentSession));
+        sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
         document.getElementById('loginForm').reset();
         setMsg('loginStatus', '');
-        applySessionUI();
+        applySession();
         return;
       }
 
-      // 2. Cek login klien di MAIN_STATE.clients
-      const client = appState.clients.find(
-        c => String(c.username || '').trim().toLowerCase() === uInput.toLowerCase() &&
-             String(c.password || '') === pInput
+      const client = (state.clients || []).find(
+        c => String(c.username || '').trim().toLowerCase() === u.toLowerCase() &&
+             String(c.password || '') === p
       );
-
       if (client) {
-        currentSession = {
+        session = {
           type: 'client',
           clientId: client.id,
           username: client.username,
           displayName: client.coupleShort,
           role: 'client'
         };
-        sessionStorage.setItem(SESSION_KEY, JSON.stringify(currentSession));
+        sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
         document.getElementById('loginForm').reset();
         setMsg('loginStatus', '');
-        applySessionUI();
+        applySession();
         return;
       }
 
-      setMsg('loginStatus', 'Username atau password tidak cocok.', 'err');
+      setMsg('loginStatus', 'Username atau password salah.', 'err');
     });
 
     document.getElementById('btnLogout').addEventListener('click', () => {
-      currentSession = null;
-      selectedClientId = null;
+      session = null;
       sessionStorage.removeItem(SESSION_KEY);
-      applySessionUI();
+      applySession();
     });
 
-    document.getElementById('btnSyncNow').addEventListener('click', async () => {
-      await fetchMainState();
-      applySessionUI();
-      setMsg('clientMsg', 'Data disinkronkan dari database.', 'ok');
+    document.getElementById('btnSync').addEventListener('click', async () => {
+      await loadState();
+      applySession();
+      setMsg('clientStatus', 'Tersinkronisasi dengan database.', 'ok');
     });
+
+    document.getElementById('activeClientSelector').addEventListener('change', e => {
+      currentClientId = e.target.value;
+      renderActivePanel();
+    });
+
+    document.getElementById('clientSearch').addEventListener('input', () => renderProjectsTab(getClient(), getPrimaryEvent(getClient())));
 
     document.getElementById('btnNewClient').addEventListener('click', () => {
-      document.getElementById('clientMainForm').reset();
+      document.getElementById('clientForm').reset();
       document.getElementById('c_id').value = '';
-      selectedClientId = null;
-      setMsg('clientMsg', 'Isi form di atas untuk membuat klien baru.');
+      setMsg('clientStatus', 'Isi form di atas untuk menambah klien baru.');
     });
 
-    document.getElementById('btnResetClientForm').addEventListener('click', () => {
-      if (selectedClientId) selectClient(selectedClientId);
-      else document.getElementById('clientMainForm').reset();
-    });
+    document.getElementById('btnResetClient').addEventListener('click', () => renderProjectsTab(getClient(), getPrimaryEvent(getClient())));
 
-    document.getElementById('clientMainForm').addEventListener('submit', async e => {
+    document.getElementById('clientForm').addEventListener('submit', async e => {
       e.preventDefault();
-      const existingId = document.getElementById('c_id').value.trim();
+      const id = document.getElementById('c_id').value.trim();
       const coupleShort = document.getElementById('c_coupleShort').value.trim();
       if (!coupleShort) return;
 
-      let target = appState.clients.find(c => c.id === existingId);
-      if (!target) {
-        const newId = 'client-' + Date.now();
-        target = {
-          id: newId,
+      let c = state.clients.find(x => x.id === id);
+      if (!c) {
+        c = {
+          id: 'client-' + Date.now(),
           coupleShort,
           packageTier: '',
           projectStatus: 'Active',
@@ -918,16 +1465,7 @@
           username: '',
           password: '',
           historyNotes: '',
-          groomFullName: '',
-          brideFullName: '',
-          biodata: {
-            groom: { fullName: '', nickname: '', birthOrder: '', phone: '', instagram: '', address: '' },
-            bride: { fullName: '', nickname: '', birthOrder: '', phone: '', instagram: '', address: '' },
-            groomParents: { fatherName: '', fatherPhone: '', motherName: '', motherPhone: '' },
-            brideParents: { fatherName: '', fatherPhone: '', motherName: '', motherPhone: '' },
-            groomSiblings: [],
-            brideSiblings: []
-          },
+          biodata: {},
           events: [{
             id: 'ev-' + Date.now(),
             eventName: 'Wedding Day',
@@ -935,43 +1473,126 @@
             eventDate: '',
             venue: '',
             woProgress: { status: 'Draft' },
-            formBrief: {
-              ceremonyTime: '', receptionTime: '', guestCount: '',
-              themeConcept: '', colorPalette: '', dietaryNotes: '',
-              additionalNotes: '', extraSections: [], customFields: []
-            },
+            formBrief: {},
             vendors: [],
             confirmedVendorList: [],
             invoices: []
           }]
         };
-        appState.clients.unshift(target);
+        state.clients.unshift(c);
+        currentClientId = c.id;
       }
 
-      target.coupleShort = coupleShort;
-      target.packageTier = document.getElementById('c_packageTier').value.trim();
-      target.projectStatus = document.getElementById('c_projectStatus').value;
-      target.phone = document.getElementById('c_phone').value.trim();
-      target.username = document.getElementById('c_username').value.trim();
-      target.password = document.getElementById('c_password').value.trim();
-      target.historyNotes = document.getElementById('c_historyNotes').value.trim();
+      c.coupleShort = coupleShort;
+      c.packageTier = document.getElementById('c_packageTier').value.trim();
+      c.projectStatus = document.getElementById('c_projectStatus').value;
+      c.phone = document.getElementById('c_phone').value.trim();
+      c.username = document.getElementById('c_username').value.trim();
+      c.password = document.getElementById('c_password').value.trim();
+      c.historyNotes = document.getElementById('c_historyNotes').value.trim();
 
       try {
-        setMsg('clientMsg', 'Menyimpan data klien...');
-        await persistMainState();
-        selectClient(target.id);
-        renderClientsTable();
-        setMsg('clientMsg', `Klien "${target.coupleShort}" tersimpan.`, 'ok');
+        await saveState();
+        renderClientSelector();
+        renderActivePanel();
+        setMsg('clientStatus', `Klien "${c.coupleShort}" tersimpan.`, 'ok');
       } catch (err) {
-        setMsg('clientMsg', err.message, 'err');
+        setMsg('clientStatus', err.message, 'err');
       }
+    });
+
+    document.getElementById('btnSaveWoStatus').addEventListener('click', async () => {
+      const ev = getPrimaryEvent(getClient());
+      if (!ev) return;
+      ev.woProgress = { ...(ev.woProgress || {}), status: document.getElementById('woStatusSelect').value };
+      await saveState();
+      renderRundownTab(getClient(), ev);
+      setMsg('woStatusMsg', 'Status rundown tersimpan.', 'ok');
+    });
+
+    document.getElementById('btnAddChk').addEventListener('click', async () => {
+      const ev = getPrimaryEvent(getClient());
+      const vId = document.getElementById('chkVendorSelect').value;
+      const title = document.getElementById('newChkTitle').value.trim();
+      if (!ev || !vId || !title) return;
+      const v = (ev.vendors || []).find(x => x.id === vId);
+      if (!v) return;
+      v.checklist = v.checklist || [];
+      v.checklist.push({ id: 'chk-' + Date.now(), title, done: false, detail: '' });
+      document.getElementById('newChkTitle').value = '';
+      await saveState();
+      renderRundownTab(getClient(), ev);
+      setMsg('woStatusMsg', 'Checklist ditambahkan.', 'ok');
+    });
+
+    document.getElementById('vendorForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const ev = getPrimaryEvent(getClient());
+      if (!ev) return;
+      ev.vendors = ev.vendors || [];
+      const vId = document.getElementById('v_id').value.trim();
+      const payload = {
+        id: vId || ('v-' + Date.now()),
+        name: document.getElementById('v_name').value.trim(),
+        category: document.getElementById('v_category').value.trim(),
+        picName: document.getElementById('v_picName').value.trim(),
+        picPhone: document.getElementById('v_picPhone').value.trim(),
+        packageName: document.getElementById('v_packageName').value.trim(),
+        packagePrice: Number(document.getElementById('v_packagePrice').value || 0),
+        progress: Number(document.getElementById('v_progress').value || 0),
+        status: document.getElementById('v_status').value,
+        packageItems: document.getElementById('v_packageItems').value.trim()
+      };
+
+      const idx = ev.vendors.findIndex(x => x.id === payload.id);
+      if (idx >= 0) {
+        ev.vendors[idx] = { ...ev.vendors[idx], ...payload };
+      } else {
+        ev.vendors.push({
+          ...payload,
+          paidAmount: 0,
+          checklist: [{ id: 'chk-' + Date.now(), title: 'Konfirmasi Kontrak & Brief Awal', done: false, detail: '' }],
+          paymentLogs: [],
+          updatesLog: []
+        });
+      }
+
+      document.getElementById('vendorForm').reset();
+      document.getElementById('v_id').value = '';
+      await saveState();
+      renderVendorsTab(getClient(), ev);
+      setMsg('vendorMsg', 'Data vendor tersimpan.', 'ok');
+    });
+
+    document.getElementById('btnResetVendor').addEventListener('click', () => {
+      document.getElementById('vendorForm').reset();
+      document.getElementById('v_id').value = '';
+    });
+
+    document.getElementById('btnAddConfirmedVendor').addEventListener('click', async () => {
+      const ev = getPrimaryEvent(getClient());
+      if (!ev) return;
+      ev.confirmedVendorList = ev.confirmedVendorList || [];
+      ev.confirmedVendorList.push({
+        id: 'cv-' + Date.now(),
+        category: document.getElementById('cv_category').value.trim(),
+        name: document.getElementById('cv_name').value.trim(),
+        picName: document.getElementById('cv_picName').value.trim(),
+        picPhone: document.getElementById('cv_picPhone').value.trim(),
+        notes: document.getElementById('cv_notes').value.trim()
+      });
+      ['cv_category', 'cv_name', 'cv_picName', 'cv_picPhone', 'cv_notes'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
+      await saveState();
+      renderVendorsTab(getClient(), ev);
+      setMsg('vendorMsg', 'Confirmed vendor ditambahkan.', 'ok');
     });
 
     document.getElementById('biodataForm').addEventListener('submit', async e => {
       e.preventDefault();
-      const c = getSelectedClient();
+      const c = getClient();
       if (!c) return;
-
       c.biodata = c.biodata || {};
       c.biodata.groom = {
         ...(c.biodata.groom || {}),
@@ -1005,78 +1626,100 @@
       };
       c.groomFullName = c.biodata.groom.fullName || c.groomFullName;
       c.brideFullName = c.biodata.bride.fullName || c.brideFullName;
-
-      try {
-        setMsg('bioMsg', 'Menyimpan biodata...');
-        await persistMainState();
-        setMsg('bioMsg', 'Biodata pasangan berhasil diperbarui.', 'ok');
-      } catch (err) {
-        setMsg('bioMsg', err.message, 'err');
-      }
+      await saveState();
+      setMsg('bioMsg', 'Biodata tersimpan.', 'ok');
     });
 
-    document.getElementById('eventDetailForm').addEventListener('submit', async e => {
+    document.getElementById('paymentForm').addEventListener('submit', async e => {
       e.preventDefault();
-      const c = getSelectedClient();
-      if (!c) return;
-      c.events = Array.isArray(c.events) && c.events.length ? c.events : [{ id: 'ev-' + Date.now() }];
-      const ev = c.events[0];
+      const ev = getPrimaryEvent(getClient());
+      const vId = document.getElementById('pay_vendorId').value;
+      const v = (ev?.vendors || []).find(x => x.id === vId);
+      if (!v) return;
+      v.paymentLogs = v.paymentLogs || [];
+      v.paymentLogs.push({
+        id: 'pay-' + Date.now(),
+        label: document.getElementById('pay_label').value.trim(),
+        method: document.getElementById('pay_method').value.trim(),
+        amount: Number(document.getElementById('pay_amount').value || 0),
+        date: document.getElementById('pay_date').value || new Date().toISOString().slice(0, 10),
+        status: document.getElementById('pay_status').value
+      });
+      v.paidAmount = v.paymentLogs.reduce((s, p) => s + Number(p.amount || 0), 0);
+      document.getElementById('paymentForm').reset();
+      await saveState();
+      renderPaymentsTab(getClient(), ev);
+      setMsg('paymentMsg', 'Pembayaran dicatat.', 'ok');
+    });
 
-      ev.eventName = document.getElementById('ev_eventName').value.trim() || 'Wedding Day';
-      ev.eventType = document.getElementById('ev_eventType').value.trim() || 'Wedding Day';
-      ev.eventDate = document.getElementById('ev_eventDate').value;
-      ev.venue = document.getElementById('ev_venue').value.trim();
-      ev.woProgress = { ...(ev.woProgress || {}), status: document.getElementById('ev_woStatus').value };
+    document.getElementById('invoiceForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const ev = getPrimaryEvent(getClient());
+      if (!ev) return;
+      const amount = Number(document.getElementById('inv_amount').value || 0);
+      const terms = document.getElementById('inv_terms').value.trim();
+      ev.invoices = ev.invoices || [];
+      ev.invoices.push({
+        id: 'inv-' + Date.now(),
+        invoiceNumber: document.getElementById('inv_number').value.trim(),
+        paymentTerms: terms,
+        issueDate: document.getElementById('inv_issueDate').value || new Date().toISOString().slice(0, 10),
+        dueDate: document.getElementById('inv_dueDate').value || '',
+        status: document.getElementById('inv_status').value,
+        totalAmount: amount,
+        items: [{ id: 'ii-' + Date.now(), description: terms, qty: 1, unitPrice: amount, detail: '' }]
+      });
+      document.getElementById('invoiceForm').reset();
+      await saveState();
+      renderInvoicesTab(getClient(), ev);
+      setMsg('invoiceMsg', 'Invoice ditambahkan.', 'ok');
+    });
+
+    document.getElementById('eventBriefForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const ev = getPrimaryEvent(getClient());
+      if (!ev) return;
+      ev.eventName = document.getElementById('fb_eventName').value.trim() || 'Wedding Day';
+      ev.eventType = document.getElementById('fb_eventType').value.trim() || 'Wedding Day';
+      ev.eventDate = document.getElementById('fb_eventDate').value;
+      ev.venue = document.getElementById('fb_venue').value.trim();
       ev.formBrief = {
         ...(ev.formBrief || {}),
-        ceremonyTime: document.getElementById('br_ceremonyTime').value.trim(),
-        receptionTime: document.getElementById('br_receptionTime').value.trim(),
-        guestCount: document.getElementById('br_guestCount').value.trim(),
-        themeConcept: document.getElementById('br_themeConcept').value.trim(),
-        colorPalette: document.getElementById('br_colorPalette').value.trim(),
-        dietaryNotes: document.getElementById('br_dietaryNotes').value.trim(),
-        additionalNotes: document.getElementById('br_additionalNotes').value.trim()
+        ceremonyTime: document.getElementById('fb_ceremonyTime').value.trim(),
+        receptionTime: document.getElementById('fb_receptionTime').value.trim(),
+        guestCount: document.getElementById('fb_guestCount').value.trim(),
+        themeConcept: document.getElementById('fb_themeConcept').value.trim(),
+        colorPalette: document.getElementById('fb_colorPalette').value.trim(),
+        dietaryNotes: document.getElementById('fb_dietaryNotes').value.trim(),
+        additionalNotes: document.getElementById('fb_additionalNotes').value.trim()
       };
-
-      try {
-        setMsg('evMsg', 'Menyimpan detail event...');
-        await persistMainState();
-        renderClientsTable();
-        setMsg('evMsg', 'Detail event & brief berhasil diperbarui.', 'ok');
-      } catch (err) {
-        setMsg('evMsg', err.message, 'err');
-      }
+      await saveState();
+      setMsg('briefMsg', 'Event & brief tersimpan.', 'ok');
     });
 
-    document.getElementById('u_role').addEventListener('change', e => {
-      setFormPermissions({}, e.target.value);
-    });
+    document.getElementById('s_role').addEventListener('change', e => setPermGrid({}, e.target.value));
+    document.getElementById('btnNewStaff').addEventListener('click', resetStaffForm);
+    document.getElementById('btnResetStaff').addEventListener('click', resetStaffForm);
 
-    document.getElementById('btnNewUser').addEventListener('click', resetStaffUserForm);
-    document.getElementById('btnResetUser').addEventListener('click', resetStaffUserForm);
-
-    document.getElementById('userForm').addEventListener('submit', async e => {
+    document.getElementById('staffForm').addEventListener('submit', async e => {
       e.preventDefault();
-      const id = document.getElementById('u_id').value.trim();
-      const username = document.getElementById('u_username').value.trim();
-      const fullName = document.getElementById('u_fullName').value.trim();
-      const position = document.getElementById('u_position').value.trim();
-      const role = document.getElementById('u_role').value;
-      const password = document.getElementById('u_password').value;
+      const id = document.getElementById('s_id').value.trim();
+      const username = document.getElementById('s_username').value.trim();
+      const fullName = document.getElementById('s_fullName').value.trim();
+      const position = document.getElementById('s_position').value.trim();
+      const role = document.getElementById('s_role').value;
+      const password = document.getElementById('s_password').value;
 
-      if (!username || !password) return;
-
-      const duplicate = appState.staffUsers.some(
+      const dup = state.staffUsers.some(
         u => u.id !== id && String(u.username || '').trim().toLowerCase() === username.toLowerCase()
       );
-      if (duplicate) {
-        setMsg('userMsg', `Username "${username}" sudah dipakai.`, 'err');
+      if (dup) {
+        setMsg('staffMsg', `Username "${username}" sudah digunakan.`, 'err');
         return;
       }
 
-      const tabPermissions = readFormPermissions(role);
-      const existing = appState.staffUsers.find(u => u.id === id);
-
+      const tabPermissions = readPermGrid(role);
+      const existing = state.staffUsers.find(u => u.id === id);
       if (existing) {
         existing.username = username;
         existing.fullName = fullName;
@@ -1086,7 +1729,7 @@
         existing.password = password;
         existing.tabPermissions = tabPermissions;
       } else {
-        appState.staffUsers.push({
+        state.staffUsers.push({
           id: 'staff-' + Date.now(),
           username,
           fullName,
@@ -1098,29 +1741,19 @@
         });
       }
 
-      try {
-        setMsg('userMsg', 'Menyimpan user...');
-        await persistMainState();
-        resetStaffUserForm();
-        renderUsersTable();
-        setMsg('userMsg', `User "${username}" berhasil disimpan.`, 'ok');
-      } catch (err) {
-        setMsg('userMsg', err.message, 'err');
-      }
+      await saveState();
+      resetStaffForm();
+      renderUsersTab();
+      setMsg('staffMsg', `User "${username}" tersimpan.`, 'ok');
     });
 
-    document.getElementById('searchClient').addEventListener('input', renderClientsTable);
-
     (async function init() {
-      buildPermissionInputs();
-      setFormPermissions({}, 'editor');
-      try {
-        currentSession = JSON.parse(sessionStorage.getItem(SESSION_KEY) || 'null');
-      } catch (_) {
-        currentSession = null;
-      }
-      await fetchMainState();
-      applySessionUI();
+      buildPermGrid();
+      setPermGrid({}, 'editor');
+      try { session = JSON.parse(sessionStorage.getItem(SESSION_KEY) || 'null'); }
+      catch (_) { session = null; }
+      await loadState();
+      applySession();
     })();
   </script>
 </body>
