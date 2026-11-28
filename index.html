@@ -1335,12 +1335,6 @@
                             </button>
                         ` : ''}
 
-                        <button type="button" onclick="copyClientPageLink()"
-                                    class="px-3 py-1.5 rounded-xl border border-stoneborder bg-alabaster hover:bg-champagne-100 text-xs font-bold text-charcoal-900 inline-flex items-center gap-1 transition">
-                                    <i data-lucide="link" class="w-3.5 h-3.5 text-champagne-600"></i>
-                                    <span>Salin Link Client</span>
-                                </button>
-
                                 ${currentUser?.role !== 'client' ? `
                                     <button type="button" onclick="toggleClientPageViewMode()"
                                         class="px-3 py-1.5 rounded-xl border border-stoneborder ${clientPageMode ? 'bg-butter text-charcoal-900' : 'bg-white hover:bg-champagne-100 text-charcoal-900'} text-xs font-bold inline-flex items-center gap-1 transition">
@@ -2241,37 +2235,6 @@
                                 </div>
                             `;
                         }).join('')}
-                    </div>
-
-                    <!-- Quick Master Rundown Table Card (Lihat Rundown, Download PDF & Share WA) -->
-                    <div class="bg-white/95 rounded-3xl border border-stoneborder p-5 sm:p-6 space-y-3 card-playful">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                            <div>
-                                <div class="text-[10px] font-extrabold uppercase tracking-widest text-champagne-600">
-                                    Master Rundown &bull; Status ${isFinal ? 'FINAL' : 'DRAFT'}
-                                </div>
-                                <h3 class="font-editorial text-xl sm:text-2xl font-bold text-charcoal-900">
-                                    Ringkasan Tabel Rundown (${isFinal ? 'Final' : 'Draft'})
-                                </h3>
-                            </div>
-                            <div class="flex flex-wrap items-center gap-2">
-                                <button type="button" onclick="openRundownPreviewModal()"
-                                    class="px-3 py-1.5 rounded-xl border border-stoneborder bg-alabaster hover:bg-champagne-100 text-xs font-bold text-charcoal-900 inline-flex items-center gap-1">
-                                    <i data-lucide="eye" class="w-3.5 h-3.5 text-champagne-600"></i>
-                                    <span>Lihat Rundown</span>
-                                </button>
-                                <button type="button" onclick="printRundownByEvent()"
-                                    class="px-3 py-1.5 rounded-xl border border-stoneborder bg-white hover:bg-alabaster text-xs font-bold text-charcoal-900 inline-flex items-center gap-1">
-                                    <i data-lucide="download" class="w-3.5 h-3.5 text-champagne-600"></i>
-                                    <span>Download PDF</span>
-                                </button>
-                                <button type="button" onclick="shareRundownToWhatsApp()"
-                                    class="px-3 py-1.5 rounded-xl bg-sage-600 hover:bg-sage-700 text-white text-xs font-bold inline-flex items-center gap-1">
-                                    <i data-lucide="send" class="w-3.5 h-3.5"></i>
-                                    <span>Share WhatsApp</span>
-                                </button>
-                            </div>
-                        </div>
                     </div>
 
                     <!-- History Adjustment & Catatan Revisi -->
